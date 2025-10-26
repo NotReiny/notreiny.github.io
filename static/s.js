@@ -1,4 +1,4 @@
-let a = ```   File  Edit  View  Search  Run  Debug  Options                          Help 
+let a = `   File  Edit  View  Search  Run  Debug  Options                          Help 
 ┌───────────────────────────────── Untitled ───────────────────────────────┤↑├─┐
 │                                                                              ↑
 │                                                                             
@@ -23,7 +23,7 @@ Press Enter to see the Survival Guide >        │        ░
 ├───────────────────────────────── Immediate ──────────────────────────────────┤
 │                                                                              │
 │                                                                              │
-F1=Help   Enter=Execute   Esc=Cancel   Tab=Next Field   Arrow=Next Item       ```
+F1=Help   Enter=Execute   Esc=Cancel   Tab=Next Field   Arrow=Next Item       `
 
 a = a.replaceAll(" ","\u00A0")
 document.getElementsByTagName("p")[0].innerHTML = a
