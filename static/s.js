@@ -4,18 +4,17 @@ let a = `   File  Edit  View  Search  Run  Debug  Options                       
 │                                                                             
 │                                                                              ░
 │           ┌────────────────────────────────────────────────────────┐         ░
-│           │                                                        │        ░
-│           │                Welcome to MS-DOS QBasic                │        ░
-│           │                                                        │        ░
-│           │     Copyright (C) Microsoft Corporation, 1987-1992.    │        ░
-│           │                  All rights reserved.                  │        ░
-│           │                                                        │        ░
-│           │       <
-Press Enter to see the Survival Guide >        │        ░
-│           ├────────────────────────────────────────────────────────┤        ░
-│           │         < Press ESC to clear this dialog box >         │        ░
-│           └────────────────────────────────────────────────────────┘        ░
-│                                                                            ░
+│           │                                                        │         ░
+│           │                Welcome to MS-DOS QBasic                │         ░
+│           │                                                        │         ░
+│           │     Copyright (C) Microsoft Corporation, 1987-1992.    │         ░
+│           │                  All rights reserved.                  │         ░
+│           │                                                        │         ░
+│           │       < Press Enter to see the Survival Guide >        │         ░
+│           ├────────────────────────────────────────────────────────┤         ░
+│           │         < Press ESC to clear this dialog box >         │         ░
+│           └────────────────────────────────────────────────────────┘         ░
+│                                                                              ░
 │                                                                              ░
 │                                                                              ░
 │                                                                              ↓
