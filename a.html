@@ -2,8 +2,17 @@
 <html>
     <head>
         <style>
-            .fit {
-                object-fit: contain;
+            .media-wrap {
+                width: 100%;            /* container width, could be max-width: 1200px; margin:auto; */
+                max-height: 80vh;       /* optional limit */
+                overflow: hidden;
+            }
+            .media-wrap img,
+            .media-wrap video {
+                display: block;         /* removes inline gap for img */
+                width: 100%;
+                height: auto;          /* preserves aspect ratio */
+                max-width: 100%;
             }
         </style>
     </head>
