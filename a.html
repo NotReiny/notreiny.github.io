@@ -8,22 +8,23 @@
         </style>
     </head>
     <body>
-        <button id="play">Play surprise (warning: sound)</button>
+        <button id="btn01">Play surprise (warning: sound)</button>
         
-        <video id="scare" src="/static/jumpscare.mp4" preload="none"></video>
+        <video id="vid01" src="/static/jumpscare.mp4" preload="none"></video>
         
         <script>
-          const btn = document.getElementById('play');
-          const video = document.getElementById('scare');
+          const _btn01 = document.getElementById('play');
+          const _vid01 = document.getElementById('vid01');
 
-          // Keep volume "reasonable"
-          video.volume = 1.0;
+          // very "safe" volume, i suppose.
+          _vid01.volume = 1.0;
           
-          btn.addEventListener('click', () => {
-            btn.style.display = "none";
-            video.currentTime = 0;
-            video.play().catch(err => {
-              console.warn('Playback blocked:', err);
+          _btn01.addEventListener('click', () => {
+            _btn01.style.display = "none";
+            _vid01.currentTime = 0;
+            _vid01.play().catch(err => {
+              console.log(`video error:
+    ${err}`);
             });
           });
         </script>
