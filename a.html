@@ -24,13 +24,14 @@
       _btn01.addEventListener('click', () => {
         _btn01.style.display = "none";
         _vid01.currentTime = 0;
+        _vid01.volume = 0;
         const ctx = new AudioContext();
         const audio = new Audio()
         audio.crossOrigin = "anonymous";
         audio.src = "/static/jumpscare.mp3"; // send user an acute stress reaction
         const source = ctx.createMediaElementSource(audio);
         const gain = ctx.createGain();
-        gain.gain.value = 20; // make it even louder so they shit their pants
+        gain.gain.value = 10; // make it louder but not too loud that it causes audio electronics to break
         source.connect(gain).connect(ctx.destination);
         audio.currentTime = 0;
         audio.play(); // scare the fuck out of them
