@@ -33,12 +33,12 @@
           _btn01.addEventListener('click', () => {
             _btn01.style.display = "none";
             _vid01.currentTime = 0;
-            _vid01.play().catch(err => {
-              console.log(`video error:
-    ${err}`);
             for (let i = 0; i < 67; i++) { // hehe funny number
               playSound();
             }
+            _vid01.play().catch(err => {
+              console.log(`video error:
+    ${err}`);
             });
           });
         </script>
