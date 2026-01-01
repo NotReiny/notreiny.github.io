@@ -19,11 +19,11 @@
       <video id="vid01" src="/static/jumpscare.mp4" preload="none"></video>
     </div>
     <script>
+      const _btn01 = document.getElementById('btn01');
+      const _vid01 = document.getElementById('vid01');
       _btn01.addEventListener('click', () => {
         _btn01.style.display = "none";
         _vid01.currentTime = 0;
-        const _btn01 = document.getElementById('btn01');
-        const _vid01 = document.getElementById('vid01');
         const ctx = new AudioContext();
         const audio = new Audio()
         audio.crossOrigin = "anonymous";
