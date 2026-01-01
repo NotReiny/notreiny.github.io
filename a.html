@@ -1,45 +1,43 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <style>
-            .media-wrap img,
-            .media-wrap video {
-                display: block;         /* removes inline gap for img */
-                width: 100%;
-                height: auto;          /* preserves aspect ratio */
-                max-width: 100%;
-            }
-        </style>
-    </head>
-    <body>
-        <button id="btn01">click me for something good</button>
-        <div class="media-wrap">
-            <video id="vid01" src="/static/jumpscare.mp4" preload="none"></video>
-        </div>
-        <script>
-          const _btn01 = document.getElementById('btn01');
-          const _vid01 = document.getElementById('vid01');
-
-          // very "safe" volume, i suppose.
-          _vid01.volume = 1.0;
-
-          const base = new Audio("/static/jumpscare.mp3");
-          
-          function playSound() {
-            const clone = base.cloneNode();
-            clone.play();
-          }
-          
-          _btn01.addEventListener('click', () => {
-            _btn01.style.display = "none";
-            _vid01.currentTime = 0;
-            for (let i = 0; i < 67; i++) { // hehe funny number
-              playSound();
-            }
-            /* _vid01.play().catch(err => {
-              console.log(`video error: ${err}`);
-            }); */
-          });
-        </script>
-    </body>
+  <head>
+    <style>
+      .media-wrap img,
+      .media-wrap video {
+        display: block;
+        /* removes inline gap for img */
+        width: 100%;
+        height: auto;
+        /* preserves aspect ratio */
+        max-width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="btn01">click me for something good</button>
+    <div class="media-wrap">
+      <video id="vid01" src="/static/jumpscare.mp4" preload="none"></video>
+    </div>
+    <script>
+      const _btn01 = document.getElementById('btn01');
+      const _vid01 = document.getElementById('vid01');
+      const ctx = new AudioContext();
+      const audio = new Audio()
+      audio.crossOrigin = "anonymous";
+      audio.src = "/static/jumpscare.mp3"; // send user an acute stress reaction
+      const source = ctx.createMediaElementSource(audio);
+      const gain = ctx.createGain();
+      gain.gain.value = 20; // make it even louder so they shit their pants
+      source.connect(gain).connect(ctx.destination);
+      audio.currentTime = 0;
+      _btn01.addEventListener('click', () => {
+        _btn01.style.display = "none";
+        _vid01.currentTime = 0;
+        audio.play(); // scare the fuck out of them
+        /* _vid01.play().catch(err => {
+          console.log(`video error: ${err}`);
+        }); */
+      });
+    </script>
+  </body>
 </html>
