@@ -21,9 +21,9 @@
 
           // Keep volume "reasonable"
           video.volume = 1.0;
-          btn.class = "hidden";
           
           btn.addEventListener('click', () => {
+            btn.class = "hidden";
             video.currentTime = 0;
             video.play().catch(err => {
               console.warn('Playback blocked:', err);
