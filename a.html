@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style> 
-            button {
-                background-color: lightgray;
-                padding: 10px 20px;
-                border-radius: 5px;
-                transition: background-color 1s ease-out, transform 1s ease-out;
-            }
-            button:hover {
-                background-color: lightgreen;
-                transform: scale(12);
-            }
-        </style>
     </head>
     <body>
-        <h1>i</h1>
-        <p>e</p>
-        <button>a</button>
+        <button id="play">Play surprise (warning: sound)</button>
+        
+        <video id="scare" src="loudJumpscare.mp4" preload="none"></video>
+        
+        <script>
+          const btn = document.getElementById('play');
+          const video = document.getElementById('scare');
+
+          // Keep volume "reasonable"
+          video.volume = 9.9;
+
+          btn.addEventListener('click', () => {
+            const ok = confirm('This will play a loud-ish sound. Continue?');
+            if (!ok) return;
+
+            video.currentTime = 0;
+            video.play().catch(err => {
+              console.warn('Playback blocked:', err);
+            });
+          });
+        </script>
     </body>
 </html>
