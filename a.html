@@ -5,9 +5,6 @@
             .fit {
                 object-fit: contain;
             }
-            .hidden {
-                display: none;
-            }
         </style>
     </head>
     <body>
@@ -23,7 +20,7 @@
           video.volume = 1.0;
           
           btn.addEventListener('click', () => {
-            btn.class = "hidden";
+            btn.style.display = "none";
             video.currentTime = 0;
             video.play().catch(err => {
               console.warn('Playback blocked:', err);
