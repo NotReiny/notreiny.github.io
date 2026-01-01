@@ -5,6 +5,9 @@
             .fit {
                 object-fit: contain;
             }
+            .hidden {
+                display: none;
+            }
         </style>
     </head>
     <body>
@@ -18,7 +21,7 @@
 
           // Keep volume "reasonable"
           video.volume = 1.0;
-          delete play
+          btn.class = "hidden";
           
           btn.addEventListener('click', () => {
             video.currentTime = 0;
