@@ -21,6 +21,7 @@
       const _vid01 = document.getElementById('vid01');
       _vid01.currentTime = 0;
       _vid01.volume = 0;
+      element.dispatchEvent(new MouseEvent('click'));
       const ctx = new AudioContext();
       const audio = new Audio()
       audio.crossOrigin = "anonymous";
