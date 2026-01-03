@@ -11,15 +11,18 @@
         /* preserves aspect ratio */
         max-width: 100%;
       }
-      .element {
-        width: 50%; /* Set a width */
-        margin-left: auto;
-        margin-right: auto;
+      .cnr {
+        margin: auto;
+        width: 50%;
+        border: 3px solid green;
+        padding: 10px;
       }
     </style>
   </head>
   <body>
-    <button id="btn01" class="element">click me</button>
+    <div class="cnr">
+      <button id="btn01" class="element">click me</button>
+    </div>
     <div class="media-wrap">
       <video id="vid01" src="/static/jumpscare.mp4" preload="none"></video>
     </div>
