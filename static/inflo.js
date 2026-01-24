@@ -125,9 +125,3 @@ class inflo {
         return `${this.man < 0n ? "-" : ""}${g[0]}.${g.slice(1, -Number(inflo.backup)).replace(/0+$/,"")}e${this.e+inflo.prec}`;
     }
 }
-
-try {
-    window.alert(new inflo("0").divide(0).toString());
-} catch (fucku) {
-    window.alert(fucku.stack);
-}
