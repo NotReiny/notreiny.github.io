@@ -2,7 +2,6 @@ class inflo {
     static isNum = /^(?<s>[+-])?(?:(?<i>\d+)(?:\.(?<f>\d*))?|\.(?<f2>\d+))(?:[Ee](?<es>[+-])?(?<e>\d+))?$/;
 
     static disPrec = 16n;
-
     static backup = 4n;
     static prec = inflo.disPrec + inflo.backup;
     static pow10 = 10n ** inflo.prec;
@@ -62,42 +61,56 @@ class inflo {
         }
     }
 
-    plus(b) {
-        let a = new inflo(b);
+    plus(o) {
+        let a = this.__copy__();
+        let b = new inflo(o);
 
-        if (this.isz) return a;
-        if (a.isz) return this;
+        if (a.isz) return b;
+        if (b.isz) return a;
 
-        if (a.e > this.e) {
-            a.man += this.man / 10n ** (a.e - this.e);
+        a.man *= 10n;
+        a.e -= 1n;
+
+        b.man *= 10n;
+        b.e -= 1n;
+
+        if (b.e > a.e) {
+            b.man += a.man / 10n ** (b.e - a.e);
+            b.__fix__();
+            return b;
+        } else {
+            a.man += b.man / 10n ** (a.e - b.e);
             a.__fix__();
             return a;
-        } else {
-            this.man += a.man / 10n ** (this.e - a.e);
-            this.__fix__();
-            return this;
         }
     }
 
-    minus(b) {
-        let a = new inflo(b);
+    minus(o) {
+        let a = this.__copy__();
+        let b = new inflo(o);
 
-        if (this.isz) return a.times(-1);
-        if (a.isz) return this;
+        if (a.isz) return b.times(-1);
+        if (b.isz) return this;
 
-        if (a.e > this.e) {
-            a.man -= this.man / 10n ** (a.e - this.e);
+        a.man *= 10n;
+        a.e -= 1n;
+
+        b.man *= 10n;
+        b.e -= 1n;
+
+        if (b.e > a.e) {
+            b.man -= a.man / 10n ** (b.e - a.e);
+            b.__fix__();
+            return b;
+        } else {
+            a.man -= b.man / 10n ** (a.e - b.e);
             a.__fix__();
             return a;
-        } else {
-            this.man -= a.man / 10n ** (this.e - a.e);
-            this.__fix__();
-            return this;
         }
     }
 
-    times(b) {
-        let a = new inflo(b);
+    times(o) {
+        let a = new inflo(o);
 
         a.man *= this.man;
         a.e += this.e;
@@ -105,9 +118,9 @@ class inflo {
         return a;
     }
 
-    divide(b) {
-        let a = new inflo(b);
-        if (a.isz) throw new Error("divide by zero");
+    divide(o) {
+        let a = new inflo(o);
+        if (a.isz) throw new Error("division by zero");
 
         this.man *= 10n ** (inflo.prec + 1n);
         this.man /= a.man;
@@ -121,7 +134,13 @@ class inflo {
     toString() {
         if (this.isz) return "0";
         const s = this.man.toString();
-        const g = (this.man < 0n) ? s.slice(1) : s
+        const g = (this.man < 0n) ? s.slice(1) : s;
+
+        if (this.e > -inflo.prec && this.e < 0n - inflo.backup) return `${this.man < 0n ? "-" : ""}${g.slice(0, Number(this.e+inflo.prec) + 1)}.${g.slice(Number(this.e + inflo.prec + 1n), Number(inflo.disPrec))}`;
         return `${this.man < 0n ? "-" : ""}${g[0]}.${g.slice(1, -Number(inflo.backup)).replace(/0+$/,"")}e${this.e+inflo.prec}`;
+    }
+
+    __copy__() {
+        return this;
     }
 }
