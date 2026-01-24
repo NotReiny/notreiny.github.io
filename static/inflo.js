@@ -29,7 +29,7 @@ class inflo {
         let digits = (g.i ?? "0") + fPart;
         digits = digits.replace(/^0+/, ""); // remove leading zeros
 
-        this.man = BigInt(digits);
+        this.man = BigInt(digits || 0);
         this.e = expSign * BigInt(g.e ?? 0) - BigInt(fPart.length);
 
         this.man *= sign;
@@ -90,7 +90,7 @@ class inflo {
         let b = new inflo(o);
 
         if (a.isz) return b.times(-1);
-        if (b.isz) return this;
+        if (b.isz) return a;
 
         a.man *= 10n;
         a.e -= 1n;
