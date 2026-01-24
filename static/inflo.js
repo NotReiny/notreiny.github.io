@@ -1,4 +1,4 @@
-class inflo {
+Class inflo {
     static isNum = /^(?<s>[+-])?(?:(?<i>\d+)(?:\.(?<f>\d*))?|\.(?<f2>\d+))(?:[Ee](?<es>[+-])?(?<e>\d+))?$/;
 
     static disPrec = 16n;
@@ -138,7 +138,7 @@ class inflo {
         const s = this.man.toString();
         const g = (this.man < 0n) ? s.slice(1) : s;
 
-        if (this.e >= -inflo.prec && this.e < 0n - inflo.backup) return `${this.man < 0n ? "-" : ""}${g.slice(0, Number(this.e+inflo.prec) + 1)}.${g.slice(Number(this.e + inflo.prec + 1n), Number(inflo.disPrec)).replace(/^0+/, "")}`;
+        if (this.e > -inflo.prec && this.e < 0n - inflo.backup) return `${this.man < 0n ? "-" : ""}${g.slice(0, Number(this.e+inflo.prec) + 1)}.${g.slice(Number(this.e + inflo.prec + 1n), Number(inflo.disPrec))}`;
         return `${this.man < 0n ? "-" : ""}${g[0]}.${g.slice(1, -Number(inflo.backup)).replace(/0+$/,"")}e${this.e+inflo.prec}`;
     }
 
