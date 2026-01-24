@@ -110,25 +110,27 @@ class inflo {
     }
 
     times(o) {
-        let a = new inflo(o);
+        let a = this.__copy__();
+        let b = new inflo(o);
 
-        a.man *= this.man;
-        a.e += this.e;
-        a.__fix__();
-        return a;
+        b.man *= a.man;
+        b.e += a.e;
+        b.__fix__();
+        return b;
     }
 
     divide(o) {
-        let a = new inflo(o);
-        if (a.isz) throw new Error("division by zero");
+        let a = this.__copy__();
+        let b = new inflo(o);
+        if (b.isz) throw new Error("division by zero");
 
-        this.man *= 10n ** (inflo.prec + 1n);
-        this.man /= a.man;
+        a.man *= 10n ** (inflo.prec + 1n);
+        a.man /= b.man;
 
-        this.e -= inflo.prec + 1n;
-        this.e -= a.e;
-        this.__fix__();
-        return this;
+        a.e -= inflo.prec + 1n;
+        a.e -= b.e;
+        a.__fix__();
+        return a;
     }
 
     toString() {
@@ -141,6 +143,10 @@ class inflo {
     }
 
     __copy__() {
-        return this;
+        const x = Object.create(inflo.prototype);
+        x.man = this.man;
+        x.e = this.e;
+        x.isz = this.isz;
+        return x;
     }
 }
