@@ -100,28 +100,49 @@ class inflo {
         }
         return a;
     }
-    ePow(MAX_RPT = 10000) {
-        if (this.isz) return new inflo(1);
-        
-        let v = this.__copy__();
-        let a = this.__copy__().plus(1);
-        let b = new inflo(1);
-        let z = this.__copy__();
-        let old_a = new inflo(0);
-        let j = new inflo(2);
-
-        while (a.compare(old_a)) {
-            z = z.times(v); // z^2, z^3, z^4, ...
-            b = new inflo(b).times(j); // 2, 6, 24, 120, 720, ...
-            
-            old_a = a;
-            a = a.plus(z.divide(b));
-            j = j.plus(1);
-            if (!j.compare(MAX_RPT)) throw new Error("overload")
-        }
-        
-        return a;
+ePow(MAX_RPT = 10000) {
+    if (this.isz) return new inflo(1);
+    
+    // 1. Handle negative exponents: e^(-x) = 1 / e^x
+    if (this.man < 0n) {
+        return new inflo(1).divide(this.__negate__().ePow(MAX_RPT));
     }
+
+    // 2. Argument Reduction (Scaling and Squaring)
+    // We want to scale 'x' down until it is small (e.g., < 0.5)
+    let k = 0n;
+    let x = this.__copy__();
+    const threshold = new inflo("0.5");
+    
+    while (x.compare(threshold) > 0) {
+        x = x.divide(2);
+        k++;
+    }
+
+    // 3. Taylor Series for the reduced 'x'
+    // e^x = 1 + x + x^2/2! + x^3/3! ...
+    let term = new inflo(1);
+    let sum = new inflo(1);
+    let i = 1n;
+
+    while (true) {
+        // term = term * x / i
+        term = term.times(x).divide(i);
+        let oldSum = sum.__copy__();
+        sum = sum.plus(term);
+
+        // If the sum stops changing within our precision, we are done
+        if (sum.compare(oldSum) === 0 || i > BigInt(MAX_RPT)) break;
+        i++;
+    }
+
+    // 4. Squaring back up: (e^(x/2^k))^(2^k)
+    for (let j = 0n; j < k; j++) {
+        sum = sum.times(sum);
+    }
+
+    return sum;
+}
     toString() {
         if (this.isz) return "0";
         // 1. Get the absolute mantissa and the sign
@@ -131,20 +152,20 @@ class inflo {
         // Since __fix__ ensures s.length is always prec + 1 (e.g., 25 digits),
         // the value is (mantissa / 10^prec) * 10^e
         // True Exponent = e + (s.length - 1)
-        const trueExp = Number(this.e) + s.length - 1;
+        const trueExp = this.e + BigInt(s.length) - 1n;
         // 3. Remove trailing zeros for a cleaner look
         s = s.replace(/0+$/, "");
         // 4. Determine format: Fixed vs Scientific
         // Use Fixed if exponent is reasonably small (e.g., between -6 and 15)
-        if (trueExp > -7 && trueExp < 21) {
-            if (trueExp >= 0) {
+        if (trueExp > -7n && trueExp < 21n) {
+            if (trueExp >= 0n) {
                 // Number >= 1 (e.g., 123.45)
-                const intPart = s.slice(0, trueExp + 1).padEnd(trueExp + 1, "0");
-                const fracPart = s.slice(trueExp + 1);
+                const intPart = s.slice(0, Number(trueExp) + 1).padEnd(Number(trueExp) + 1, "0");
+                const fracPart = s.slice(Number(trueExp) + 1);
                 return `${sign}${intPart}${fracPart ? "." + fracPart : ""}`;
             } else {
                 // Number < 1 (e.g., 0.00123)
-                const leadingZeros = "0".repeat(Math.abs(trueExp) - 1);
+                const leadingZeros = "0".repeat(Math.abs(Number(trueExp)) - 1);
                 return `${sign}0.${leadingZeros}${s}`;
             }
         }
