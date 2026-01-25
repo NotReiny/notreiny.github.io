@@ -1,6 +1,6 @@
 class inflo {
     static isNum = /^(?<s>[+-])?(?:(?<i>\d+)(?:\.(?<f>\d*))?|\.(?<f2>\d+))(?:[Ee](?<es>[+-])?(?<e>\d+))?$/;
-    static prec = 16n;
+    static prec = 21n;
     static pow10 = 10n ** inflo.prec;
     static pow10_n = inflo.pow10 * 10n;
     constructor(inp) {
@@ -100,44 +100,38 @@ class inflo {
         }
         return a;
     }
-toString() {
-    if (this.isz) return "0";
-
-    // 1. Get the absolute mantissa and the sign
-    let s = (this.man < 0n ? -this.man : this.man).toString();
-    const sign = this.man < 0n ? "-" : "";
-
-    // 2. Calculate the 'true' exponent 
-    // Since __fix__ ensures s.length is always prec + 1 (e.g., 25 digits),
-    // the value is (mantissa / 10^prec) * 10^e
-    // True Exponent = e + (s.length - 1)
-    const trueExp = Number(this.e) + s.length - 1;
-
-    // 3. Remove trailing zeros for a cleaner look
-    s = s.replace(/0+$/, "");
-
-    // 4. Determine format: Fixed vs Scientific
-    // Use Fixed if exponent is reasonably small (e.g., between -6 and 15)
-    if (trueExp > -7 && trueExp < 21) {
-        if (trueExp >= 0) {
-            // Number >= 1 (e.g., 123.45)
-            const intPart = s.slice(0, trueExp + 1).padEnd(trueExp + 1, "0");
-            const fracPart = s.slice(trueExp + 1);
-            return `${sign}${intPart}${fracPart ? "." + fracPart : ""}`;
-        } else {
-            // Number < 1 (e.g., 0.00123)
-            const leadingZeros = "0".repeat(Math.abs(trueExp) - 1);
-            return `${sign}0.${leadingZeros}${s}`;
+    toString() {
+        if (this.isz) return "0";
+        // 1. Get the absolute mantissa and the sign
+        let s = (this.man < 0n ? -this.man : this.man).toString();
+        const sign = this.man < 0n ? "-" : "";
+        // 2. Calculate the 'true' exponent 
+        // Since __fix__ ensures s.length is always prec + 1 (e.g., 25 digits),
+        // the value is (mantissa / 10^prec) * 10^e
+        // True Exponent = e + (s.length - 1)
+        const trueExp = Number(this.e) + s.length - 1;
+        // 3. Remove trailing zeros for a cleaner look
+        s = s.replace(/0+$/, "");
+        // 4. Determine format: Fixed vs Scientific
+        // Use Fixed if exponent is reasonably small (e.g., between -6 and 15)
+        if (trueExp > -7 && trueExp < 21) {
+            if (trueExp >= 0) {
+                // Number >= 1 (e.g., 123.45)
+                const intPart = s.slice(0, trueExp + 1).padEnd(trueExp + 1, "0");
+                const fracPart = s.slice(trueExp + 1);
+                return `${sign}${intPart}${fracPart ? "." + fracPart : ""}`;
+            } else {
+                // Number < 1 (e.g., 0.00123)
+                const leadingZeros = "0".repeat(Math.abs(trueExp) - 1);
+                return `${sign}0.${leadingZeros}${s}`;
+            }
         }
+        // 5. Fallback: Scientific Notation (e.g., 1.23e+10)
+        const firstDigit = s[0];
+        const rest = s.slice(1);
+        const expSign = trueExp >= 0 ? "+" : ""; // optional: standard plus sign
+        return `${sign}${firstDigit}${rest ? "." + rest : ""}e${expSign}${trueExp}`;
     }
-
-    // 5. Fallback: Scientific Notation (e.g., 1.23e+10)
-    const firstDigit = s[0];
-    const rest = s.slice(1);
-    const expSign = trueExp >= 0 ? "+" : ""; // optional: standard plus sign
-    return `${sign}${firstDigit}${rest ? "." + rest : ""}e${expSign}${trueExp}`;
-}
-
     __copy__() {
         const x = Object.create(inflo.prototype);
         x.man = this.man;
@@ -159,29 +153,23 @@ toString() {
             return;
         }
         this.isz = false;
-
         let absoluteMan = this.man < 0n ? -this.man : this.man;
         let s = absoluteMan.toString();
         let targetLen = Number(inflo.prec) + 1;
         let diff = s.length - targetLen;
-
         if (diff > 0) {
             const divisor = 10n ** BigInt(diff);
             const half = divisor / 2n;
             const remainder = absoluteMan % divisor;
-
             // Perform the truncation
             absoluteMan /= divisor;
-
             // If the remainder is >= 0.5 of the divisor, round up
             if (remainder >= half) {
                 absoluteMan += 1n;
             }
-
             // Restore the sign and update exponent
             this.man = this.man < 0n ? -absoluteMan : absoluteMan;
             this.e += BigInt(diff);
-            
             // Re-check: rounding up 999... could increase digit length
             if (absoluteMan.toString().length > targetLen) {
                 this.man /= 10n;
