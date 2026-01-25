@@ -100,7 +100,7 @@ class inflo {
         }
         return a;
     }
-ePow(MAX_RPT = 10000) {
+ePow() {
     if (this.isz) return new inflo(1);
     
     // 1. Handle negative exponents: e^(-x) = 1 / e^x
@@ -132,7 +132,7 @@ ePow(MAX_RPT = 10000) {
         sum = sum.plus(term);
 
         // If the sum stops changing within our precision, we are done
-        if (sum.compare(oldSum) === 0 || i > BigInt(MAX_RPT)) break;
+        if (sum.compare(oldSum) === 0) break;
         i++;
     }
 
