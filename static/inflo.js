@@ -100,7 +100,7 @@ class inflo {
         }
         return a;
     }
-    ePow() {
+    ePow(MAX_RPT = 10000) {
         if (this.isz) return new inflo(1);
         
         let v = this.__copy__();
@@ -117,7 +117,7 @@ class inflo {
             old_a = a;
             a = a.plus(z.divide(b));
             j = j.plus(1);
-            if (!j.compare(20000)) throw new Error("overload")
+            if (!j.compare(MAX_RPT)) throw new Error("overload")
         }
         
         return a;
