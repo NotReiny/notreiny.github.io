@@ -1,8 +1,6 @@
 class inflo {
     static isNum = /^(?<s>[+-])?(?:(?<i>\d+)(?:\.(?<f>\d*))?|\.(?<f2>\d+))(?:[Ee](?<es>[+-])?(?<e>\d+))?$/;
-    static disPrec = 16n;
-    static backup = 8n;
-    static prec = inflo.disPrec + inflo.backup;
+    static prec = 16n;
     static pow10 = 10n ** inflo.prec;
     static pow10_n = inflo.pow10 * 10n;
     constructor(inp) {
@@ -90,20 +88,56 @@ class inflo {
         if (this.e < b.e) return this.man > 0n ? -1 : 1;
         return this.man > b.man ? 1 : (this.man < b.man ? -1 : 0);
     }
-    toString() {
-        if (this.isz) return "0";
-        const s = this.man.toString();
-        const g = (this.man < 0n) ? s.slice(1) : s;
-        const r = this.e >= -inflo.prec && this.e < 0n
-        const d = this.e < -inflo.prec && this.e >= -inflo.prec - inflo.disPrec
-        const i = this.man < 0n ? "-" : ""
-        const f = g.slice(Number(this.e + inflo.prec + 1n), Number(inflo.disPrec) + 1).replace(/0+$/, "")
-        const v = g.slice(1, -Number(inflo.backup)).replace(/0+$/, "")
-        // Random cluttered shit
-        if (d) return `${i}0.${"0".repeat(Number(-this.e - inflo.prec) - 1)}${g.slice(0, Number(-inflo.backup) - 1).replace(/0+$/, "")}`
-        if (r) return `${i}${g.slice(0, Number(this.e + inflo.prec) + 1)}${f === "" ? "" : "."}${f}`;
-        return `${i}${g[0]}${v === "" ? "" : "."}${v}e${this.e + inflo.prec}`;
+    sqrt() {
+        if (this.isz) return new inflo("0");
+        if (this.man < 0n) throw new Error("not a number");
+        let a = this.__copy__();
+        let old_a = new inflo(0);
+        a.e = (a.e + inflo.prec) / 2n - inflo.prec;
+        while (a.compare(old_a)) {
+            old_a = a;
+            a = (new inflo(1).divide(2)).times(a.plus(this.divide(a)));
+        }
+        return a;
     }
+toString() {
+    if (this.isz) return "0";
+
+    // 1. Get the absolute mantissa and the sign
+    let s = (this.man < 0n ? -this.man : this.man).toString();
+    const sign = this.man < 0n ? "-" : "";
+
+    // 2. Calculate the 'true' exponent 
+    // Since __fix__ ensures s.length is always prec + 1 (e.g., 25 digits),
+    // the value is (mantissa / 10^prec) * 10^e
+    // True Exponent = e + (s.length - 1)
+    const trueExp = Number(this.e) + s.length - 1;
+
+    // 3. Remove trailing zeros for a cleaner look
+    s = s.replace(/0+$/, "");
+
+    // 4. Determine format: Fixed vs Scientific
+    // Use Fixed if exponent is reasonably small (e.g., between -6 and 15)
+    if (trueExp > -7 && trueExp < 21) {
+        if (trueExp >= 0) {
+            // Number >= 1 (e.g., 123.45)
+            const intPart = s.slice(0, trueExp + 1).padEnd(trueExp + 1, "0");
+            const fracPart = s.slice(trueExp + 1);
+            return `${sign}${intPart}${fracPart ? "." + fracPart : ""}`;
+        } else {
+            // Number < 1 (e.g., 0.00123)
+            const leadingZeros = "0".repeat(Math.abs(trueExp) - 1);
+            return `${sign}0.${leadingZeros}${s}`;
+        }
+    }
+
+    // 5. Fallback: Scientific Notation (e.g., 1.23e+10)
+    const firstDigit = s[0];
+    const rest = s.slice(1);
+    const expSign = trueExp >= 0 ? "+" : ""; // optional: standard plus sign
+    return `${sign}${firstDigit}${rest ? "." + rest : ""}e${expSign}${trueExp}`;
+}
+
     __copy__() {
         const x = Object.create(inflo.prototype);
         x.man = this.man;
@@ -125,12 +159,34 @@ class inflo {
             return;
         }
         this.isz = false;
-        let s = (this.man < 0n ? -this.man : this.man).toString();
+
+        let absoluteMan = this.man < 0n ? -this.man : this.man;
+        let s = absoluteMan.toString();
         let targetLen = Number(inflo.prec) + 1;
         let diff = s.length - targetLen;
+
         if (diff > 0) {
-            this.man /= 10n ** BigInt(diff);
+            const divisor = 10n ** BigInt(diff);
+            const half = divisor / 2n;
+            const remainder = absoluteMan % divisor;
+
+            // Perform the truncation
+            absoluteMan /= divisor;
+
+            // If the remainder is >= 0.5 of the divisor, round up
+            if (remainder >= half) {
+                absoluteMan += 1n;
+            }
+
+            // Restore the sign and update exponent
+            this.man = this.man < 0n ? -absoluteMan : absoluteMan;
             this.e += BigInt(diff);
+            
+            // Re-check: rounding up 999... could increase digit length
+            if (absoluteMan.toString().length > targetLen) {
+                this.man /= 10n;
+                this.e += 1n;
+            }
         } else if (diff < 0) {
             this.man *= 10n ** BigInt(-diff);
             this.e -= BigInt(-diff);
