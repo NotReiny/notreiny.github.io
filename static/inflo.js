@@ -172,7 +172,7 @@ ePow(MAX_RPT = 10000) {
         // 5. Fallback: Scientific Notation (e.g., 1.23e+10)
         const firstDigit = s[0];
         const rest = s.slice(1);
-        const expSign = trueExp >= 0 ? "+" : ""; // optional: standard plus sign
+        const expSign = trueExp >= 0 ? "" : ""; // optional: standard plus sign
         return `${sign}${firstDigit}${rest ? "." + rest : ""}e${expSign}${trueExp}`;
     }
     __copy__() {
