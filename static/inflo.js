@@ -89,7 +89,7 @@ class inflo {
         return this.man > b.man ? 1 : (this.man < b.man ? -1 : 0);
     }
     sqrt() {
-        if (this.isz) return new inflo("0");
+        if (this.isz) return new inflo(0);
         if (this.man < 0n) throw new Error("not a number");
         let a = this.__copy__();
         let old_a = new inflo(0);
@@ -97,6 +97,23 @@ class inflo {
         while (a.compare(old_a)) {
             old_a = a;
             a = (new inflo(1).divide(2)).times(a.plus(this.divide(a)));
+        }
+        return a;
+    }
+    ePow() {
+        if (this.isz) return new inflo(1);
+        let v = this.__copy__();
+        let a = this.__copy__().plus(1);
+        let b = new inflo(1);
+        let z = this.__copy__();
+        let old_a = new inflo(0);
+        let j = new inflo(2);
+        while (a.compare(old_a)) {
+            z = z.times(v); // z^2, z^3, z^4, ...
+            b = new inflo(b).times(j); // 2, 6, 24, 120, 720, ...
+            old_a = a;
+            a = a.plus(z.divide(b));
+            j = j.plus(1);
         }
         return a;
     }
