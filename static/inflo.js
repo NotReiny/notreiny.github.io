@@ -210,6 +210,11 @@ class inflo {
         let a = this.__copy__();
         return a.ln().divide(new inflo("10").ln());
     }
+    pow(o) {
+        let a = this.__copy__();
+        let b = o instanceof inflo ? o : new inflo(o);
+        return a.ln().times(b).exp()
+    }
     toString() {
         if (this.isz) return "0";
         // 1. Get the absolute mantissa and the sign
