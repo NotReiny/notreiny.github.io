@@ -1,30 +1,30 @@
 class inflo {
     static isNum = /^(?<s>[+-])?(?:(?<i>\d+)(?:\.(?<f>\d*))?|\.(?<f2>\d+))(?:[Ee](?<es>[+-])?(?<e>\d+))?$/;
-    static prec = 20n;
+    static prec = 50n;
     static pow10 = 10n ** inflo.prec;
     static pow10_n = inflo.pow10 * 10n;
 
-    static PI = new inflo("3.141592653589793")
-    static TAU = new inflo("6.283185307179586")
-    static SQRT2 = new inflo("1.4142135623730951")
-    static SQRT3 = new inflo("1.7320508075688772")
-    static SQRT5 = new inflo("2.23606797749979")
-    static GOLDEN_RATIO = new inflo("1.618033988749895")
-    static SILVER_RATIO = new inflo("2.414213562373095")
-    static CBRT2 = new inflo("1.2599210498948732")
-    static ROOT12_2 = new inflo("1.0594630943592953")
-    static SUPERGOLDEN_RATIO = new inflo("1.4655712318767682")
-    static E = new inflo("2.718281828459045")
-    static LN2 = new inflo("0.6931471805599453")
-    static RAMANUJANS_CONSTANT = new inflo("262537412640767700")
-    static GELFONDS_CONSTANT = new inflo("23.140692632779263")
-    static GELFOND_SCHNEIDER_CONSTANT = new inflo("2.665144142690225")
-    static TRIBONACCI_CONSTANT = new inflo("1.8392867552141612")
+    static PI = new inflo("3.141592653589793");
+    static TAU = new inflo("6.283185307179586");
+    static SQRT2 = new inflo("1.4142135623730951");
+    static SQRT3 = new inflo("1.7320508075688772");
+    static SQRT5 = new inflo("2.23606797749979");
+    static GOLDEN_RATIO = new inflo("1.618033988749895");
+    static SILVER_RATIO = new inflo("2.414213562373095");
+    static CBRT2 = new inflo("1.2599210498948732");
+    static ROOT12_2 = new inflo("1.0594630943592953");
+    static SUPERGOLDEN_RATIO = new inflo("1.4655712318767682");
+    static E = new inflo("2.718281828459045");
+    static LN2 = new inflo("0.6931471805599453");
+    static RAMANUJANS_CONSTANT = new inflo("262537412640767700");
+    static GELFONDS_CONSTANT = new inflo("23.140692632779263");
+    static GELFOND_SCHNEIDER_CONSTANT = new inflo("2.665144142690225");
+    static TRIBONACCI_CONSTANT = new inflo("1.8392867552141612");
 
-    static LN10 = new inflo("2.302585092994046")
-    static LOG10E = new inflo("0.4342944819032518")
-    static LOG2E = new inflo("1.4426950408889634")
-    static SQRT1_2 = new inflo("0.7071067811865476")
+    static LN10 = new inflo("2.302585092994046");
+    static LOG10E = new inflo("0.4342944819032518");
+    static LOG2E = new inflo("1.4426950408889634");
+    static SQRT1_2 = new inflo("0.7071067811865476");
 
     constructor(inp) {
         const s = typeof inp === "string" ? inp : inp.toString();
@@ -123,7 +123,7 @@ class inflo {
         }
         return a;
     }
-    ePow() {
+    exp() {
         if (this.isz) return new inflo(1);
 
         // 1. Handle negative exponents: e^(-x) = 1 / e^x
@@ -226,14 +226,15 @@ class inflo {
         const expSign = trueExp >= 0 ? "" : ""; // optional: standard plus sign
         return `${sign}${firstDigit}${rest ? "." + rest : ""}e${expSign}${trueExp}`;
     }
-    static recomputeConstants() {
-        inflo.SQRT2 = new inflo("2").sqrt()
-        inflo.SQRT3 = new inflo("3").sqrt()
-        inflo.SQRT5 = new inflo("5").sqrt()
-        inflo.GOLDEN_RATIO = new inflo("5").sqrt().plus("1").divide("2")
-        inflo.SILVER_RATIO = new inflo("2").sqrt().plus("1")
+    static recompute() {
+        inflo.SQRT2 = new inflo("2").sqrt();
+        inflo.SQRT3 = new inflo("3").sqrt();
+        inflo.SQRT5 = new inflo("5").sqrt();
+        inflo.GOLDEN_RATIO = new inflo("5").sqrt().plus("1").divide("2");
+        inflo.SILVER_RATIO = new inflo("2").sqrt().plus("1");
 
-        inflo.SQRT1_2 = new inflo("1").divide("2").sqrt()
+        inflo.LN10 = new inflo("10").ln();
+        inflo.SQRT1_2 = new inflo("1").divide("2").sqrt();
     }
     __copy__() {
         const x = Object.create(inflo.prototype);
@@ -284,3 +285,6 @@ class inflo {
         }
     }
 }
+
+
+
