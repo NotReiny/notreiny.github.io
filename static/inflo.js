@@ -1,6 +1,6 @@
 class inflo {
     static isNum = /^(?<s>[+-])?(?:(?<i>\d+)(?:\.(?<f>\d*))?|\.(?<f2>\d+))(?:[Ee](?<es>[+-])?(?<e>\d+))?$/;
-    static prec = 50n;
+    static prec = 30n;
     static pow10 = 10n ** inflo.prec;
     static pow10_n = inflo.pow10 * 10n;
 
@@ -198,6 +198,56 @@ class inflo {
         let a = this.__copy__();
         let b = o instanceof inflo ? o : new inflo(o);
         return a.ln().times(b).exp()
+    }
+    floor() {
+        if (this.isz) return new inflo("0");
+
+        // 1. If the true exponent is negative, the value is between -1 and 1
+        const trueExp = this.e + BigInt(this.man.toString().replace('-', '').length) - 1n;
+        if (trueExp < 0n) {
+            return this.man < 0n ? new inflo("-1") : new inflo("0");
+        }
+
+        // 2. Identify how many digits are fractional
+        // Value = man * 10^e. If e is >= 0, it's already an integer.
+        if (this.e >= 0n) return this.__copy__();
+
+        // 3. Truncate fractional digits
+        let res = this.__copy__();
+        let powerOf10 = 10n ** (-this.e);
+        let remainder = res.man % powerOf10;
+
+        res.man -= remainder;
+
+        // 4. Floor logic for negative numbers (e.g., floor(-1.1) = -2)
+        if (this.man < 0n && remainder !== 0n) {
+            res.man -= powerOf10;
+        }
+
+        res.__fix__();
+        return res;
+    }
+    ceil() {
+        if (this.isz) return new inflo("0");
+
+        // If it's already an integer, return copy
+        if (this.e >= 0n) return this.__copy__();
+
+        // A simple trick for ceil: -floor(-x)
+        return this.__negate__().floor().__negate__();
+    }
+    trunc() {
+        if (this.isz) return new inflo("0");
+        // Remove everything after the decimal point regardless of sign
+        return this.man < 0n ? this.ceil() : this.floor();
+    }
+    mod(o) {
+        let b = o instanceof inflo ? o : new inflo(o);
+        if (b.isz) throw new Error("division by zero");
+
+        // Standard formula: a % n = a - (n * floor(a / n))
+        let quotient = this.divide(b).floor();
+        return this.minus(b.times(quotient));
     }
     toString() {
         if (this.isz) return "0";
