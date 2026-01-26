@@ -4,27 +4,11 @@ class inflo {
     static pow10 = 10n ** inflo.prec;
     static pow10_n = inflo.pow10 * 10n;
 
-    static PI = new inflo("3.141592653589793");
-    static TAU = new inflo("6.283185307179586");
-    static SQRT2 = new inflo("1.4142135623730951");
-    static SQRT3 = new inflo("1.7320508075688772");
-    static SQRT5 = new inflo("2.23606797749979");
-    static GOLDEN_RATIO = new inflo("1.618033988749895");
-    static SILVER_RATIO = new inflo("2.414213562373095");
-    static CBRT2 = new inflo("1.2599210498948732");
-    static ROOT12_2 = new inflo("1.0594630943592953");
-    static SUPERGOLDEN_RATIO = new inflo("1.4655712318767682");
-    static E = new inflo("2.718281828459045");
-    static LN2 = new inflo("0.6931471805599453");
-    static RAMANUJANS_CONSTANT = new inflo("262537412640767700");
-    static GELFONDS_CONSTANT = new inflo("23.140692632779263");
-    static GELFOND_SCHNEIDER_CONSTANT = new inflo("2.665144142690225");
-    static TRIBONACCI_CONSTANT = new inflo("1.8392867552141612");
-
-    static LN10 = new inflo("2.302585092994046");
-    static LOG10E = new inflo("0.4342944819032518");
-    static LOG2E = new inflo("1.4426950408889634");
-    static SQRT1_2 = new inflo("0.7071067811865476");
+    static PI;
+    static E;
+    static LN10;
+    static LN2;
+    static SQRT2;
 
     constructor(inp) {
         const s = typeof inp === "string" ? inp : inp.toString();
@@ -247,47 +231,6 @@ class inflo {
         const expSign = trueExp >= 0 ? "" : ""; // optional: standard plus sign
         return `${sign}${firstDigit}${rest ? "." + rest : ""}e${expSign}${trueExp}`;
     }
-    static recompute() {
-        // 1. Basic Roots
-        inflo.SQRT2 = new inflo("2").sqrt();
-        inflo.SQRT3 = new inflo("3").sqrt();
-        inflo.SQRT5 = new inflo("5").sqrt();
-
-        // 2. Logarithms (Crucial for the ln() function)
-        // LN10 = LN(2*5) = LN2 + LN5
-        inflo.LN2 = new inflo("2").ln();
-        inflo.LN10 = inflo.LN2.plus(new inflo("5").ln());
-
-        // 3. Derived Constants
-        inflo.GOLDEN_RATIO = inflo.SQRT5.plus("1").divide("2");
-        inflo.SILVER_RATIO = inflo.SQRT2.plus("1");
-        inflo.SQRT1_2 = new inflo("1").divide(inflo.SQRT2);
-
-        // 4. Geometry
-        // Implementing a basic Machin-like formula for PI
-        const atan = (x_inv) => { // calculates atan(1/x_inv)
-            let xInvInflo = new inflo(x_inv);
-            let xSq = xInvInflo.times(xInvInflo);
-            let sum = new inflo("0");
-            let term = new inflo("1").divide(xInvInflo);
-            let i = 1n;
-            while (true) {
-                let prev = sum.__copy__();
-                let step = term.divide(i);
-                sum = (i % 4n === 1n) ? sum.plus(step) : sum.minus(step);
-                if (sum.compare(prev) === 0) break;
-                term = term.divide(xSq);
-                i += 2n;
-            }
-            return sum;
-        };
-
-        // Pi = 4 * (4*atan(1/5) - atan(1/239))
-        inflo.PI = atan("5").times("4").minus(atan("239")).times("4");
-        inflo.TAU = inflo.PI.times("2");
-
-        inflo.E = new inflo("1").exp();
-    }
     __copy__() {
         const x = Object.create(inflo.prototype);
         x.man = this.man;
@@ -336,4 +279,42 @@ class inflo {
             this.e -= BigInt(-diff);
         }
     }
+    static recompute() {
+        // 1. Calculate PI using Machin Formula (Internal helper)
+        const atan = (x_inv) => {
+            let xInvInflo = new inflo(x_inv);
+            let xSq = xInvInflo.times(xInvInflo);
+            let sum = new inflo("0"),
+                term = new inflo("1").divide(xInvInflo),
+                i = 1n;
+            while (true) {
+                let prev = sum.__copy__();
+                let step = term.divide(i);
+                sum = (i % 4n === 1n) ? sum.plus(step) : sum.minus(step);
+                if (sum.compare(prev) === 0) break;
+                term = term.divide(xSq);
+                i += 2n;
+            }
+            return sum;
+        };
+        inflo.PI = atan("5").times("4").minus(atan("239")).times("4");
+
+        // 2. Calculate E via exp(1)
+        inflo.E = new inflo("1").exp();
+
+        // 3. Essential Logarithms (LN10 is required for the ln() method to work on large numbers)
+        inflo.LN2 = new inflo("2").ln();
+        inflo.LN10 = inflo.LN2.plus(new inflo("5").ln());
+
+        // 4. Common Roots
+        inflo.SQRT2 = new inflo("2").sqrt();
+    }
+    // Getters for derivative constants (Computes only when asked)
+    static get TAU() {
+        return inflo.PI.times("2");
+    }
+    static get GOLDEN_RATIO() {
+        return new inflo("5").sqrt().plus("1").divide("2");
+    }
 }
+inflo.recompute(); // Do not remove!
