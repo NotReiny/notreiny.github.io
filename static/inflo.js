@@ -1,6 +1,6 @@
 class inflo {
     static isNum = /^(?<s>[+-])?(?:(?<i>\d+)(?:\.(?<f>\d*))?|\.(?<f2>\d+))(?:[Ee](?<es>[+-])?(?<e>\d+))?$/;
-    static prec = 16n;
+    static prec = 50n;
     static pow10 = 10n ** inflo.prec;
     static pow10_n = inflo.pow10 * 10n;
 
@@ -178,7 +178,6 @@ class inflo {
 
         // Normalize x to be between [0.5, 1.5] for fast convergence
         x.e = -inflo.prec;
-
         // 2. Further reduction if x is far from 1
         // Using ln(x) = ln(x/2) + ln(2) or similar can help, 
         // but scaling to 10^k is usually enough for 50-digit precision.
@@ -250,12 +249,9 @@ class inflo {
         inflo.SQRT5 = new inflo("5").sqrt();
 
         // 2. Logarithms (Crucial for the ln() function)
-        // Compute LN10 first for the reduction logic
-        // We can use ln(10) = 2 * ln(3) + ln(1.111...) or just the series for ln(10)
-        // A stable way: LN10 = 3*ln(2) + ln(1.25)
-        const ln_reduced = (val) => new inflo(val).ln(); // Simple helper
+        // LN10 = LN(2*5) = LN2 + LN5
         inflo.LN2 = new inflo("2").ln();
-        inflo.LN10 = new inflo("10").ln();
+        inflo.LN10 = inflo.LN2.plus(new inflo("5").ln());
 
         // 3. Derived Constants
         inflo.GOLDEN_RATIO = inflo.SQRT5.plus("1").divide("2");
