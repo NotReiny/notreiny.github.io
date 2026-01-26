@@ -1,6 +1,6 @@
 class inflo {
     static isNum = /^(?<s>[+-])?(?:(?<i>\d+)(?:\.(?<f>\d*))?|\.(?<f2>\d+))(?:[Ee](?<es>[+-])?(?<e>\d+))?$/;
-    static prec = 50n;
+    static prec = 16n;
     static pow10 = 10n ** inflo.prec;
     static pow10_n = inflo.pow10 * 10n;
 
@@ -167,27 +167,44 @@ class inflo {
     }
 
     ln() {
+        if (this.isz || this.man <= 0n) throw new Error("ln undefined for non-positive numbers");
+
+        // 1. Argument Reduction
+        // We want to transform x into x_reduced * 10^k such that 0.1 < x_reduced < 10
+        // Based on your __fix__, this.man is always ~10^prec
+        // x = (man / 10^prec) * 10^e
+        let x = this.__copy__();
+        let k = x.e + inflo.prec;
+
+        // Normalize x to be between [0.5, 1.5] for fast convergence
+        x.e = -inflo.prec;
+
+        // 2. Further reduction if x is far from 1
+        // Using ln(x) = ln(x/2) + ln(2) or similar can help, 
+        // but scaling to 10^k is usually enough for 50-digit precision.
+
+        // 3. Halley's Method or Taylor Series
+        // We use the series for ln((1+z)/(1-z)) where z = (x-1)/(x+1)
         let sum = new inflo("0");
         let prevSum = new inflo("-1");
-
-        let z = this.__copy__();
-
-        // If input is greater than 1, Do not run otherwise it crashes.
-        if (z.compare("0") < 1) throw new Error("result is undefined");
-        z = z.minus("1").divide(z.plus("1"))
-
+        let z = x.minus("1").divide(x.plus("1"));
         let zs = z.times(z);
-        let i = 0;
+        let term = z;
+        let i = 1n;
 
-
-        while (sum.compare(prevSum)) {
+        while (sum.compare(prevSum) !== 0) {
             prevSum = sum.__copy__();
-            sum = sum.plus(z.divide(new inflo(i).times("2").plus("1")));
-            z = z.times(zs);
-            i++;
+            sum = sum.plus(term.divide(i));
+            term = term.times(zs);
+            i += 2n;
         }
         sum = sum.times("2");
 
+        // 4. Combine: ln(x) = ln(x_reduced) + k * ln(10)
+        // Note: This requires a precomputed LN10 to avoid infinite recursion
+        if (k !== 0n) {
+            return sum.plus(new inflo(k).times(inflo.LN10));
+        }
         return sum;
     }
     log10() {
@@ -227,14 +244,48 @@ class inflo {
         return `${sign}${firstDigit}${rest ? "." + rest : ""}e${expSign}${trueExp}`;
     }
     static recompute() {
+        // 1. Basic Roots
         inflo.SQRT2 = new inflo("2").sqrt();
         inflo.SQRT3 = new inflo("3").sqrt();
         inflo.SQRT5 = new inflo("5").sqrt();
-        inflo.GOLDEN_RATIO = new inflo("5").sqrt().plus("1").divide("2");
-        inflo.SILVER_RATIO = new inflo("2").sqrt().plus("1");
 
+        // 2. Logarithms (Crucial for the ln() function)
+        // Compute LN10 first for the reduction logic
+        // We can use ln(10) = 2 * ln(3) + ln(1.111...) or just the series for ln(10)
+        // A stable way: LN10 = 3*ln(2) + ln(1.25)
+        const ln_reduced = (val) => new inflo(val).ln(); // Simple helper
+        inflo.LN2 = new inflo("2").ln();
         inflo.LN10 = new inflo("10").ln();
-        inflo.SQRT1_2 = new inflo("1").divide("2").sqrt();
+
+        // 3. Derived Constants
+        inflo.GOLDEN_RATIO = inflo.SQRT5.plus("1").divide("2");
+        inflo.SILVER_RATIO = inflo.SQRT2.plus("1");
+        inflo.SQRT1_2 = new inflo("1").divide(inflo.SQRT2);
+
+        // 4. Geometry
+        // Implementing a basic Machin-like formula for PI
+        const atan = (x_inv) => { // calculates atan(1/x_inv)
+            let xInvInflo = new inflo(x_inv);
+            let xSq = xInvInflo.times(xInvInflo);
+            let sum = new inflo("0");
+            let term = new inflo("1").divide(xInvInflo);
+            let i = 1n;
+            while (true) {
+                let prev = sum.__copy__();
+                let step = term.divide(i);
+                sum = (i % 4n === 1n) ? sum.plus(step) : sum.minus(step);
+                if (sum.compare(prev) === 0) break;
+                term = term.divide(xSq);
+                i += 2n;
+            }
+            return sum;
+        };
+
+        // Pi = 4 * (4*atan(1/5) - atan(1/239))
+        inflo.PI = atan("5").times("4").minus(atan("239")).times("4");
+        inflo.TAU = inflo.PI.times("2");
+
+        inflo.E = new inflo("1").exp();
     }
     __copy__() {
         const x = Object.create(inflo.prototype);
@@ -285,6 +336,3 @@ class inflo {
         }
     }
 }
-
-
-
