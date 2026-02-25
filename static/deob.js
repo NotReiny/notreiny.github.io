@@ -284,6 +284,6 @@
             }
             const ue = 192
                 , se = ["#000000", "#898D90", "#D4D7D9", "#FF99AA", "#FF4500", "#FFA800", "#9C6926", "#FFD635", "#7EED56", "#00CC78", "#51E9F4", "#3690EA", "#2450A4", "#B44AC0", "#811E9F", "#BE0039", "#00A368", "#00756F", "#009EAA", "#493AC1", "#6A5CFF", "#FF3881", "#6D482F", "#6D001A", "#FFF8B8", "#00CCC0", "#94B3FF", "#E4ABFF", "#DE107F", "#FFB470", "#515252"]
-                , de = ["black", "grey", "light grey", n(629), n(251), n(703), n(266), n(646), n(255), n(231), n(260), n(357), n(480), "purple", n(347), n(371), "dark green", "dark teal", n(554), "indigo", "periwinkle", n(277), "dark brown", n(350), "pale yellow", n(206), n(407), n(579), n(200), n(385), n(614)]
+                , de = ["black", "grey", "light grey", "light pink", "red", "orange", "brown", "yellow", "light green", "green", "light blue", "blue", "dark blue", "purple", "dark purple", "dark red", "dark green", "dark teal", "teal", "indigo", "periwinkle", "pink", "dark brown", "burgundy", "pale yellow", "light teal", "lavender", "pale purple", "magenta", "beige", "dark grey"]
                 , fe = [0, 30, 1, 2, 23, 15, 4, 5, 7, 24, 16, 9, 8, 17, 18, 25, 12, 11, 10, 19, 20, 26, 14, 13, 27, 28, 21, 3, 22, 6, 29];
         }("undefined" == typeof browser ? browser = {} : browser)
