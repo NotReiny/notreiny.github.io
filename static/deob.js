@@ -299,4 +299,41 @@
                     me[ne] = Yr(se[ne], .2);
                 me[se.length] = "rgba(255, 255, 255, 0.2)"
             }();
+            var he, ye, ge, pe = 0, be = Yr(se[pe], .6), xe = !1, we = new Map, Me = [], ke = [], Ee = new Map, Se = new Worker(n(584)), Ie = !1, Ce = {
+                x: 0,
+                y: 0,
+                rawx: 0,
+                rawy: 0,
+                visible: !0,
+                start: 0,
+                lastedit: {
+                    x: 0,
+                    y: 0
+                }
+            }, Ae = {
+                x: 0,
+                y: 0
+            }, Te = {
+                x: 0,
+                y: 0
+            }, Be = [], Fe = [], Pe = new Map, Le = !0, Oe = !0, Re = !0, De = !1, Ne = [], je = "", Ue = 0, We = 0, He = document[n(628)]("coords"), Ke = document.getElementById("nearby"), Xe = performance[n(430)](), ze = {
+                scale: 1,
+                offset: {
+                    x: 0,
+                    y: 0
+                }
+            }, qe = {
+                start: {
+                    x: null,
+                    y: null
+                },
+                offset: {
+                    x: 0,
+                    y: 0
+                },
+                coords: {
+                    x: 0,
+                    y: 0
+                }
+            }, Ye = !1, Je = !1, Ve = !1, Ze = !1, $e = {}, Ge = [], Qe = null, _e = [];
         }("undefined" == typeof browser ? browser = {} : browser)
