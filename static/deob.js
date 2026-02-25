@@ -392,11 +392,34 @@
                 rt = e < .5 ? .5 : e > 3 ? 3 : e,
                     at = Math.round(100 * rt) / 100,
                     localStorage.setItem("zoom", at),
-                    ot.value = 10 * at, // get zoom value
+                    ot.value = 10 * at, // get zoom value (line 389)
                     t && ir(Math.round(100 * at) + "% ", 1e3),
                     kn()
             }
             function ct() {
                 it(ot.value / 10, false)
+            }
+            var lt = document.getElementById("registerlink")
+                , ut = document.getElementById("loginlink")
+                , st = document.getElementById("logoutlink");
+            function dt(e, t) {
+                var r = n;
+                e && (localStorage.removeItem("username"),
+                    localStorage.removeItem("token")),
+                    je = "",
+                    j = 0,
+                    X.style.display = none, // (line 169)
+                    a.readyState != a.OPEN || t || (nt.private.checked && Cn("textwall", "main"),
+                        a.send(Or({
+                            logout: 0
+                        })),
+                        Re = true),
+                    document.getElementById("login").style.display = "block",
+                    document.getElementById("loggedin").style.display = "none",
+                    vn(false),
+                    xn(),
+                    m = false,
+                    document.getElementById("admin").style.display = "none",
+                    ge = true
             }
         }("undefined" == typeof browser ? browser = {} : browser)
