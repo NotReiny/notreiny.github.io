@@ -45,7 +45,7 @@
                         , i = new XMLHttpRequest;
                     i.onreadystatechange = function () {
                         var e = t; // (line 2)
-                        4 == i[e(348)] && 200 == i[e(384)] && (o[e(199)](i.responseText),
+                        4 == i.readyState && 200 == i.status && (o.parseFont(i.responseText),
                             null != r && r())
                     }
                         ,
