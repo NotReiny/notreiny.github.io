@@ -152,7 +152,7 @@
                 , I = "#EBEBEB";
             var C = S // (line 151)
                 , A = I // (line 152)
-                , T = Xr(A, 10); // (line 154 -> line 152)
+                , T = Xr(A, 10); // (line 154)
             const B = document.getElementById("primary")
                 , F = document.getElementById("secondary")
                 , P = document.getElementById("themetext")
@@ -459,5 +459,20 @@
                     localStorage.setItem("font", G),
                     document.getElementById("fontselect").value = G,
                     ge = true
+            }
+            function mt() {
+                var e = n;
+                return Math.ceil(.1 * Math.round(Et * v / .1))
+            }
+            function ht() {
+                return mt() // (line 463)
+            }
+            function yt(e) {
+                var t = n;
+                E.fillRect(Math.round(10 * e[0] * v), Math.round(20 * e[1] * v), mt(), ht()) // (line 142)
+            }
+            function gt(e) {
+                var t = n;
+                e.font = Math.round(11 * v) + "px" + G + ", monospace"
             }
         }("undefined" == typeof browser ? browser = {} : browser)
