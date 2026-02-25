@@ -349,42 +349,42 @@
             } // detect font changing
                 ;
             const tt = {
-                showothercurs: document.getElementById(n(442)),
-                shownametags: document[n(628)](n(567)),
-                showchat: document[n(628)](n(613)),
-                disablecolour: document.getElementById(n(577)),
-                smoothpanning: document[n(628)](n(358)),
+                showothercurs: document.getElementById("showothercurs"),
+                shownametags: document.getElementById("shownametags"),
+                showchat: document.getElementById("showchat"),
+                disablecolour: document.getElementById("disablecolour"),
+                smoothpanning: document.getElementById("smoothpanning"),
                 smoothcursors: document.getElementById("smoothcursors"),
-                copycolour: document[n(628)](n(261)),
-                copydecorations: document[n(628)](n(693)),
-                rainbow: document[n(628)]("rainbow"),
-                anonymous: document[n(628)](n(280)),
+                copycolour: document.getElementById("copycolour"),
+                copydecorations: document.getElementById("copydecorations"),
+                rainbow: document.getElementById("rainbow"),
+                anonymous: document.getElementById("anonymous"),
                 darkChat: document.getElementById("darkChat"),
                 rainbowTag: document.getElementById("rainbowTag"),
                 fps: document.getElementById("fps"),
                 showFeedback: document.getElementById("showFeedback"),
                 anonIdShow: document.getElementById("anonIdShow")
-            };
-            tt.showothercurs[n(427)] = !0,
-                tt[n(567)][n(427)] = !0,
-                tt.showchat[n(427)] = !0,
-                tt[n(577)][n(427)] = !1,
-                tt[n(358)][n(427)] = !0,
-                tt[n(223)].checked = !0,
-                tt["showFeedback"].checked = !0,
-                tt["anonIdShow"].checked = !0,
-                tt["rainbowTag"].checked = !0;
+            }; // get setting checkboxes
+            tt.showothercurs.checked = true,
+                tt.shownametags.checked = true,
+                tt.showchat.checked = true,
+                tt.disablecolour.checked = false,
+                tt.smoothpanning.checked = true,
+                tt.smoothcursors.checked = true,
+                tt.showFeedback.checked = true,
+                tt.anonIdShow.checked = true,
+                tt.rainbowTag.checked = true; // default settings
             const nt = {
-                protect: document[n(628)]("protect"),
-                clear: document.getElementById(n(222)),
-                readOnly: document[n(628)](n(706)),
+                protect: document.getElementById("protect"),
+                clear: document.getElementById("clear"),
+                readOnly: document.getElementById("readonly"),
                 private: document.getElementById("private"),
-                hideCursors: document[n(628)]("hidecursors"),
-                disableChat: document[n(628)]("disablechat"),
-                disableColour: document[n(628)](n(664)),
-                disableBraille: document.getElementById(n(633))
+                hideCursors: document.getElementById("hidecursors"),
+                disableChat: document.getElementById("disablechat"),
+                disableColour: document.getElementById("walldisablecolour"),
+                disableBraille: document.getElementById("disablebraille")
             };
             var rt = 1
                 , at = 1
-                , ot = document[n(628)](n(464));
+                , ot = document.getElementById("zoom");
         }("undefined" == typeof browser ? browser = {} : browser)
