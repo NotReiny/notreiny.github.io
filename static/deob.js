@@ -337,4 +337,54 @@
                     y: 0
                 }
             }, Ye = false, Je = false, Ve = false, Ze = false, $e = {}, Ge = [], Qe = null, _e = [];
+            for (ne = 0; ne < 200; ne++)
+                _e[ne] = " ";
+            var et = [];
+
+            for (ne = 0; ne < 200; ne++)
+                et[ne] = 0;
+            document.getElementById("fontselect").onchange = function (e) {
+                var t = n;
+                vt(e.target.value)
+            } // detect font changing
+                ;
+            const tt = {
+                showothercurs: document.getElementById(n(442)),
+                shownametags: document[n(628)](n(567)),
+                showchat: document[n(628)](n(613)),
+                disablecolour: document.getElementById(n(577)),
+                smoothpanning: document[n(628)](n(358)),
+                smoothcursors: document.getElementById("smoothcursors"),
+                copycolour: document[n(628)](n(261)),
+                copydecorations: document[n(628)](n(693)),
+                rainbow: document[n(628)]("rainbow"),
+                anonymous: document[n(628)](n(280)),
+                darkChat: document.getElementById("darkChat"),
+                rainbowTag: document.getElementById("rainbowTag"),
+                fps: document.getElementById("fps"),
+                showFeedback: document.getElementById("showFeedback"),
+                anonIdShow: document.getElementById("anonIdShow")
+            };
+            tt.showothercurs[n(427)] = !0,
+                tt[n(567)][n(427)] = !0,
+                tt.showchat[n(427)] = !0,
+                tt[n(577)][n(427)] = !1,
+                tt[n(358)][n(427)] = !0,
+                tt[n(223)].checked = !0,
+                tt["showFeedback"].checked = !0,
+                tt["anonIdShow"].checked = !0,
+                tt["rainbowTag"].checked = !0;
+            const nt = {
+                protect: document[n(628)]("protect"),
+                clear: document.getElementById(n(222)),
+                readOnly: document[n(628)](n(706)),
+                private: document.getElementById("private"),
+                hideCursors: document[n(628)]("hidecursors"),
+                disableChat: document[n(628)]("disablechat"),
+                disableColour: document[n(628)](n(664)),
+                disableBraille: document.getElementById(n(633))
+            };
+            var rt = 1
+                , at = 1
+                , ot = document[n(628)](n(464));
         }("undefined" == typeof browser ? browser = {} : browser)
