@@ -447,17 +447,17 @@
                     }
                     a.scale = ft()
                 }
-                var o = G
+                var o = G // (line 214)
                     , i = $[G]; // (line 176)
                 "Custom" == G ? (D.classList.remove("hidden"), // (line 162)
                     o = O.value, // (line 160)
                     i = Math.max(Math.min(20, R.value), 1), // (line 161)
                     localStorage.setItem("customfont", o), // (line 450)
                     localStorage.setItem("customfontsize", i), // (line 451)
-                    o = '"' + (o || t(322)) + '"') : D.classList[t(608)](t(692)),
-                    Q = Math[t(437)](i * v) + t(451) + o + t(565),
-                    localStorage[t(460)](t(504), G),
-                    document.getElementById(t(372))[t(356)] = G,
-                    ge = !0
+                    o = '"' + (o || "monospace") + '"') : D.classList.add("hidden"),
+                    Q = Math.floor(i * v) + "px" + o + ", monospace, Special",
+                    localStorage.setItem("font", G),
+                    document.getElementById("fontselect").value = G,
+                    ge = true
             }
         }("undefined" == typeof browser ? browser = {} : browser)
