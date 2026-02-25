@@ -451,9 +451,9 @@
                     , i = $[G]; // (line 176)
                 "Custom" == G ? (D.classList.remove("hidden"), // (line 162)
                     o = O.value, // (line 160)
-                    i = Math[t(227)](Math[t(678)](20, R[t(356)]), 1),
-                    localStorage[t(460)]("customfont", o),
-                    localStorage[t(460)](t(333), i),
+                    i = Math.max(Math.min(20, R.value), 1), // (line 161)
+                    localStorage.setItem("customfont", o), // (line 450)
+                    localStorage.setItem("customfontsize", i), // (line 451)
                     o = '"' + (o || t(322)) + '"') : D.classList[t(608)](t(692)),
                     Q = Math[t(437)](i * v) + t(451) + o + t(565),
                     localStorage[t(460)](t(504), G),
