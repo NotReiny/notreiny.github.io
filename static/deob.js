@@ -387,4 +387,16 @@
             var rt = 1
                 , at = 1
                 , ot = document.getElementById("zoom");
+            function it(e, t) {
+                var r = n;
+                rt = e < .5 ? .5 : e > 3 ? 3 : e,
+                    at = Math.round(100 * rt) / 100,
+                    localStorage.setItem("zoom", at),
+                    ot.value = 10 * at, // get zoom value
+                    t && ir(Math.round(100 * at) + "% ", 1e3),
+                    kn()
+            }
+            function ct() {
+                it(ot.value / 10, false)
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
