@@ -13,7 +13,7 @@
             return e
         }
         )()
-    } // MANDATORY FOR DEOBFUSCATION
+    }
     window.getMapping = r;
     (function (e, n) {
         for (var r = t, a = e(); ;)
@@ -421,5 +421,9 @@
                     m = false,
                     document.getElementById("admin").style.display = "none",
                     ge = true
+            }
+            function ft() {
+                var e = n;
+                return 16 * Math.round(v) > 20 * v || 16 * Math.round(v) < 13 * v ? v : Math.round(v) // (line 130)
             }
         }("undefined" == typeof browser ? browser = {} : browser)
