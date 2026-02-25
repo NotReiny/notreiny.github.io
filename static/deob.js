@@ -426,4 +426,38 @@
                 var e = n;
                 return 16 * Math.round(v) > 20 * v || 16 * Math.round(v) < 13 * v ? v : Math.round(v) // (line 130)
             }
+            function vt(e) {
+                var t = n;
+                if (G = e,
+                    _.has(G)) { // (line 214 and 216)
+                    var a = _.get(G);
+                    if (null == a) {
+                        switch (G) {
+                            case "Unifont":
+                                a = new r("/static/fonts/unifont-15.0.01.hex", Sn);
+                                break;
+                            case "Terminus":
+                                a = new r("/static/fonts/terminus.hex", Sn);
+                                break;
+                            default:
+                                a = new r("/static/fonts/fixed.hex", Sn)
+                        }
+                        a.forceSharpPixels = true,
+                            _.set(G, a)
+                    }
+                    a.scale = ft()
+                }
+                var o = G
+                    , i = $[G]; // (line 176)
+                "Custom" == G ? (D.classList.remove("hidden"), // (line 162)
+                    o = O.value, // (line 160)
+                    i = Math[t(227)](Math[t(678)](20, R[t(356)]), 1),
+                    localStorage[t(460)]("customfont", o),
+                    localStorage[t(460)](t(333), i),
+                    o = '"' + (o || t(322)) + '"') : D.classList[t(608)](t(692)),
+                    Q = Math[t(437)](i * v) + t(451) + o + t(565),
+                    localStorage[t(460)](t(504), G),
+                    document.getElementById(t(372))[t(356)] = G,
+                    ge = !0
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
