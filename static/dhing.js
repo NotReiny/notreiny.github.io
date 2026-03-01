@@ -38,7 +38,7 @@ function rawLiteral(e) {
                                     .replace(/'/g, "\\'")
                                     .replace(/\t/g, '\\t')
                                     .replace(/\n/g, '\\n')
-                                    .replace(/\r/g, "\\r")
+                                    .replace(/\r/g, '\\r')
                                     .replace(/[\x00-\x1f\x7f-\x9f\ud800-\udfff]/g, (e) => {
         
         return `\\${e.codePointAt(0) < 256 ? 'x' : 'u'}${e.codePointAt(0).toString(16).padStart(e.codePointAt(0) < 256 ? 2 : 4, '0')}`;
