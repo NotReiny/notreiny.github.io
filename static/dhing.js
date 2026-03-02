@@ -1,6 +1,6 @@
 function rawLiteral(e, seen = new WeakSet()) {
     if (typeof e === 'object' && e !== null) {
-        if (seen.has(e)) return 'infinite nest';
+        if (seen.has(e)) return 'self-referencing';
         seen.add(e);
 
         try {
