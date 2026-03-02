@@ -4,6 +4,8 @@ function rawLiteral(e) {
     if (typeof e === 'object') {
         if (e === null) return 'null';
         if (e instanceof RegExp) return `${e}`;
+        if (e instanceof Date) return `${e}`;
+        if (e instanceof Error) return `${e.stack}`;
         let g;
         if (e instanceof Array) {
             g = [];
@@ -28,7 +30,7 @@ function rawLiteral(e) {
             for (let i in e) {
                 g.push(`${i}: ${rawLiteral(e[i])}`);
             }
-            ob = `{${g.join(', ')}}`;
+            ob = `${e.constructor.name === 'Object' ? '' : `${e.constructor.name} `}{${g.join(', ')}}`;
         }
         return ob;
     }
