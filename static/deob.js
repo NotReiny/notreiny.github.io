@@ -137,7 +137,7 @@
                 , x = document.getElementById("usermenu")
                 , w = document.getElementById("colourlist")
                 , M = document.getElementById("teleport");
-            var k = document.getElementById("canvas");
+            var k = document.getElementsByTagName("canvas")[0];
             k.removeAttribute("id"); // (remove attribute id)
             var E = k.getContext("2d", {
                 alpha: false
@@ -171,8 +171,8 @@
                 , q = document.getElementById("walllist");
             var Y;
             const J = document.getElementById("deletewall")
-                , V = String.fromCharCode(10240)
-                , Z = String.fromCharCode(27)
+                , V = String.fromCharCode(10240) // braille pattern blank
+                , Z = String.fromCharCode(27) // escape control character
                 , $ = {
                     Inconsolata: 18,
                     "IBM Plex Mono": 16,
