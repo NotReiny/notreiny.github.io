@@ -137,7 +137,7 @@
                 , x = document.getElementById("usermenu")
                 , w = document.getElementById("colourlist")
                 , M = document.getElementById("teleport");
-            /* var k = document.getElementById("canvas");
+            var k = document.getElementById("canvas");
             k.removeAttribute("id"); // (remove attribute id)
             var E = k.getContext("2d", {
                 alpha: false
@@ -146,7 +146,7 @@
                 k.height = Math.round(window.innerHeight * v), // resize canvas to window height
                 k.style.width = window.innerWidth + "px",
                 k.style.height = window.innerHeight + "px",
-                E.imageSmoothingEnabled = false; */
+                E.imageSmoothingEnabled = false;
             var renderChunkAmount = 100;
             const S = "#FFFFFF"
                 , I = "#EBEBEB";
