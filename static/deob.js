@@ -445,7 +445,7 @@ try{
                         a.forceSharpPixels = true,
                             _.set(G, a)
                     }
-                    a.scale = ft()
+                    a.scale = ft() // (line 425)
                 }
                 var o = G // (line 214)
                     , i = $[G]; // (line 176)
@@ -474,6 +474,21 @@ try{
             function gt(e) {
                 var t = n;
                 e.font = Math.round(11 * v) + "px" + G + ", monospace"
+            }
+            function pt(e, t) {
+                var r = n
+                    , a = we.get(e);
+                if (a.empty)
+                    E.fillStyle = a.protected ? A : C,
+                        yt(t);
+                else {
+                    var o = a.img;
+                    s && (o = a.bmp),
+                        null != o ? (E.drawImage(o, Math.round(10 * t[0] * v), Math.round(20 * t[1] * v), mt(), ht()),
+                            a.dpr == v && a.font == Q || St(e, false)) : (E.fillStyle = T,
+                                yt(t),
+                                St(e, false))
+                }
             }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
