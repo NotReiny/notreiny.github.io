@@ -1,4 +1,4 @@
-
+try{
     function t(e, n) { // get mapping
         var a = r();
         return (t = function (e, t) {
@@ -476,3 +476,4 @@
                 e.font = Math.round(11 * v) + "px" + G + ", monospace"
             }
         }("undefined" == typeof browser ? browser = {} : browser)
+}catch(fu){alert(fu.stack)}
