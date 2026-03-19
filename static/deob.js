@@ -480,7 +480,7 @@ try{
                     , a = we.get(e);
                 if (a.empty)
                     E.fillStyle = a.protected ? A : C,
-                        yt(t);
+                        yt(t); // (line 470)
                 else {
                     var o = a.img;
                     s && (o = a.bmp),
@@ -488,6 +488,16 @@ try{
                             a.dpr == v && a.font == Q || St(e, false)) : (E.fillStyle = T,
                                 yt(t),
                                 St(e, false))
+                }
+            }
+            function bt(e) {
+                var t = n;
+                return e = e || 0,
+                {
+                    minx: -qe.offset.x / v / 10 - e, // (line 326)
+                    maxx: -qe.offset.x / v / 10 + window.innerWidth / at / 10 + e - 20,
+                    miny: -qe.offset.y / v / 20 - e,
+                    maxy: -qe.offset.y / v / 20 + window.innerHeight / at / 20 + e - 10
                 }
             }
         }("undefined" == typeof browser ? browser = {} : browser)
