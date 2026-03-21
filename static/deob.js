@@ -1,12 +1,12 @@
 try{
-    function t(e, n) { // get mapping
+    function t(e, n) {
         var a = r();
         return (t = function (e, t) {
             return a[e -= 187]
         }
         )(e, n)
     }
-    var n = t; // (line 2)
+    var n = t;
     function r() {
         var e = ["copyico", "cool", "/static/star.svg", "preventDefault", "newpass", "texttheme", "pointerId", "checked", "dec", "size", "now", "themeico", "dblclick", "round", "flex", "readOnly", "removeChild", "floor", "fromCodePoint", "dataset", "offset", "deleteaccount", "showothercurs", "div", "customtheme", "#493AC1", "memberlist", "member", "inputType", "2055914epKCPp", "#7EED56", "px ", "open", "quadraticCurveTo", "appendChild", "Create", "focus", ", monospace", "random", "register", "setItem", "#000000", "paste", "fetchFont", "zoom", "&y=", "includes", "block", "strikethrough", "password", "New passwords do not match.", "opacity", "0,-10", "\\p{Extended_Pictographic}", "Unifont", "registerbtn", "hideCursors", "msg", "inputmember", "private", "dark blue", "selectionEnd", "startsWith", "loginbtn", "execCommand", "noui", "10px Special", "pointercancel", "Please type a password.", "/static/fonts/terminus.hex", "disableChat", "rgba(0,120,212,0.5)", "Please type 'confirm' in the text box if you would like to delete your wall.", "pop", "log", "italic bold 10px ", "insertBefore", "href", "true", "toLowerCase", "length", "#6D482F", "accountdeleted", "clientHeight", "font", "col", "change", "none", "7382lhphtT", "refresh", "target", "string", "writeText", "OffscreenCanvas", "touchend", "addmemberbtn", "rgba(221,249,255,0.5)", "#EBEBEB", "binaryType", "translateX(0px)", "get", "/static/lock_open.svg", "cursor", "themetext", "backgroundColor", "textarea", "Firefox", "fillRect", "lastedit", "maxLength", "innerWidth", "walllist", "Username/Password is incorrect.", "newpass2", "loginfail", "#898D90", "clientY", "innerText", "text", "#FFB470", " nearby", "number", "accountsettings", "deleteContentBackward", "connecting2", "left", "codePointAt", "perms", "oldpass", "top", "display", "contains", "Password has been changed.", "You cannot add more than 20 members.", "teal", "substring", "Please type your username.", "transform", "getMonth", "#6A5CFF", "translate", "toString", "/static/moon.svg", "onchange", "shift", ", monospace, Special", "span", "shownametags", "328500xgTFKE", "tpwordgo", "fillText", "end", "highlighted", "clipboardData", "getFloat64", "Invalid code point: ", "chatbox", "disablecolour", "Array.from requires an array-like object - not null or undefined", "pale purple", "password2", "createElement", "Array.from: when provided, the second argument must be a function", "bold", "/static/ping.js", "fillStyle", "18ZbIeJp", "#009EAA", "Inconsolata", "wheel", "padStart", "addmem", "byteOffset", "100%", "selected", "insertLineBreak", "translateX(-105%)", "toUpperCase", "rainbow", "disabled", "setTransform", "pageX", "wrongpass", "submitpasschange", "disableColour", "optionsmenu", "decorations", "bdtiple", "add", "chat to nobody", "closemenu", "keys", "userAgent", "showchat", "dark grey", "src", "fill", "black", "primary", "call", "0.2", "nametaken", "main", "innerHeight", "drawText", "childElementCount", "chngusername", "remove", "getElementById", "light pink", "coords", "Array.prototype.indexOf called on null or undefined", "getContext", "disablebraille", "#B44AC0", "select", "sign", "deletepassword", "placeholder", "delete", "tpcoordgo", "ws://", "Create a new wall", "splice", "set", "spaceMissingCharacters", "yellow", "alert", "arraybuffer", "10px", "copy", "abc", "drawChar", "host", "-20,-10", "chunks", "charCodeAt", "freename", "#9C6926", "alt", "edge", "You have typed in your current username.", "isArray", "type 'confirm' here", "walldisablecolour", "rgba(204,204,204,0.5)", "underline", "option", "split", "#FFD635", "strokeStyle", "buttonlink", "popstate", "removeItem", "test", "Your username is now: ", "classList", "undefined", "min", "pointerup", "login", "maxy", "Terminus", "charMap", "orientationchange", "#811E9F", "onclick", "1024463WHQzZL", "function", "keydown", "dpr", "registerlink", "hidden", "copydecorations", "bold ", "Custom", "admin", "logoutlink", "data", "clientX", "deltaY", "onerror", "tpy", "orange", "txt", "Please type your new password.", "readonly", "msgcontainer", "protect", "3gLFWBy", "noreg", "scale", "scrollHeight", "520rMZDVP", "deletename", "/ws", "tagName", "parse", "submitnamechange", "protected", "sqrt", "Public", "This wall is in read-only mode.", "send", "indexOf", "parseFont", "magenta", "rawy", "/static/sun.svg", "subarray", "wss://", "input", "light teal", "/static/done.svg", "removeAttribute", "colour", "fontSize", "onclose", "clr", ": (", "offsetTop", "info", "addEventListener", "replace", "touches", "children", "unread", "#FFA800", "clear", "smoothcursors", "passchanged", "ctrlKey", "close", "max", "home", "#2450A4", "innerHTML", "green", "keyCode", "reload", "translateX(", "rawx", "imageSmoothingEnabled", "goto", " nearby)", "px Special", "Password is incorrect.", "OPEN", "openmenu", "Connected.", "italic", "/static/fonts/fixed.hex", "prototype", "[object Function]", "   ", "Connection lost.", "pathname", "red", "drawImage", "deletewallconfirm", "createTextNode", "light green", "false", "clientWidth", "start", "show", "light blue", "copycolour", "ceil", "priv", "#94B3FF", "content", "brown", "justifyContent", "loginname", "loggedin", "style", "dcl", "altKey", "3268832GOrAoJ", "substr", "resize", "getElementsByClassName", "pink", "parentNode", "object", "anonymous", "rgba(239, 255, 71, 0.5)", "#222222", "free", "bmp", "italic ", "#6D001A", "Username is invalid.", "shiftKey", "type", "admintable", "140cEWkKM", "img", "submit", "isTrusted", " online", "from", "~main", "maxx", " (disconnected)", "requestAnimationFrame", "username", "chatmsg", "touchstart", "delaccountform", "button", "rgba(34, 34, 34, 0.4)", "\n\n\n\n\n\n\n\n\n", "pushState", "Please type your new password again.", "title", "toasting", "#FF99AA", "invalidTypeReplacement", "tpword", "#FFFFFF", "#51E9F4", "#3690EA", "lastElementChild", "minx", "contextmenu", "insertFromPaste", "monospace", "token", "GET", "pointerdown", "pasteico", "color", "teleport", "height", "abs", "px Courier", "canvas", "customfontsize", "blur", "checkbox", "Please type a username.", "Invalid wall name", "online", "roundRect", "readText", "^[a-zA-Z0-9_-]{1,24}$", "tpx", "unshift", "crosshair", "clipboard", "usermenu", "dark purple", "readyState", "lineTo", "burgundy", "stringify", "theme", "forceSharpPixels", "fromCharCode", "christmas", "value", "blue", "smoothpanning", "pointermove", "defineProperty", "has", "measureText", "disableBraille", "nextSibling", "customfont", "addmembers", "pageY", "colourlist", "textAlign", "parentElement", "dark red", "fontselect", "Please type your password.", "miny", "1339710QIWWjh", "#DE107F", "iPod", "Click here to reconnect.", "http", "https:", "width", "loginpass", "click", "status", "beige", "slice", "connecting1", "setAttribute", "sort", "replaceState", "textwall", "italic 10px ", "chngeusrpass", "chat", "77886fpVOzR", "pow", "history", "push", "exportFont", "Copied link.", "ontouchstart", "getDate", "scrollTop", "enabled", "iPad", "secondary", "lavender", "empty", "moveTo", "beginPath", "apply", " ~ ", "then", "getItem", "deletewall", "/static/copy.svg", "#515252", "rgba(", "#141414"];
         return (r = function () {
@@ -25,12 +25,12 @@ try{
                 a.push(a.shift())
             }
     }
-    )(r), // useless code (line 18 – 28)
+    )(r),
         function (e) {
-            var n = t; // (line 2)
+            var n = t;
             class r {
                 constructor(e, n) {
-                    var r = t; // (line 2)
+                    var r = t;
                     this.charMap = new Map,
                         this.scale = 1,
                         this.spaceMissingCharacters = false,
@@ -38,13 +38,13 @@ try{
                         this.bold = false,
                         this.italic = false,
                         null != e && this.fetchFont(e, n)
-                } // end of constructor (line 32 – 41)
+                }
                 fetchFont(e, r) {
-                    var a = n // (line 30 -> line 2)
+                    var a = n
                         , o = this
                         , i = new XMLHttpRequest;
                     i.onreadystatechange = function () {
-                        var e = t; // (line 2)
+                        var e = t;
                         4 == i.readyState && 200 == i.status && (o.parseFont(i.responseText),
                             null != r && r())
                     }
@@ -53,7 +53,7 @@ try{
                         i.send(null)
                 }
                 parseFont(e) {
-                    var t = n // (line 30 -> line 2)
+                    var t = n
                         , r = e.split("\n");
                     const a = r.length;
                     for (var o = 0; o < a; o++) {
@@ -69,7 +69,7 @@ try{
                     }
                 }
                 exportFont() {
-                    var e = n // (line 30 -> line 2)
+                    var e = n
                         , t = "";
                     for (const [n, o] of this.charMap.entries()) {
                         var r = "";
@@ -82,7 +82,7 @@ try{
                     return t
                 }
                 drawChar(e, t, r, a) {
-                    var o = n // (line 30 -> line 2)
+                    var o = n
                         , i = e.codePointAt()
                         , c = this.charMap.get(i);
                     if (null == c)
@@ -118,7 +118,7 @@ try{
                         y: (a += 16 * this.scale) - c
                     }
                 }
-            } // end of class r (line 31 – 121)
+            }
             var a, o = "/";
             const i = document.getElementById("textarea")
                 , c = document.getElementById("connecting")
@@ -138,21 +138,21 @@ try{
                 , w = document.getElementById("colourlist")
                 , M = document.getElementById("teleport");
             var k = document.getElementsByTagName("canvas")[0];
-            k.removeAttribute("id"); // (remove attribute id)
+            k.removeAttribute("id");
             var E = k.getContext("2d", {
                 alpha: false
-            }); // get canvas properties
-            k.width = Math.round(window.innerWidth * v), // resize canvas to window width
-                k.height = Math.round(window.innerHeight * v), // resize canvas to window height
+            });
+            k.width = Math.round(window.innerWidth * v),
+                k.height = Math.round(window.innerHeight * v),
                 k.style.width = window.innerWidth + "px",
                 k.style.height = window.innerHeight + "px",
                 E.imageSmoothingEnabled = false;
             var renderChunkAmount = 100;
             const S = "#FFFFFF"
                 , I = "#EBEBEB";
-            var C = S // (line 151)
-                , A = I // (line 152)
-                , T = Xr(A, 10); // (line 154)
+            var C = S
+                , A = I
+                , T = Xr(A, 10);
             const B = document.getElementById("primary")
                 , F = document.getElementById("secondary")
                 , P = document.getElementById("themetext")
@@ -171,8 +171,8 @@ try{
                 , q = document.getElementById("walllist");
             var Y;
             const J = document.getElementById("deletewall")
-                , V = String.fromCharCode(10240) // braille pattern blank
-                , Z = String.fromCharCode(27) // escape control character
+                , V = String.fromCharCode(10240)
+                , Z = String.fromCharCode(27)
                 , $ = {
                     Inconsolata: 18,
                     "IBM Plex Mono": 16,
@@ -209,26 +209,26 @@ try{
                     "DM Mono": 16,
                     "Quicksand Mono": 18,
                     Custom: 20,
-                }; // initialize font names and sizes
+                };
 
             var G = "Inconsolata"
                 , Q = Math.floor($[G] * v) + "px" + G + ", monospace, Special";
             const _ = new Map;
-            _.set("Unifont", void 0), // void does not return anything so it's undefined
+            _.set("Unifont", void 0),
                 _.set("Terminus", void 0),
                 _.set("Fixed", void 0);
             const ee = Object.keys($).length
-                , te = document.getElementById("fontselect"); // length of zero
-            /* for (var ne = 0; te.length > 0; ne++) // te.length is 0 at initialization so 0 > 0 is false, it doesn't run
-                ; // also useless code */
-            for (ne = 0; ne < ee; ne++) // create font select
+                , te = document.getElementById("fontselect");
+            for (var ne = 0; te.length > 0; ne++)
+                ;
+            for (ne = 0; ne < ee; ne++)
                 option = document.createElement("option"),
                     option.text = Object.keys($)[ne],
                     te.add(option);
-            te.value = G; // (line 214)
+            te.value = G;
             const re = document.getElementById("decorations");
             re.addEventListener("contextmenu", (function (e) {
-                e.preventDefault() // prevent browser defaults
+                e.preventDefault()
             }
             ));
             const ae = {
@@ -249,13 +249,13 @@ try{
                     enabled: false
                 }
             };
-            var oe = Object.keys(ae); // returns as array object
-            for (ne = 0; ne < oe.length; ne++) // arrays use numbers
+            var oe = Object.keys(ae);
+            for (ne = 0; ne < oe.length; ne++)
                 ae[oe[ne]].el.addEventListener("click", pr);
             function ie(e) {
                 var t, r, a = n;
                 if (e) {
-                    re.style.display = "flex"; // (const re at line 229)
+                    re.style.display = "flex";
                     var o = (t = Ce.x,
                         r = Ce.y,
                     {
@@ -270,11 +270,11 @@ try{
             function ce() {
                 var e = n
                     , t = 0;
-                return ae.bold.enabled && (t += 8), // (const ae at line 234)
+                return ae.bold.enabled && (t += 8),
                     ae.italic.enabled && (t += 4),
                     ae.underline.enabled && (t += 2),
                     ae.strikethrough.enabled && (t += 1),
-                    t // example: bold and italic => t = 12
+                    t
             }
             function le(e) {
                 var t = n;
@@ -346,7 +346,7 @@ try{
             document.getElementById("fontselect").onchange = function (e) {
                 var t = n;
                 vt(e.target.value)
-            } // detect font changing
+            }
                 ;
             const tt = {
                 showothercurs: document.getElementById("showothercurs"),
@@ -364,7 +364,7 @@ try{
                 fps: document.getElementById("fps"),
                 showFeedback: document.getElementById("showFeedback"),
                 anonIdShow: document.getElementById("anonIdShow")
-            }; // get setting checkboxes
+            };
             tt.showothercurs.checked = true,
                 tt.shownametags.checked = true,
                 tt.showchat.checked = true,
@@ -373,7 +373,7 @@ try{
                 tt.smoothcursors.checked = true,
                 tt.showFeedback.checked = true,
                 tt.anonIdShow.checked = true,
-                tt.rainbowTag.checked = true; // default settings
+                tt.rainbowTag.checked = true;
             const nt = {
                 protect: document.getElementById("protect"),
                 clear: document.getElementById("clear"),
@@ -392,7 +392,7 @@ try{
                 rt = e < .5 ? .5 : e > 3 ? 3 : e,
                     at = Math.round(100 * rt) / 100,
                     localStorage.setItem("zoom", at),
-                    ot.value = 10 * at, // get zoom value (line 389)
+                    ot.value = 10 * at,
                     t && ir(Math.round(100 * at) + "% ", 1e3),
                     kn()
             }
@@ -408,7 +408,7 @@ try{
                     localStorage.removeItem("token")),
                     je = "",
                     j = 0,
-                    X.style.display = none, // (line 169)
+                    X.style.display = none,
                     a.readyState != a.OPEN || t || (nt.private.checked && Cn("textwall", "main"),
                         a.send(Or({
                             logout: 0
@@ -424,12 +424,12 @@ try{
             }
             function ft() {
                 var e = n;
-                return 16 * Math.round(v) > 20 * v || 16 * Math.round(v) < 13 * v ? v : Math.round(v) // (line 130)
+                return 16 * Math.round(v) > 20 * v || 16 * Math.round(v) < 13 * v ? v : Math.round(v)
             }
             function vt(e) {
                 var t = n;
                 if (G = e,
-                    _.has(G)) { // (line 214 and 216)
+                    _.has(G)) {
                     var a = _.get(G);
                     if (null == a) {
                         switch (G) {
@@ -445,15 +445,15 @@ try{
                         a.forceSharpPixels = true,
                             _.set(G, a)
                     }
-                    a.scale = ft() // (line 425)
+                    a.scale = ft()
                 }
-                var o = G // (line 214)
-                    , i = $[G]; // (line 176)
-                "Custom" == G ? (D.classList.remove("hidden"), // (line 162)
-                    o = O.value, // (line 160)
-                    i = Math.max(Math.min(20, R.value), 1), // (line 161)
-                    localStorage.setItem("customfont", o), // (line 450)
-                    localStorage.setItem("customfontsize", i), // (line 451)
+                var o = G
+                    , i = $[G];
+                "Custom" == G ? (D.classList.remove("hidden"),
+                    o = O.value,
+                    i = Math.max(Math.min(20, R.value), 1),
+                    localStorage.setItem("customfont", o),
+                    localStorage.setItem("customfontsize", i),
                     o = '"' + (o || "monospace") + '"') : D.classList.add("hidden"),
                     Q = Math.floor(i * v) + "px" + o + ", monospace, Special",
                     localStorage.setItem("font", G),
@@ -465,11 +465,11 @@ try{
                 return Math.ceil(.1 * Math.round(Et * v / .1))
             }
             function ht() {
-                return mt() // (line 463)
+                return mt()
             }
             function yt(e) {
                 var t = n;
-                E.fillRect(Math.round(10 * e[0] * v), Math.round(20 * e[1] * v), mt(), ht()) // (line 142)
+                E.fillRect(Math.round(10 * e[0] * v), Math.round(20 * e[1] * v), mt(), ht())
             }
             function gt(e) {
                 var t = n;
@@ -480,7 +480,7 @@ try{
                     , a = we.get(e);
                 if (a.empty)
                     E.fillStyle = a.protected ? A : C,
-                        yt(t); // (line 470)
+                        yt(t);
                 else {
                     var o = a.img;
                     s && (o = a.bmp),
@@ -494,11 +494,36 @@ try{
                 var t = n;
                 return e = e || 0,
                 {
-                    minx: -qe.offset.x / v / 10 - e, // (line 326)
+                    minx: -qe.offset.x / v / 10 - e, 
                     maxx: -qe.offset.x / v / 10 + window.innerWidth / at / 10 + e - 20,
                     miny: -qe.offset.y / v / 20 - e,
                     maxy: -qe.offset.y / v / 20 + window.innerHeight / at / 20 + e - 10
                 }
+            }
+            function xt(e, t) {
+                var r = n;
+                return e[0] < t.minx || e[0] > t.maxx || e[1] < t.miny || e[1] > t.maxy
+            }
+
+            function wt(e) {
+                var t = n;
+                return we.get(e).coords || e.split(",")
+            }
+            function Mt(e, t, r, a) {
+                var o = n;
+                if ("" != e) {
+                    E[o(585)] = o(306);
+                    var i = E[o(362)](e);
+                    E.beginPath(),
+                        E.roundRect(Math[o(433)](t - i.width / 2), Math[o(433)](r + 21 * v), Math[o(433)](i[o(381)] + 10 * v), Math[o(433)](14 * v), [a]),
+                        E[o(616)](),
+                        E[o(585)] = o(315),
+                        E.fillText(e, Math.round(t - i[o(381)] / 2 + 5 * v), Math[o(433)](r + 31 * v))
+                }
+            }
+            function kt(e, t, r, a) {
+                var o = n;
+                E[o(527)](Math[o(433)](e), Math[o(433)](t), Math[o(433)](r), Math[o(433)](a))
             }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
