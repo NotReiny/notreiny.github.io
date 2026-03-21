@@ -582,5 +582,40 @@ try{
                 var t = n;
                 return "BCDFGHJKLMNPQRSTVWXYZ"[Math.floor(21 * e)].codePointAt()
             }
+            function Rt(e) {
+                const t = Math.random();
+                switch (e - 58112) {
+                    case 0:
+                        return t < .41 ? Ft(t) + 32 : t < .83 ? Ft(t) : Pt(t);
+                    case 1:
+                        return t < .72 ? Ft(t) + 32 : Pt(t);
+                    case 2:
+                        return t < .72 ? Ft(t) : Pt(t);
+                    case 3:
+                        return t < .5 ? Ft(t) + 32 : Ft(t);
+                    case 4:
+                        return Ft(t) + 32;
+                    case 5:
+                        return Ft(t);
+                    case 6:
+                        return Pt(t);
+                    case 7:
+                        return t < .5 ? Lt(t) + 32 : Lt(t);
+                    case 8:
+                        return Lt(t) + 32;
+                    case 9:
+                        return Lt(t);
+                    case 10:
+                        return t < .5 ? Ot(t) + 32 : Ot(t);
+                    case 11:
+                        return Ot(t) + 32;
+                    case 12:
+                        return Ot(t)
+                }
+                return 97
+            }
+            function Dt(e) {
+                return (e + 2) % 20 < 2
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
