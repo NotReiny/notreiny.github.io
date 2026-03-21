@@ -219,8 +219,8 @@ try{
                 _.set("Fixed", void 0);
             const ee = Object.keys($).length
                 , te = document.getElementById("fontselect");
-            for (var ne = 0; te.length > 0; ne++)
-                ;
+            //for (var ne = 0; te.length > 0; ne++)
+            //    ;
             for (ne = 0; ne < ee; ne++)
                 option = document.createElement("option"),
                     option.text = Object.keys($)[ne],
@@ -525,5 +525,22 @@ try{
                 var o = n;
                 E.fillRect(Math.round(e), Math.round(t), Math.round(r), Math.round(a))
             }
+            !function () {
+                var e = n;
+                E.font = "10px Special",
+                    E.fillText("abc", 0, 10),
+                    E.font = Q,
+                    E.fillText("abc", 0, 10);
+                for (var t = 0; t < Object.keys($).length; t++)
+                    E.font = "10px " + Object.keys($)[t],
+                        E.fillText("abc", 0, 10),
+                        E.font = "bold 10px " + Object.keys($)[t],
+                        E.fillText("abc", 0, 10),
+                        E.font = "italic 10px " + Object.keys($)[t],
+                        E.fillText("abc", 0, 10),
+                        E.font = "italic bold 10px " + Object.keys($)[t],
+                        E.fillText("abc", 0, 10)
+            }();
+            const Et = 200;
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
