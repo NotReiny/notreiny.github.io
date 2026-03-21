@@ -512,18 +512,18 @@ try{
             function Mt(e, t, r, a) {
                 var o = n;
                 if ("" != e) {
-                    E[o(585)] = o(306);
-                    var i = E[o(362)](e);
+                    E.fillStyle = "rgba(34, 34, 34, 0.4)";
+                    var i = E.measureText(e);
                     E.beginPath(),
-                        E.roundRect(Math[o(433)](t - i.width / 2), Math[o(433)](r + 21 * v), Math[o(433)](i[o(381)] + 10 * v), Math[o(433)](14 * v), [a]),
-                        E[o(616)](),
-                        E[o(585)] = o(315),
-                        E.fillText(e, Math.round(t - i[o(381)] / 2 + 5 * v), Math[o(433)](r + 31 * v))
+                        E.roundRect(Math.round(t - i.width / 2), Math.round(r + 21 * v), Math.round(i[o(381)] + 10 * v), Math.round(14 * v), [a]),
+                        E.fill(),
+                        E.fillStyle = "#FFFFFF",
+                        E.fillText(e, Math.round(t - i.width / 2 + 5 * v), Math.round(r + 31 * v))
                 }
             }
             function kt(e, t, r, a) {
                 var o = n;
-                E[o(527)](Math[o(433)](e), Math[o(433)](t), Math[o(433)](r), Math[o(433)](a))
+                E.fillRect(Math.round(e), Math.round(t), Math.round(r), Math.round(a))
             }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
