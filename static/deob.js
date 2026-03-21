@@ -542,5 +542,15 @@ try{
                         E.fillText("abc", 0, 10)
             }();
             const Et = 200;
+            function St(e, t) {
+                var r = n;
+                Ee.has(e) ? 0 == Ee.get(e) && t && Ee.set(e, t) : (ke.push(e),
+                    Ee.set(e, t))
+            }
+            function It(e, t) {
+                var r = n;
+                Ee.has(e) ? 0 == Ee.get(e) && t && Ee.set(e, t) : (ke.unshift(e),
+                    Ee.set(e, t))
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
