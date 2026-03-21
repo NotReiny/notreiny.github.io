@@ -552,5 +552,35 @@ try{
                 Ee.has(e) ? 0 == Ee.get(e) && t && Ee.set(e, t) : (ke.unshift(e),
                     Ee.set(e, t))
             }
+            var Ct, At, Tt;
+            try {
+                Ct = RegExp(n(473), "u")
+            } catch (e) {
+                Ct = !1
+            }
+            try {
+                At = RegExp("\t", "gm")
+            } catch (e) {
+                At = !1
+            }
+            try {
+                Tt = RegExp("\r", "gm")
+            } catch (e) {
+                Tt = !1
+            }
+            var Bt = RegExp(n(341));
+            function Ft(e) {
+                return 65 + Math[n(437)](26 * e)
+            }
+            function Pt(e) {
+                return 48 + Math.floor(10 * e)
+            }
+            function Lt(e) {
+                return "AEIOU"[Math[n(437)](5 * e)].codePointAt()
+            }
+            function Ot(e) {
+                var t = n;
+                return "BCDFGHJKLMNPQRSTVWXYZ"[Math[t(437)](21 * e)][t(546)]()
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
