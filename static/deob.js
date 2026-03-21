@@ -617,5 +617,30 @@ try{
             function Dt(e) {
                 return (e + 2) % 20 < 2
             }
+            function Nt(e) {
+                var t = n;
+                return Math.round(14 * e) + "px Courier"
+            }
+            function jt(e, t, r, a, o) {
+                var i = n;
+                e.fillText(t, Math.floor(r), Math.floor(a + 15 * o))
+            }
+            function Ut(e, t, r, a, o, i, c) {
+                var l = n;
+                e.drawChar(r, t, Math.floor(a), Math.floor(o + (10 * i - c / 2)))
+            }
+            function Wt(e) {
+                var t = n;
+                e.font = "bold " + e.font
+            }
+            function Ht(e) {
+                var t = n;
+                e.font = "italic " + e.font
+            }
+            function Kt(e, t) {
+                var r = n;
+                tt.disablecolour.checked && (t = 0),
+                    e.fillStyle = xe && 0 == t ? "#FFFFFF" : se[t]
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
