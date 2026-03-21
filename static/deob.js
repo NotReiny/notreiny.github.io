@@ -554,33 +554,33 @@ try{
             }
             var Ct, At, Tt;
             try {
-                Ct = RegExp(n(473), "u")
+                Ct = RegExp("\\p{Extended_Pictographic}", "u")
             } catch (e) {
-                Ct = !1
+                Ct = false
             }
             try {
                 At = RegExp("\t", "gm")
             } catch (e) {
-                At = !1
+                At = false
             }
             try {
                 Tt = RegExp("\r", "gm")
             } catch (e) {
-                Tt = !1
+                Tt = false
             }
-            var Bt = RegExp(n(341));
+            var Bt = RegExp("^[a-zA-Z0-9_-]{1,24}$");
             function Ft(e) {
-                return 65 + Math[n(437)](26 * e)
+                return 65 + Math.floor(26 * e)
             }
             function Pt(e) {
                 return 48 + Math.floor(10 * e)
             }
             function Lt(e) {
-                return "AEIOU"[Math[n(437)](5 * e)].codePointAt()
+                return "AEIOU"[Math.floor(5 * e)].codePointAt()
             }
             function Ot(e) {
                 var t = n;
-                return "BCDFGHJKLMNPQRSTVWXYZ"[Math[t(437)](21 * e)][t(546)]()
+                return "BCDFGHJKLMNPQRSTVWXYZ"[Math.floor(21 * e)].codePointAt()
             }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
