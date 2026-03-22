@@ -685,9 +685,9 @@ try{
                                             if (null != l[k]) {
                                                 var E = l[k];
                                                 Kt(e, E[2]),
-                                                    null != g && g[i(683)][i(361)](E[0][i(546)]()) ? (g[i(583)] = E[3],
-                                                        g[i(244)] = E[4],
-                                                        Ut(g, e, E[0], w, M, y, p)) : (e[i(504)] = E[1] ? Nt(y) : Q,
+                                                    null != g && g.charMap.has(E[0].codePointAt()) ? (g.bold = E[3],
+                                                        g.italic = E[4],
+                                                        Ut(g, e, E[0], w, M, y, p)) : (e.font = E[1] ? Nt(y) : Q,
                                                             E[3] && Wt(e),
                                                             E[4] && Ht(e),
                                                             jt(e, E[0], w, M, y))
