@@ -774,5 +774,25 @@ try{
                 }
             }
             var Yt = null;
+            function Jt(e, t) {
+                var r = n;
+                return null != Yt && Yt.minx <= e && e < Yt.maxx && Yt.miny <= t && t < Yt.maxy
+            }
+            function Vt(e, t) {
+                return e[0] === t[0] ? 0 : e[0] < t[0] ? -1 : 1
+            }
+            function Zt(e) {
+                for (var t = n, r = innerWidth / innerHeight, a = [], o = qe.coords.x, i = 2 * qe.coords.y * r, c = 0; c < e.length; c += 2) {
+                    var l = e[c] + 10
+                        , u = 2 * (e[c + 1] + 5) * r
+                        , s = Math.sqrt(Jr(o - l) + Jr(i - u));
+                    a.push([s, c])
+                }
+                return a.sort(Vt),
+                    a
+            }
+
+
+            var $t, Gt = false;
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
