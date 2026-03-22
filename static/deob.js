@@ -711,17 +711,17 @@ try{
                                                     (h = B) >= 58112 && h <= 58124 && (B = Rt(B),
                                                         S = String.fromCodePoint(B)),
                                                     (u = B) >= 9472 && u <= 9632 && !(u >= 9476 && u <= 9483) && !(u >= 9548 && u <= 9551) || u >= 9698 && u <= 9701 || qr(B))
-                                                    e.font = Math.round(20 * y) + i(239),
+                                                    e.font = Math.round(20 * y) + "px Special",
                                                         e.fillText(S, Math.round(w), Math.floor(M + 15 * y));
                                                 else {
                                                     var O = false;
                                                     Ct && Ct.test(S) && (O = true,
                                                         e.font = Nt(y)),
-                                                        null != g && g[i(683)][i(361)](B) ? (g[i(583)] = P,
-                                                            g[i(244)] = L,
+                                                        null != g && g.charMap.has(B) ? (g.bold = P,
+                                                            g.italic = L,
                                                             Ut(g, e, S, w, M, y, p)) : jt(e, S, w, M, y),
                                                         x >= 18 && (s[x - 20 + 20 * b] = [S, O, F, P, L],
-                                                            d = !0)
+                                                            d = true)
                                                 }
                                                 2 & T && e.fillRect(Math.floor(w - .5 * y), Math.round(M + 17.5 * y), Math.ceil(11 * y), Math.ceil(y)),
                                                     1 & T && e.fillRect(Math.floor(w - .5 * y), Math.floor(M + 9 * y), Math.ceil(11 * y), Math.ceil(y))
