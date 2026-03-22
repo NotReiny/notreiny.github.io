@@ -694,19 +694,19 @@ try{
                                             }
                                         }
                                         if (!(x < 0)) {
-                                            var S = c[i(704)][x + 20 * b]
+                                            var S = c.txt[x + 20 * b]
                                                 , I = Zr(c.clr[x + 20 * b])
                                                 , T = I[1];
                                             if (!Qn(S, T)) {
-                                                var B = S[i(546)]()
+                                                var B = S.codePointAt()
                                                     , F = I[0];
                                                 Kt(e, F),
-                                                    e[i(504)] = Q;
-                                                var P = !1;
-                                                8 & T && (P = !0,
+                                                    e.font = Q;
+                                                var P = false;
+                                                8 & T && (P = true,
                                                     Wt(e));
-                                                var L = !1;
-                                                if (4 & T && (L = !0,
+                                                var L = false;
+                                                if (4 & T && (L = true,
                                                     Ht(e)),
                                                     (h = B) >= 58112 && h <= 58124 && (B = Rt(B),
                                                         S = String[i(438)](B)),
