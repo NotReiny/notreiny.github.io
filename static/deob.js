@@ -752,5 +752,27 @@ try{
                     }
                 }
             }
+            function zt(e) {
+                for (var t = n, r = we.get(e), a = true, o = 0; o < 200; o++)
+                    if (!Qn(r.txt[o], Zr(r.clr[o])[1])) {
+                        a = false;
+                        break
+                    }
+                if (a && (r.edge = void 0),
+                    a) {
+                    var i = wt(e)
+                        , c = i[0] - 20 + "," + i[1];
+                    we.has(c) && null != we.get(c).edge && (a = false)
+                }
+                return a
+            }
+            function qt(e) {
+                var t = n;
+                if (we.has(e)) {
+                    var r = we.get(e);
+                    null != r.img && delete r.img
+                }
+            }
+            var Yt = null;
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
