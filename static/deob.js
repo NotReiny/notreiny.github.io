@@ -797,34 +797,34 @@ try{
             function Qt() {
                 var e = n;
                 if (!Gt) {
-                    for (var t = -120 - 20 * Math[e(437)](qe[e(440)].x / (200 * v)), r = -60 - 10 * Math[e(437)](qe[e(440)].y / (200 * v)), o = r, i = Math.floor(window.innerWidth / (10 * at) - qe[e(440)].x / (10 * v) + 120), c = Math.floor(window[e(623)] / (20 * at) - qe[e(440)].y / (20 * v) + 60), l = []; t < i;) {
+                    for (var t = -120 - 20 * Math.floor(qe.offset.x / (200 * v)), r = -60 - 10 * Math.floor(qe.offset.y / (200 * v)), o = r, i = Math.floor(window.innerWidth / (10 * at) - qe.offset.x / (10 * v) + 120), c = Math.floor(window.innerHeight / (20 * at) - qe.offset.y / (20 * v) + 60), l = []; t < i;) {
                         for (; r < c;) {
                             var u = t + "," + r;
-                            !we[e(361)](u) && Jt(t, r) && l[e(398)](t, r),
+                            !we.has(u) && Jt(t, r) && l.push(t, r),
                                 r += 10
                         }
                         r = o,
                             t += 20
                     }
-                    if (0 != l[e(500)]) {
+                    if (0 != l.length) {
                         var s = Zt(l);
                         $t = [];
-                        for (var d = 0, f = 0; f < s[e(500)]; f++) {
+                        for (var d = 0, f = 0; f < s.length; f++) {
                             var m = s[f][1]
                                 , h = l[m]
                                 , y = l[m + 1];
                             if (u = h + "," + y,
-                                $t[e(398)](h / 20, y / 10),
-                                we[e(644)](u, {}),
+                                $t.push(h / 20, y / 10),
+                                we.set(u, {}),
                                 // take 100 and replace it to renderChunkAmount
                                 renderChunkAmount == ++d)
                                 break
                         }
-                        d > 0 && (a[e(197)](Or({
+                        d > 0 && (a.send(Or({
                             r: $t
                         })),
-                            Gt = !0,
-                            ge = !0)
+                            Gt = true,
+                            ge = true)
                     }
                 }
             }
