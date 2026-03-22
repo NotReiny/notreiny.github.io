@@ -709,14 +709,14 @@ try{
                                                 if (4 & T && (L = true,
                                                     Ht(e)),
                                                     (h = B) >= 58112 && h <= 58124 && (B = Rt(B),
-                                                        S = String[i(438)](B)),
+                                                        S = String.fromCodePoint(B)),
                                                     (u = B) >= 9472 && u <= 9632 && !(u >= 9476 && u <= 9483) && !(u >= 9548 && u <= 9551) || u >= 9698 && u <= 9701 || qr(B))
-                                                    e[i(504)] = Math[i(433)](20 * y) + i(239),
-                                                        e[i(570)](S, Math[i(433)](w), Math[i(437)](M + 15 * y));
+                                                    e.font = Math.round(20 * y) + i(239),
+                                                        e.fillText(S, Math.round(w), Math.floor(M + 15 * y));
                                                 else {
-                                                    var O = !1;
-                                                    Ct && Ct[i(674)](S) && (O = !0,
-                                                        e[i(504)] = Nt(y)),
+                                                    var O = false;
+                                                    Ct && Ct.test(S) && (O = true,
+                                                        e.font = Nt(y)),
                                                         null != g && g[i(683)][i(361)](B) ? (g[i(583)] = P,
                                                             g[i(244)] = L,
                                                             Ut(g, e, S, w, M, y, p)) : jt(e, S, w, M, y),
