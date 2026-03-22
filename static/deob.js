@@ -642,5 +642,115 @@ try{
                 tt.disablecolour.checked && (t = 0),
                     e.fillStyle = xe && 0 == t ? "#FFFFFF" : se[t]
             }
+            function Xt(e, t) {
+                var r = n
+                    , a = we.get(e);
+                if (null != a && null != a.txt) {
+                    var o = zt(e);
+                    if (a.empty = o,
+                        o) {
+                        qt(e);
+                        var i = wt(e)
+                            , c = i[0] + 20 + "," + i[1];
+                        if (we.has(c)) {
+                            var l = we.get(c);
+                            null != l.txt && (zt(c) ? (l.empty = true,
+                                qt(c)) : t && It(c, false))
+                        }
+                    } else {
+                        var u = mt()
+                            , d = ht();
+                        null == a.img && (null != window.OffscreenCanvas ? a.img = new OffscreenCanvas(u, d) : a.img = document.createElement("canvas")),
+                            a.img.width = u,
+                            a.img.height = d,
+                            function (e, t, n, a, o) {
+                                var i = r
+                                    , c = we.get(a);
+                                e.imageSmoothingEnabled = false,
+                                    e.textBaseline = "alphabetic",
+                                    e.textAlign = "left",
+                                    e.fillStyle = c.protected ? A : C,
+                                    e.fillRect(0, 0, t, n);
+                                var l, u, s = {}, d = false, f = wt(a), v = f[0] - 20 + "," + f[1];
+                                if (we.has(v)) {
+                                    var m = we.get(v);
+                                    null == m.edge || !m.protected && c.protected || (l = m.edge)
+                                }
+                                for (var h, y = t / Et, g = _.get(G), p = 16 * ft(), b = 0; b < 10; b++)
+                                    for (var x = -2; x < 20; x++) {
+                                        var w = t / 20 * x
+                                            , M = n / 10 * b;
+                                        if (x < 0 && null != l) {
+                                            var k = x + 20 * b;
+                                            if (null != l[k]) {
+                                                var E = l[k];
+                                                Kt(e, E[2]),
+                                                    null != g && g[i(683)][i(361)](E[0][i(546)]()) ? (g[i(583)] = E[3],
+                                                        g[i(244)] = E[4],
+                                                        Ut(g, e, E[0], w, M, y, p)) : (e[i(504)] = E[1] ? Nt(y) : Q,
+                                                            E[3] && Wt(e),
+                                                            E[4] && Ht(e),
+                                                            jt(e, E[0], w, M, y))
+                                            }
+                                        }
+                                        if (!(x < 0)) {
+                                            var S = c[i(704)][x + 20 * b]
+                                                , I = Zr(c.clr[x + 20 * b])
+                                                , T = I[1];
+                                            if (!Qn(S, T)) {
+                                                var B = S[i(546)]()
+                                                    , F = I[0];
+                                                Kt(e, F),
+                                                    e[i(504)] = Q;
+                                                var P = !1;
+                                                8 & T && (P = !0,
+                                                    Wt(e));
+                                                var L = !1;
+                                                if (4 & T && (L = !0,
+                                                    Ht(e)),
+                                                    (h = B) >= 58112 && h <= 58124 && (B = Rt(B),
+                                                        S = String[i(438)](B)),
+                                                    (u = B) >= 9472 && u <= 9632 && !(u >= 9476 && u <= 9483) && !(u >= 9548 && u <= 9551) || u >= 9698 && u <= 9701 || qr(B))
+                                                    e[i(504)] = Math[i(433)](20 * y) + i(239),
+                                                        e[i(570)](S, Math[i(433)](w), Math[i(437)](M + 15 * y));
+                                                else {
+                                                    var O = !1;
+                                                    Ct && Ct[i(674)](S) && (O = !0,
+                                                        e[i(504)] = Nt(y)),
+                                                        null != g && g[i(683)][i(361)](B) ? (g[i(583)] = P,
+                                                            g[i(244)] = L,
+                                                            Ut(g, e, S, w, M, y, p)) : jt(e, S, w, M, y),
+                                                        x >= 18 && (s[x - 20 + 20 * b] = [S, O, F, P, L],
+                                                            d = !0)
+                                                }
+                                                2 & T && e[i(527)](Math[i(437)](w - .5 * y), Math[i(433)](M + 17.5 * y), Math[i(262)](11 * y), Math[i(262)](y)),
+                                                    1 & T && e.fillRect(Math[i(437)](w - .5 * y), Math[i(437)](M + 9 * y), Math.ceil(11 * y), Math[i(262)](y))
+                                            }
+                                        }
+                                    }
+                                if (c[i(660)] = d ? s : void 0,
+                                    o) {
+                                    var R = f[0] + 20 + "," + f[1];
+                                    we.has(R) && null != we[i(520)](R)[i(704)] && It(R, !1)
+                                }
+                            }(a[r(292)][r(632)]("2d", {
+                                alpha: !1
+                            }), u, d, e, t),
+                            a[r(690)] = v,
+                            a[r(504)] = Q,
+                            s && createImageBitmap(a[r(292)])[r(413)]((function (t) {
+                                var n = r;
+                                if (we[n(361)](e)) {
+                                    var a = we[n(520)](e);
+                                    null != a.bmp && a[n(284)][n(226)](),
+                                        a[n(284)] = t,
+                                        ge = !0
+                                }
+                            }
+                            )),
+                            a[r(408)] = !1
+                    }
+                }
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
