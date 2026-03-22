@@ -723,32 +723,32 @@ try{
                                                         x >= 18 && (s[x - 20 + 20 * b] = [S, O, F, P, L],
                                                             d = !0)
                                                 }
-                                                2 & T && e[i(527)](Math[i(437)](w - .5 * y), Math[i(433)](M + 17.5 * y), Math[i(262)](11 * y), Math[i(262)](y)),
-                                                    1 & T && e.fillRect(Math[i(437)](w - .5 * y), Math[i(437)](M + 9 * y), Math.ceil(11 * y), Math[i(262)](y))
+                                                2 & T && e.fillRect(Math.floor(w - .5 * y), Math.round(M + 17.5 * y), Math.ceil(11 * y), Math.ceil(y)),
+                                                    1 & T && e.fillRect(Math.floor(w - .5 * y), Math.floor(M + 9 * y), Math.ceil(11 * y), Math.ceil(y))
                                             }
                                         }
                                     }
-                                if (c[i(660)] = d ? s : void 0,
+                                if (c.edge = d ? s : void 0,
                                     o) {
                                     var R = f[0] + 20 + "," + f[1];
-                                    we.has(R) && null != we[i(520)](R)[i(704)] && It(R, !1)
+                                    we.has(R) && null != we.get(R).txt && It(R, false)
                                 }
-                            }(a[r(292)][r(632)]("2d", {
-                                alpha: !1
+                            }(a.img.getContext("2d", {
+                                alpha: false
                             }), u, d, e, t),
-                            a[r(690)] = v,
-                            a[r(504)] = Q,
-                            s && createImageBitmap(a[r(292)])[r(413)]((function (t) {
+                            a.dpr = v,
+                            a.font = Q,
+                            s && createImageBitmap(a.img).then((function (t) {
                                 var n = r;
-                                if (we[n(361)](e)) {
-                                    var a = we[n(520)](e);
-                                    null != a.bmp && a[n(284)][n(226)](),
-                                        a[n(284)] = t,
-                                        ge = !0
+                                if (we.has(e)) {
+                                    var a = we.get(e);
+                                    null != a.bmp && a.bmp.close(),
+                                        a.bmp = t,
+                                        ge = true
                                 }
                             }
                             )),
-                            a[r(408)] = !1
+                            a.empty = false
                     }
                 }
             }
