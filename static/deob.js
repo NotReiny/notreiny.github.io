@@ -828,5 +828,17 @@ try{
                     }
                 }
             }
+            function _t() {
+                var e, t = n, r = bt(250);
+                for (const n of we.keys()) {
+                    var a = wt(n);
+                    !xt(a, r) || (e = a)[0] > Ce.x - 20 && e[0] < Ce.x + 20 && e[1] > Ce.y - 10 && e[1] < Ce.y + 10 || we.delete(n)
+                }
+            }
+            function en() {
+                var e = n;
+                "ontouchstart" in window || i.focus()
+            }
+            var tn = false;
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
