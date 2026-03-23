@@ -867,7 +867,7 @@ try{
             function on(e) {
                 var t = n;
                 m && a.send(Or({
-                    a: [rn(e), e[t(510)][t(427)]]
+                    a: [rn(e), e.target.checked]
                 }))
             }
             function cn(e) {
