@@ -894,5 +894,43 @@ try{
                     , a = Pe.get(r);
                 null != a && m && Zn(a.l[0], a.l[1])
             }
+            function dn(e) {
+                var t = n
+                    , r = document.createElement("tr")
+                    , a = document.createElement("td")
+                    , o = document.createElement("td")
+                    , i = document.createElement("td")
+                    , c = document.createElement("input")
+                    , l = document.createElement("input")
+                    , u = document.createElement("button")
+                    , s = document.createElement("button");
+                l.type = "checkbox",
+                    l.checked = false,
+                    u.innerText = "2",
+                    s.innerText = "3",
+                    l.addEventListener("click", on),
+                    u.addEventListener("click", cn),
+                    s.addEventListener("click", an),
+                    c.addEventListener("click", ln);
+                var d = Pe.get(e);
+                c.type = "checkbox",
+                    c.checked = 1 == d.highlighted,
+                    a.appendChild(c);
+                var f = d.c;
+                o.style.backgroundColor = "#FFFFFF" == se[f] ? "#222222" : se[f],
+                    o.style.fontSize = "10px",
+                    o.style.userSelect = "all",
+                    o.innerText = d.n || e,
+                    o.addEventListener("click", un),
+                    o.addEventListener("dblclick", sn),
+                    i.appendChild(l),
+                    i.appendChild(u),
+                    i.appendChild(s),
+                    r.dataset.id = e,
+                    r.appendChild(a),
+                    r.appendChild(o),
+                    r.appendChild(i),
+                    document.getElementById("admintable").appendChild(r)
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
