@@ -875,5 +875,24 @@ try{
                     aa: rn(e)
                 }))
             }
+            function ln(e) {
+                var t = n
+                    , r = rn(e)
+                    , a = Pe.get(r);
+                null != a && m && (a.highlighted = e.target.checked,
+                    ge = true)
+            }
+            function un(e) {
+                var t = n
+                    , r = e.target.parentElement.dataset.id
+                    , a = Pe.get(r);
+                null != a && m && ir((a.n || r) + ": (" + a.l[0] + ", " + -a.l[1] + ")", 3e3)
+            }
+            function sn(e) {
+                var t = n
+                    , r = e.target.parentElement.dataset.id
+                    , a = Pe.get(r);
+                null != a && m && Zn(a.l[0], a.l[1])
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
