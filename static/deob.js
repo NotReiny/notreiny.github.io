@@ -932,5 +932,17 @@ try{
                     r.appendChild(i),
                     document.getElementById("admintable").appendChild(r)
             }
+            function fn(e) {
+                e.preventDefault()
+            }
+            function vn(e) {
+                for (var t = n, r = ["loginbtn", "registerbtn", "loginname", "loginpass", "username", "password", "password2", "registerbtn", "chngusername", "chngeusrpass", "submitnamechange", "oldpass", "newpass", "newpass2", "submitpasschange", "deletepassword", "deleteaccount"], a = 0; a < r[t(500)]; a++)
+                    document.getElementById(r[a]).disabled = e;
+                if (!e) {
+                    var o = ["loginname", "loginpass", "username", "password", "password2", "chngusername", "chngeusrpass", "oldpass", "newpass", "newpass2", "deletepassword"];
+                    for (a = 0; a < o.length; a++)
+                        document.getElementById(o[a]).value = ""
+                }
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
