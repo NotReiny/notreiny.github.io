@@ -840,5 +840,40 @@ try{
                 "ontouchstart" in window || i.focus()
             }
             var tn = false;
+            function nn(e) {
+                var t = n;
+                if (e.isTrusted) {
+                    var r = 20 * Math.floor(Ce.x / 20)
+                        , o = 10 * Math.floor(Ce.y / 10)
+                        , c = r + "," + o;
+                    we.has(c) && (Ve && a.send(Or({
+                        p: c
+                    })),
+                        Ze && (tn ? tn = false : a.send(Or({
+                            c: [r, o, r + 19, o + 9]
+                        }))),
+                        i.focus())
+                }
+            }
+            function rn(e) {
+                var t = n;
+                return e.target.parentElement.parentElement.dataset.id
+            }
+            function an(e) {
+                m && a.send(Or({
+                    i: rn(e)
+                }))
+            }
+            function on(e) {
+                var t = n;
+                m && a.send(Or({
+                    a: [rn(e), e[t(510)][t(427)]]
+                }))
+            }
+            function cn(e) {
+                m && a.send(Or({
+                    aa: rn(e)
+                }))
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
