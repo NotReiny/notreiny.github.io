@@ -5,7 +5,7 @@
                         null != Dn && 1 != e.pointerId || Nn || (Dn = e["pointerId"],
                             Te = Wn(e),
                             Je ? ($e.start = Te,
-                                $e.end = $e.start) : (Ye = !0,
+                                $e.end = $e.start) : (Ye = true,
                                     qe.start.x = e.clientX * v,
                                     qe.start.y = e.clientY * v,
                                     Ge = [],
