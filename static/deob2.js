@@ -518,30 +518,30 @@
                 ot.addEventListener("change", ct),
                 Se.addEventListener("message", (function (e) {
                     var t = n;
-                    a && a[t(348)] == a.OPEN && a[t(197)](e[t(698)])
+                    a && a.readyState == a.OPEN && a.send(e.data)
                 }
                 )),
                 document.getElementById("chatbutton").addEventListener("click", (function () {
                     var e = n;
-                    hn[e(676)][e(551)](e(452)) ? hn[e(676)].remove(e(452)) : (hn[e(676)][e(608)](e(452)),
-                        yn[e(676)][e(627)](e(259)),
+                    hn.classList.contains("open") ? hn.classList.remove("open") : (hn.classList.add("open"),
+                        yn.classList.remove("show"),
                         gn())
                 }
                 )),
                 document.getElementById("sendmsg").addEventListener("click", bn),
                 document.getElementById("chatmsg").addEventListener("keyup", (function (e) {
-                    13 == e[n(232)] && bn(e)
+                    13 == e.keyCode && bn(e)
                 }
                 )),
                 document.getElementById("loginbtn").addEventListener("click", (function (e) {
                     var t = n;
                     if (e.isTrusted) {
-                        var r = document[t(628)](t(268))
-                            , o = document[t(628)](t(382));
-                        mn.test(r[t(356)]) ? 0 != r.value.length ? 0 != o.value[t(500)] ? (vn(!0),
+                        var r = document.getElementById("loginname")
+                            , o = document.getElementById("loginpass");
+                        mn.test(r.value) ? 0 != r.value.length ? 0 != o.value.length ? (vn(true),
                             a.send(Or({
-                                login: [r[t(356)], o[t(356)]]
-                            }))) : ir("Please type your password.", 3e3) : ir(t(556), 3e3) : ir(t(287), 3e3)
+                                login: [r.value, o.value]
+                            }))) : ir("Please type your password.", 3e3) : ir("Please type your username.", 3e3) : ir("Username is invalid.", 3e3)
                     }
                 }
                 )),
@@ -549,12 +549,12 @@
                     var t = n;
                     if (e.isTrusted) {
                         var r = document.getElementById("username")
-                            , o = document[t(628)]("password")
-                            , i = document[t(628)](t(580));
-                        mn[t(674)](r[t(356)]) ? 0 != r.value.length ? 0 != o[t(356)][t(500)] ? o.value == i[t(356)] ? (vn(!0),
-                            a[t(197)](Or({
-                                register: [r[t(356)], o.value]
-                            }))) : ir("Passwords do not match.", 3e3) : ir(t(488), 3e3) : ir(t(336), 3e3) : ir("Username is invalid.", 3e3)
+                            , o = document.getElementById("password")
+                            , i = document.getElementById("password2");
+                        mn.test(r.value) ? 0 != r.value.length ? 0 != o.value.length ? o.value == i.value ? (vn(true),
+                            a.send(Or({
+                                register: [r.value, o.value]
+                            }))) : ir("Passwords do not match.", 3e3) : ir("Please type a password.", 3e3) : ir("Please type a username.", 3e3) : ir("Username is invalid.", 3e3)
                     }
                 }
                 )),
@@ -562,21 +562,21 @@
                 document.getElementById("register").addEventListener("submit", fn),
                 document.getElementById("accsettinglink").addEventListener("click", (function () {
                     var e = n
-                        , t = document[e(628)](e(542));
-                    t[e(270)][e(550)] = e(467) == t[e(270)][e(550)] ? e(507) : e(467),
-                        document.getElementById(e(605))[e(403)] = t[e(503)] - 60
+                        , t = document.getElementById("accountsettings");
+                    t.style.display = "block" == t.style.display ? "none" : "block",
+                        document.getElementById("optionsmenu").scrollTop = t.clientHeight - 60
                 }
                 )),
                 document.getElementById("changenameform").addEventListener("submit", fn),
                 document.getElementById("submitnamechange").addEventListener("click", (function (e) {
                     var t = n;
-                    if (e[t(294)]) {
-                        var r = document[t(628)]("chngusername")
-                            , o = document[t(628)]("chngeusrpass");
-                        mn[t(674)](r.value) ? 0 != r[t(356)][t(500)] ? je != r.value ? 0 != o[t(356)].length ? (vn(!0),
-                            a[t(197)](Or({
+                    if (e.isTrusted) {
+                        var r = document.getElementById("chngusername")
+                            , o = document.getElementById("chngeusrpass");
+                        mn.test(r.value) ? 0 != r.value.length ? je != r.value ? 0 != o.value.length ? (vn(true),
+                            a.send(Or({
                                 namechange: [r.value, o.value]
-                            }))) : ir("Please type your password.", 3e3) : ir(t(661), 3e3) : ir("Please type a new username.", 3e3) : ir(t(287), 3e3)
+                            }))) : ir("Please type your password.", 3e3) : ir("You have typed in your current username.", 3e3) : ir("Please type a new username.", 3e3) : ir("Username is invalid.", 3e3)
                     }
                 }
                 )),
@@ -584,13 +584,13 @@
                 document.getElementById("submitpasschange").addEventListener("click", (function (e) {
                     var t = n;
                     if (e.isTrusted) {
-                        var r = document[t(628)](t(548))
-                            , o = document[t(628)](t(424))
-                            , i = document[t(628)](t(533));
-                        0 != r[t(356)][t(500)] ? 0 != o[t(356)].length ? 0 != i[t(356)].length ? o.value == i[t(356)] ? (vn(!0),
-                            a[t(197)](Or({
-                                passchange: [r[t(356)], o[t(356)]]
-                            }))) : ir(t(470), 3e3) : ir(t(309), 3e3) : ir(t(705), 3e3) : ir("Please type your password.", 3e3)
+                        var r = document.getElementById("oldpass")
+                            , o = document.getElementById("newpass")
+                            , i = document.getElementById("newpass2");
+                        0 != r.value.length ? 0 != o.value.length ? 0 != i.value.length ? o.value == i.value ? (vn(true),
+                            a.send(Or({
+                                passchange: [r.value, o.value]
+                            }))) : ir("New passwords do not match.", 3e3) : ir("Please type your new password again.", 3e3) : ir("Please type your new password.", 3e3) : ir("Please type your password.", 3e3)
                     }
                 }
                 )),
