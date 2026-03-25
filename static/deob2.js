@@ -598,11 +598,11 @@
                 document.getElementById("deleteaccount").addEventListener("click", (function (e) {
                     var t = n;
                     if (e.isTrusted) {
-                        var r = document[t(628)](t(637));
-                        0 != r.value[t(500)] ? (vn(!0),
+                        var r = document.getElementById("deletepassword");
+                        0 != r.value.length ? (vn(true),
                             a.send(Or({
-                                deleteaccount: r[t(356)]
-                            }))) : ir(t(373), 3e3)
+                                deleteaccount: r.value
+                            }))) : ir("Please type your password.", 3e3)
                     }
                 }
                 )),
