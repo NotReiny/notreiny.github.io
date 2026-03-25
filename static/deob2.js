@@ -1,7 +1,7 @@
             k.addEventListener("pointerdown", (function (e) {
                 var t = n;
                 e.preventDefault(),
-                    e.isTrusted && (ie(!1),
+                    e.isTrusted && (ie(false),
                         null != Dn && 1 != e.pointerId || Nn || (Dn = e["pointerId"],
                             Te = Wn(e),
                             Je ? ($e.start = Te,
@@ -17,7 +17,7 @@
                                         if (e.pointerId == Dn) {
                                             nr();
                                             var r = Wn(e);
-                                            if (Ce.x == r.x && Ce.y == r.y || (Le = !0),
+                                            if (Ce.x == r.x && Ce.y == r.y || (Le = true),
                                                 Ce.x = r.x,
                                                 Ce.y = r.y,
                                                 Ce.start = Ce.x,
@@ -38,60 +38,60 @@
                 )),
                 document.addEventListener("pointermove", (function (e) {
                     var t = n;
-                    if (e[t(294)] && (Te = Wn(e),
-                        (Ve || Ze) && (ge = !0),
-                        e[t(426)] == Dn && !Nn)) {
-                        if (e[t(423)](),
+                    if (e.isTrusted && (Te = Wn(e),
+                        (Ve || Ze) && (ge = true),
+                        e.pointerId == Dn && !Nn)) {
+                        if (e.preventDefault(),
                             Je)
-                            $e[t(571)] = Te;
+                            $e.end = Te;
                         else if (Ye) {
                             var r = e.clientX * devicePixelRatio - qe.start.x / at
-                                , a = e[t(536)] * devicePixelRatio - qe[t(258)].y / at;
-                            qe[t(440)].x = Math[t(433)](ze[t(440)].x + r),
-                                qe[t(440)].y = Math[t(433)](ze[t(440)].y + a),
-                                tt[t(358)][t(427)] && Rn(e)
+                                , a = e.clientY * devicePixelRatio - qe.start.y / at;
+                            qe.offset.x = Math.round(ze.offset.x + r),
+                                qe.offset.y = Math.round(ze.offset.y + a),
+                                tt.smoothpanning.checked && Rn(e)
                         }
-                        ge = !0
+                        ge = true
                     }
                 }
                 )),
                 k.addEventListener("click", nn),
                 k.addEventListener("wheel", (function (e) {
                     var t = n;
-                    if (e[t(294)] && (ie(!1),
+                    if (e.isTrusted && (ie(false),
                         !Ye)) {
-                        if (e[t(423)](),
-                            e[t(225)])
-                            it(rt - e[t(700)] / 1e3, !0);
-                        else if (e[t(272)])
-                            1 == Math.sign(e[t(700)]) ? mr(pe == fe[se[t(500)] - 1] ? fe[0] : fe[ve(pe) + 1]) : mr(pe == fe[0] ? fe[se[t(500)] - 1] : fe[ve(pe) - 1]);
+                        if (e.preventDefault(),
+                            e.ctrlKey)
+                            it(rt - e.deltaY / 1e3, true);
+                        else if (e.altKey)
+                            1 == Math.sign(e.deltaY) ? mr(pe == fe[se.length - 1] ? fe[0] : fe[ve(pe) + 1]) : mr(pe == fe[0] ? fe[se.length - 1] : fe[ve(pe) - 1]);
                         else {
                             var r = e.deltaX
-                                , a = e[t(700)];
+                                , a = e.deltaY;
                             e.shiftKey && (r ^= a,
                                 r ^= a ^= r),
-                                Mn(qe[t(440)].x - r, qe.offset.y - a)
+                                Mn(qeoffset.x - r, qe.offset.y - a)
                         }
-                        ge = !0
+                        ge = true
                     }
                 }
                 ), {
-                    passive: !1
+                    passive: false
                 }),
                 document.addEventListener("pointerup", (function (e) {
                     var t = n;
-                    if (e[t(294)] && (e[t(423)](),
-                        e[t(426)] == Dn && !Nn)) {
-                        if (Je && $e[t(258)] && $e[t(571)]) {
-                            var r = Math.min($e.start.x, $e[t(571)].x)
-                                , o = Math[t(678)]($e.start.y, $e[t(571)].y)
-                                , i = Math[t(227)]($e.start.x, $e[t(571)].x)
-                                , c = Math[t(227)]($e.start.y, $e[t(571)].y);
-                            if (Je = !1,
+                    if (e.isTrusted && (e.preventDefault(),
+                        e.pointerId == Dn && !Nn)) {
+                        if (Je && $e.start && $e.end) {
+                            var r = Math.min($e.start.x, $e.end.x)
+                                , o = Math.min($e.start.y, $e.end.y)
+                                , i = Math.max($e.start.x, $e.end.x)
+                                , c = Math.max($e.start.y, $e.end.y);
+                            if (Je = false,
                                 $e = {},
                                 m && Ze)
-                                tn = !0,
-                                    a[t(197)](Or({
+                                tn = true,
+                                    a.send(Or({
                                         c: [r, o, i, c]
                                     }));
                             else {
@@ -99,15 +99,15 @@
                                     , u = Ce.y;
                                 Ce.x = r,
                                     Ce.y = o;
-                                for (var s = "", d = "", f = !1, v = !1, h = o; h <= c; h++) {
+                                for (var s = "", d = "", f = false, v = false, h = o; h <= c; h++) {
                                     for (var y = r; y <= i; y++) {
                                         var g = rr();
                                         if (g) {
                                             g[0] == Z ? s += " " : s += g[0];
                                             var [p, b] = Zr(g[1]);
-                                            tt[t(261)][t(427)] && tt[t(693)][t(427)] ? d += String[t(354)](ue + g[1]) : tt.copycolour[t(427)] ? d += String[t(354)](ue + p) : tt[t(693)].checked && (d += String[t(354)](ue + Vr(0, b))),
-                                                Qn(g[0], b) || (0 != b && (v = !0),
-                                                    0 != p && (f = !0)),
+                                            tt.copycolour.checked && tt.copydecorations.checked ? d += String.fromCharCode(ue + g[1]) : tt.copycolour.checked ? d += String.fromCharCode(ue + p) : tt.copydecorations.checked && (d += String.fromCharCode(ue + Vr(0, b))),
+                                                Qn(g[0], b) || (0 != b && (v = true),
+                                                    0 != p && (f = true)),
                                                 Ce.x++
                                         }
                                     }
@@ -116,37 +116,37 @@
                                         s += "\n",
                                         d += "ï¿½"
                                 }
-                                s = s[t(386)](0, -1),
-                                    d = d[t(386)](0, -1),
-                                    s[t(482)](t(379)) && (f = v = !1),
-                                    tt[t(261)][t(427)] && f || tt[t(693)][t(427)] && v ? ar(s + Z + d) : ar(s),
+                                s = s.slice(0, -1),
+                                    d = d.slice(0, -1),
+                                    s.startsWith("http") && (f = v = false),
+                                    tt.copycolour.checked && f || tt.copydecorations.checked && v ? ar(s + Z + d) : ar(s),
                                     Ce.x = l,
                                     Ce.y = u,
                                     ir("Copied selection.", 1500);
-                                var x = document[t(628)](t(420));
-                                x.src = t(207),
+                                var x = document.getElementById("copyico");
+                                x.src = "/static/done.svg",
                                     setTimeout((function () {
                                         var e = t;
-                                        x[e(615)] = e(416)
+                                        x.src = "/static/copy.svg"
                                     }
                                     ), 1e3)
                             }
                         } else if (Dn = void 0,
-                            Ye = !1,
-                            qe[t(258)].x = null,
-                            qe[t(258)].y = null,
-                            Mn(qe[t(440)].x, qe.offset.y),
-                            tt.smoothpanning[t(427)]) {
+                            Ye = false,
+                            qe.start.x = null,
+                            qe.start.y = null,
+                            Mn(qe.offset.x, qe.offset.y),
+                            tt.smoothpanning.checked) {
                             Rn(e);
-                            var w = Ge[t(500)] - 1;
+                            var w = Ge.length - 1;
                             ((Qe = {
                                 dx: Ge[0][0] - Ge[w][0],
                                 dy: Ge[0][1] - Ge[w][1],
                                 dt: Ge[0][2] - Ge[w][2]
-                            }).dt > 90 || Math.abs(Qe.dx) < 5 && Math[t(330)](Qe.dy) < 5) && (Qe = null)
+                            }).dt > 90 || Math.abs(Qe.dx) < 5 && Math.abs(Qe.dy) < 5) && (Qe = null)
                         }
-                        k[t(270)][t(522)] = t(538),
-                            ge = !0
+                        k.style.cursor = "text",
+                            ge = true
                     }
                 }
                 )),
@@ -158,7 +158,7 @@
                         e[t(294)]) {
                         if (t(595) != e[t(448)])
                             return t(543) == e[t(448)] ? (Ce.x -= 1,
-                                Vn(" ", 0, !1, !0) || (Ce.x += 1),
+                                Vn(" ", 0, false, true) || (Ce.x += 1),
                                 void nr()) : void (null != e[t(698)] && "" != e[t(698)] && t(321) != e[t(448)] && (nr(),
                                     Array[t(296)](e.data).length > 1 ? tr(e[t(698)]) : Vn(e[t(698)], 1)));
                         cr()
