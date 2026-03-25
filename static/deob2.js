@@ -155,12 +155,12 @@
                 i.addEventListener("input", (function (e) {
                     var t = n;
                     if (e.preventDefault(),
-                        e[t(294)]) {
-                        if (t(595) != e[t(448)])
-                            return t(543) == e[t(448)] ? (Ce.x -= 1,
+                        e.isTrusted) {
+                        if ("insertLineBreak" != e.inputType)
+                            return "deleteContentBackward" == e.inputType ? (Ce.x -= 1,
                                 Vn(" ", 0, false, true) || (Ce.x += 1),
-                                void nr()) : void (null != e[t(698)] && "" != e[t(698)] && t(321) != e[t(448)] && (nr(),
-                                    Array[t(296)](e.data).length > 1 ? tr(e[t(698)]) : Vn(e[t(698)], 1)));
+                                void nr()) : void (null != e.data && "" != e.data && "insertFromPaste" != e.inputType && (nr(),
+                                    Array.from(e.data).length > 1 ? tr(e.data) : Vn(e.data, 1)));
                         cr()
                     }
                 }
@@ -168,8 +168,8 @@
                 
                 i.addEventListener("keydown", (function (e) {
                     var t = n;
-                    if (e[t(294)]) {
-                        switch (e[t(232)]) {
+                    if (e.isTrusted) {
+                        switch (e.keyCode) {
                             case 38:
                                 window.w.moveCursor("up", 1);
                                 e.preventDefault();
@@ -191,24 +191,24 @@
                                 e.preventDefault();
                                 break;
                             case 36:
-                                Ce.x = Ce[t(258)],
+                                Ce.x = Ce.start,
                                     nr(),
-                                    ie(!1),
-                                    e[t(423)]();
+                                    ie(false),
+                                    e.preventDefault();
                                 break;
                             case 46:
-                                Vn(" ", 0, !1, !0),
+                                Vn(" ", 0, false, true),
                                     nr(),
-                                    e[t(423)]()
+                                    e.preventDefault()
                         }
-                        (!e[t(225)] && !e[t(288)] && !e[t(272)] || 37 == e[t(232)] || 38 == e[t(232)] || 39 == e[t(232)] || 40 == e[t(232)]) && Hn()
+                        (!e.ctrlKey && !e.shiftKey && !e.altKey || 37 == e.keyCode || 38 == e.keyCode || 39 == e.keyCode || 40 == e.keyCode) && Hn()
                     }
                 }
                 )),
                 undoWrite = function () {
                     var e = t;
-                    if (0 != Be[e(500)]) {
-                        var n = Be[e(564)]();
+                    if (0 != Be.length) {
+                        var n = Be.shift();
                         Ce.x = n[0],
                             Ce.y = n[1];
                         var r = pe
@@ -217,7 +217,7 @@
                         pe = o[0],
                             window.color = pe,
                             le(o[1]),
-                            Vn(n[2], 0, !0) || Be.unshift(n),
+                            Vn(n[2], 0, true) || Be.unshift(n),
                             pe = r,
                             window.color = pe,
                             le(a)
@@ -229,13 +229,13 @@
                         switch (e.keyCode) {
                             case 90:
                                 e.ctrlKey && (undoWrite(),
-                                    e[r(423)]());
+                                    e.preventDefault());
                                 break;
                             case 89:
-                                e[r(225)] && (function () {
+                                e.ctrlKey && (function () {
                                     var e = r;
-                                    if (0 != Fe[e(500)]) {
-                                        var t = Fe[e(564)]();
+                                    if (0 != Fe.length) {
+                                        var t = Fe.shift();
                                         Ce.x = t[0],
                                             Ce.y = t[1];
                                         var n = pe
@@ -244,68 +244,68 @@
                                         pe = o[0],
                                             window.color = pe,
                                             le(o[1]),
-                                            Vn(t[2], 1, !1) || Fe[e(343)](t),
+                                            Vn(t[2], 1, false) || Fe.unshift(t),
                                             pe = n,
                                             window.color = pe,
                                             le(a)
                                     }
                                 }(),
-                                    e[r(423)]());
+                                    e.preventDefault());
                                 break;
                             case 67:
-                                e[r(272)] && or(e);
+                                e.altKey && or(e);
                                 break;
                             case 71:
-                                e[r(225)] && (e[r(423)](),
+                                e.ctrlKey && (e.preventDefault(),
                                     dr());
                                 break;
                             case 66:
-                                e.ctrlKey && (e[r(423)](),
-                                    br(r(583)),
-                                    ie(!0));
+                                e.ctrlKey && (e.preventDefault(),
+                                    br("bold"),
+                                    ie(true));
                                 break;
                             case 73:
                                 e.ctrlKey && (e.preventDefault(),
                                     br("italic"),
-                                    ie(!0));
+                                    ie(true));
                                 break;
                             case 85:
-                                e.ctrlKey && (e[r(423)](),
+                                e.ctrlKey && (e.preventDefault(),
                                     br("underline"),
-                                    ie(!0));
+                                    ie(true));
                                 break;
                             case 83:
-                                e[r(225)] && (e[r(423)](),
-                                    br(r(468)),
-                                    ie(!0));
+                                e.ctrlKey && (e.preventDefault(),
+                                    br("strikethrough"),
+                                    ie(true));
                                 break;
                             case 18:
-                                e[r(423)]();
+                                e.preventDefault();
                                 break;
                             case 27:
-                                Je && (Je = !1,
+                                Je && (Je = false,
                                     $e = {},
-                                    k.style[r(522)] = "text",
-                                    e[r(423)]()),
-                                    M[r(676)][r(627)]("open"),
-                                    ie(!1),
+                                    k.style.cursor = "text",
+                                    e.preventDefault()),
+                                    M.classList.remove("open"),
+                                    ie(false),
                                     nr();
                                 break;
                             case 107:
                             case 187:
-                                e[r(225)] && (e[r(423)](),
-                                    it(rt + .1, !0));
+                                e.ctrlKey && (e.preventDefault(),
+                                    it(rt + .1, true));
                                 break;
                             case 109:
                             case 189:
-                                e[r(225)] && (e.preventDefault(),
-                                    it(rt - .1, !0))
+                                e.ctrlKey && (e.preventDefault(),
+                                    it(rt - .1, true))
                         }
                 }
                 )),
                 i.addEventListener("paste", (function (e) {
                     var t = n;
-                    e[t(294)] && tr((e[t(573)] || window[t(573)]).getData(t(538)))
+                    e.isTrusted && tr((e.clipboardData || window.clipboardData).getData("text"))
                 }
                 )),
                 i.addEventListener("copy", (function (e) {
@@ -313,16 +313,16 @@
                         , r = rr();
                     if (r) {
                         ar(r[0]),
-                            e[t(423)](),
-                            e[t(573)] || ir("Copied character.", 1e3);
-                        var a = document[t(628)](t(420));
-                        a[t(615)] = t(207),
+                            e.preventDefault(),
+                            e.clipboardData || ir("Copied character.", 1e3);
+                        var a = document.getElementById("copyico");
+                        a.src = "/static/done.svg",
                             setTimeout((function () {
                                 var e = t;
-                                a[e(615)] = e(416)
+                                a.src = "/static/copy.svg"
                             }
                             ), 1e3),
-                            i[t(456)]()
+                            i.focus()
                     }
                 }
                 )),
@@ -332,10 +332,10 @@
                 )),
                 He.addEventListener("click", (function () {
                     var e = n;
-                    history[e(308)]({}, null, o),
-                        ar(location.protocol + "//" + location[e(653)] + o + "?x=" + Ce.x + e(465) + -Ce.y),
-                        ir(e(400), 1e3),
-                        i[e(456)]()
+                    history.pushState({}, null, o),
+                        ar(location.protocol + "//" + location.host + o + "?x=" + Ce.x + "&y=" + -Ce.y),
+                        ir("Copied link.", 1e3),
+                        i.focus()
                 }
                 )),
                 document.getElementById("closemenu").addEventListener("click", (function () {
@@ -364,13 +364,13 @@
                 document.getElementById("copy").addEventListener("click", or),
                 document.getElementById("paste").addEventListener("click", (function () {
                     var e = n;
-                    navigator[e(345)][e(340)]()[e(413)]((function (t) {
+                    navigator.clipboard.readText().then((function (t) {
                         var n = e;
                         tr(t);
-                        var r = document.getElementById(n(326));
-                        r.src = n(207),
+                        var r = document.getElementById("pasteico");
+                        r.src = "/static/done.svg",
                             setTimeout((function () {
-                                r[n(615)] = "/static/paste.svg"
+                                r.src = "/static/paste.svg"
                             }
                             ), 1e3),
                             en()
@@ -400,101 +400,101 @@
                 document.getElementById("goto").addEventListener("click", dr),
                 x.addEventListener("click", (function (e) {
                     var t = n
-                        , r = JSON[t(351)](e[t(510)][t(427)]);
+                        , r = JSON.stringify(e.target.checked);
                     switch (e.target) {
-                        case tt[t(442)]:
-                            localStorage[t(460)]("showothercurs", r),
-                                ge = !0;
+                        case tt.showothercurs:
+                            localStorage.setItem("showothercurs", r),
+                                ge = true;
                             break;
-                        case tt[t(567)]:
+                        case tt.shownametags:
                             localStorage.setItem("shownametags", r),
-                                ge = !0;
+                                ge = true;
                             break;
-                        case tt[t(613)]:
-                            localStorage[t(460)](t(613), r),
-                                e[t(510)][t(427)] ? hn[t(676)][t(627)]("hidden") : hn.classList[t(608)](t(692));
+                        case tt["showchat"]:
+                            localStorage.setItem("showchat", r),
+                                etarget.checked ? hn.classList.remove("hidden") : hn.classList.add("hidden");
                             break;
                         case tt.disablecolour:
-                            localStorage.setItem(t(577), r),
-                                nt.disableColour[t(427)] || hr(tt[t(577)].checked),
-                                ge = !0,
+                            localStorage.setItem("disablecolour", r),
+                                nt.disableColour.checked || hr(tt.disablecolour.checked),
+                                ge = true,
                                 Sn();
                             break;
-                        case tt[t(358)]:
-                            localStorage[t(460)](t(358), r),
-                                ge = !0;
+                        case tt.smoothpanning:
+                            localStoragesetItem("smoothpanning", r),
+                                ge = true;
                             break;
-                        case tt[t(223)]:
-                            localStorage[t(460)]("smoothcursors", r);
+                        case tt.smoothcursors:
+                            localStorage.setItem("smoothcursors", r);
                             break;
-                        case tt[t(261)]:
-                            localStorage[t(460)](t(261), r);
+                        case ttcopycolour:
+                            localStorage.setItem("copycolour", r);
                             break;
-                        case tt[t(693)]:
-                            localStorage[t(460)](t(693), r);
+                        case tt.copydecorations:
+                            localStorage.setItem("copydecorations", r);
                             break;
-                        case tt[t(598)]:
-                            localStorage[t(460)](t(598), r);
+                        case tt.rainbow:
+                            localStorage.setItem("rainbow", r);
                             break;
                         case tt.anonymous:
-                            localStorage[t(460)]("anonymous", r),
-                                Re = !0,
-                                ge = !0;
+                            localStorage.setItem("anonymous", r),
+                                Re = true,
+                                ge = true;
                             break;
                         case tt.anonIdShow:
                             ge = true;
                             break;
                         case lt:
-                            document[t(628)](t(680))[t(270)][t(550)] = t(507),
-                                document[t(628)](t(459)).style.display = t(467);
+                            document.getElementById("login").style.display = "none",
+                                document.getElementById("register").style.display = "block";
                             break;
                         case ut:
-                            document[t(628)]("login")[t(270)].display = t(467),
-                                document[t(628)](t(459))[t(270)][t(550)] = t(507);
+                            document.getElementById("login").style.display = "block",
+                                document.getElementById("register").style.display = "none";
                             break;
                         case st:
-                            dt(!0)
+                            dt(true)
                     }
                 }
                 )),
                 document.getElementById("closeteleport").addEventListener("click", (function () {
                     var e = n;
-                    M.classList[e(627)](e(452))
+                    M.classList.remove("open")
                 }
                 )),
                 document.getElementById("tpwordgo").addEventListener("click", (function (e) {
                     var t = n;
-                    e[t(423)]();
-                    var r = document[t(628)](t(314));
-                    vr(r[t(356)]),
+                    e.preventDefault();
+                    var r = document.getElementById("tpword");
+                    vr(r.value),
                         r.blur()
                 }
                 )),
                 document.getElementById("tpword").addEventListener("input", (function () {
                     var e = n
-                        , t = document[e(628)]("tpword").value[e(217)](/^\/|\/$/g, "")
-                        , r = 0 == t || t[e(482)]("~") ? {
+                        , t = document.getElementById("tpword").value.replace(/^/|/$/g, "")
+                        , r = 0 == t || t.startsWith("~") ? {
                             x: 0,
                             y: 0
                         } : Lr(t);
-                    document[e(628)](e(342))[e(356)] = r.x,
-                        document[e(628)](e(702))[e(356)] = -r.y
+                    document.getElementById("tpx").value = r.x,
+                        document.getElementById("tpy").value = -r.y
                 }
                 )),
                 document.getElementById("tpcoordgo").addEventListener("click", (function (e) {
                     var t = n;
-                    e[t(423)]();
-                    var r = document[t(628)](t(342))
-                        , a = document[t(628)]("tpy")
-                        , i = parseInt(r[t(356)], 10)
+                    e.preventDefault();
+                    var r = document.getElementById("tpx")
+                        , a = document.getElementById("tpy")
+                        , i = parseInt(r.value, 10)
                         , c = parseInt(a.value, 10);
                     isNaN(i) && isNaN(c) || (0 !== i && (i = i || Ce.x),
                         0 !== c && (c = c || Ce.y),
-                        Zn(i = Math[t(227)](Math[t(678)](i, Yt.maxx - 1), Yt[t(319)]), c = Math[t(227)](Math[t(678)](-c, Yt[t(681)] - 1), Yt[t(374)])),
-                        history[t(308)]({}, null, o),
-                        M[t(676)][t(627)](t(452)),
-                        r[t(334)](),
-                        a[t(334)]())
+                        Zn(i = Math.max(Math.min(i, Yt.maxx - 1), Yt.minx), c = Math.max(Math.min(-c, Yt.maxy - 1), Yt.miny)),
+                        history.pushState({}, null, o),
+                        M.classList.remove("open"),
+                        r.blur(),
+                        a.blur())
                 }
                 )),
                 window.addEventListener("resize", kn),
@@ -504,13 +504,13 @@
                 }
                 )),
                 window.addEventListener("focus", (function () {
-                    y = !0,
+                    y = true,
                         En(),
                         Kr()
                 }
                 )),
                 window.addEventListener("blur", (function () {
-                    y = !1,
+                    y = false,
                         En()
                 }
                 )),
