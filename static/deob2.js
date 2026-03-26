@@ -633,15 +633,15 @@
                 )),
                 nt.hideCursors.addEventListener("click", (function (e) {
                     var t = n;
-                    a[t(197)](Or({
-                        ch: e.target[t(427)]
+                    a.send(Or({
+                        ch: e.target.checked
                     }))
                 }
                 )),
                 nt.disableChat.addEventListener("click", (function (e) {
                     var t = n;
                     a.send(Or({
-                        dc: e[t(510)][t(427)]
+                        dc: e.target.checked
                     }))
                 }
                 )),
@@ -661,42 +661,42 @@
                 )),
                 document.getElementById("addmemberbtn").addEventListener("click", (function (e) {
                     var t = n;
-                    e[t(423)](),
-                        document[t(628)](t(605));
-                    var r = document[t(628)](t(478))
-                        , o = document[t(628)](t(446))
+                    e.preventDefault(),
+                        document.getElementById("optionsmenu");
+                    var r = document.getElementById("inputmember")
+                        , o = document.getElementById("memberlist")
                         , i = r.value.toLowerCase();
-                    r[t(356)] = "",
+                    r.value = "",
                         (i.length = function (e) {
-                            for (var n = t, r = document.getElementById("memberlist"), a = 0; a < r[n(625)]; a++)
-                                if (r.children[a][n(537)] == e)
-                                    return !0;
-                            return !1
-                        }(i) || i == je) || (mn[t(674)](i) ? o.childElementCount >= 20 ? ir(t(553), 3e3) : a[t(197)](Or({
+                            for (var n = t, r = document.getElementById("memberlist"), a = 0; a < r.childElementCount; a++)
+                                if (r.children[a].innerText == e)
+                                    return true;
+                            return false
+                        }(i) || i == je) || (mn.test(i) ? o.childElementCount >= 20 ? ir("You cannot add more than 20 members.", 3e3) : a["send"](Or({
                             addmem: i
-                        })) : ir(t(287), 3e3))
+                        })) : ir("Username is invalid.", 3e3))
                 }
                 )),
                 J.addEventListener("click", (function (e) {
                     var t = n
-                        , r = document[t(628)]("deletewallconfirm");
+                        , r = document["getElementById"]("deletewallconfirm");
                     if (null == r) {
-                        var o = document[t(581)]("br");
-                        return e[t(510)][t(278)].insertBefore(o, e.target[t(364)]),
-                            (r = document[t(581)](t(205))).type = t(538),
-                            r[t(638)] = t(663),
-                            r[t(529)] = 7,
-                            r.id = t(253),
-                            o.parentNode[t(496)](r, o[t(364)]),
+                        var o = document.createElement("br");
+                        return e.target.parentNode.insertBefore(o, e.target.nextSibling),
+                            (r = document.createElement("input")).type = "text",
+                            r.placeholder = "type 'confirm' here",
+                            r.maxLength = 7,
+                            r.id = "deletewallconfirm",
+                            o.parentNode.insertBefore(r, o.nextSibling),
                             void r.focus()
                     }
-                    "confirm" == r[t(356)].toLowerCase() ? (r.parentElement[t(436)](r.previousSibling),
-                        r.parentNode[t(436)](r),
-                        a[t(197)](Or({
+                    "confirm" == r.value.toLowerCase() ? (r.parentElement.removeChild(r.previousSibling),
+                        r.parentNode.removeChild(r),
+                        a.send(Or({
                             dw: 0
                         })),
-                        Cn(t(391), t(622)),
-                        ir("Deleting wall...", 3e3)) : ir(t(492), 3e3)
+                        Cn("textwall", "main"),
+                        ir("Deleting wall...", 3e3)) : ir("Please type 'confirm' in the text box if you would like to delete your wall.", 3e3)
                 }
                 )),
                 document.getElementById("l").addEventListener("click", (function (e) {
