@@ -1703,5 +1703,126 @@ try{
                 )),
                 b.setAttribute("id", "textarea"),
                 i.setAttribute("id", "clipboard");
+            var mn = /^[\w.-]+$/;
+            const hn = document.getElementById("chat")
+                , yn = document.getElementById("unread");
+            function gn() {
+                chatbox.scrollTop = chatbox.scrollHeight
+            }
+
+
+            function pn() {
+                var e = n
+                    , t = document.getElementById("chatbox");
+                null != t.lastElementChild && "HR" != t.lastElementChild.tagName && (t.appendChild(document.createElement("hr")),
+                    gn())
+            }
+            function bn(e) {
+                var t = n;
+                var r = document.getElementById("chatmsg");
+                // /^[s?]*$/ <- blocks question marks
+                // fixed to
+                // /^s*$/
+                gn(),
+                    Xe + 300 > performance.now() || (/^s*$/.test(r.value) ? r.value = "" : (window.w.chat.send(
+                        r.value.substr(0, 180)
+                    ),
+                        Xe = performance.now(),
+                        r.value = "",
+                        r.focus()))
+            }
+            function aib(e) {
+                var t = n;
+                var data = { msg: e };
+                window.w.emit("chatBefore", data);
+                a.send(Or({
+                    msg: data.msg
+                })),
+                    Xe = performance.now();
+
+            }
+            function xn() {
+                var e = n
+                    , t = document.getElementsByClassName("msgcontainer")[0];
+                nt.readOnly.checked && 0 == j || U && "" == je ? t.classList.add("hidden") : t.classList.remove("hidden")
+            }
+            function wn(e) {
+                var t = n;
+                e.preventDefault(),
+                    Cn(e.target.innerText.toLowerCase(), "main") && Zn(0, 0)
+            }
+            function Mn(e, t, r) {
+                var a = n;
+                r ? (qe.offset.x = e,
+                    qe.offset.y = t) : (qe.offset.x = Math.ceil(e),
+                        qe.offset.y = Math.ceil(t)),
+                    ze.offset.x = qe.offset.x,
+                    ze.offset.y = qe.offset.y;
+                var o = qe.coords.x
+                    , i = qe.coords.y;
+                qe.coords.x = Math.floor(window.innerWidth / at / 20 - qe.offset.x / 10 / v),
+                    qe.coords.y = Math.floor(window.innerHeight / at / 40 - qe.offset.y / 20 / v),
+                    De = o != qe.coords.x || i != qe.coords.y
+            }
+            function kn() {
+                var e = n
+                    , t = v;
+                if (v = devicePixelRatio * at,
+                    k.width = Math.round(window.innerWidth * devicePixelRatio),
+                    k.height = Math.round(window.innerHeight * devicePixelRatio),
+                    k.style["width"] = Math.round(k.width / devicePixelRatio) + "px",
+                    k.style.height = Math.round(k.height / devicePixelRatio) + "px",
+                    E.imageSmoothingEnabled = false,
+                    ge = true,
+                    t != v) {
+                    ie(false);
+                    var r = Math.floor((qe.offset.x - k.width / 2) / t)
+                        , a = Math.floor((qe.offset.y - k.height / 2) / t);
+                    Mn((r + window.innerWidth / at / 2) * v, (a + window.innerHeight / at / 2) * v),
+                        vt(G)
+                }
+            }
+            function En() {
+                var e = n
+                    , t = h;
+                "textwall" != W && (t = "~" + W,
+                    "main" != H && (t += "/" + H)),
+                    null == a || a.readyState == a.CLOSED ? document.title = h + " (disconnected)" : document.title = y ? "textwall" != W ? t : h : t + " (" + Ue + " nearby)"
+            }
+            function Sn(e) {
+                var t = n;
+                ke = [],
+                    Ee.clear();
+                var r = [];
+                for (const e of we.keys()) {
+                    var a = wt(e);
+                    r.push(a[0], a[1])
+                }
+                for (var o = Zt(r), i = 0; i < o.length; i++) {
+                    var c = o[i][1]
+                        , l = r[c] + "," + r[c + 1]
+                        , u = we.get(l);
+                    e ? u.protected && St(l, false) : u.empty || St(l, false)
+                }
+            }
+            let pingInterval = null;
+            function startPing() {
+                if (pingInterval) return; // already running
+                pingInterval = setInterval(() => {
+                    NKe = performance.now();
+                    if (a.readyState === 1) {
+                        a.send(Or({ ping: true }));
+                    }
+                }, 1000);
+            }
+            function stopPing() {
+                if (pingInterval) {
+                    clearInterval(pingInterval);
+                    pingInterval = null;
+                }
+                lastPing = 0;
+                NKe = 0;
+            }
+
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
