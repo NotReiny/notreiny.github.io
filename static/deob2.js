@@ -701,45 +701,45 @@
                 )),
                 document.getElementById("l").addEventListener("click", (function (e) {
                     var t = n;
-                    m && a[t(197)](Or({
-                        l: e[t(510)][t(427)]
+                    m && a.send(Or({
+                        l: e.target.checked
                     }))
                 }
                 )),
                 document.getElementById("refresh").addEventListener("click", (function () {
                     var e = n;
                     if (m) {
-                        document[e(628)](e(290))[e(230)] = "";
-                        var t = !1;
-                        for (const n of Pe[e(611)]())
+                        document.getElementById("admintable").innerHTML = "";
+                        var t = false;
+                        for (const n of Pe.keys())
                             dn(n),
-                                t = !0;
+                                t = true;
                         if (t) {
-                            var r = document.getElementById(e(605));
-                            r[e(403)] = r[e(712)]
+                            var r = document.getElementById("optionsmenu");
+                            r.scrollTop = r.scrollHeight
                         }
                     }
                 }
                 )),
                 document.getElementById("sendalert").addEventListener("click", (function () {
                     var e = n
-                        , t = document[e(628)]("alerttext")[e(356)];
-                    m && 0 != t[e(500)] && a.send(Or({
+                        , t = document.getElementById("alerttext").value;
+                    m && 0 != t.length && a.send(Or({
                         alert: t
                     }))
                 }
                 )),
                 document.getElementById("reload").addEventListener("click", (function () {
-                    m && a[n(197)](Or({
-                        reload: !0
+                    m && a.send(Or({
+                        reload: true
                     }))
                 }
                 )),
                 document.getElementById("delete").addEventListener("click", (function () {
                     var e = n;
                     if (m) {
-                        var t = document[e(628)](e(188)).value;
-                        0 != t[e(500)] && a[e(197)](Or({
+                        var t = document.getElementById("deletename").value;
+                        0 != t.length && a.send(Or({
                             aaa: t
                         }))
                     }
@@ -748,8 +748,8 @@
                 document.getElementById("free").addEventListener("click", (function () {
                     var e = n;
                     if (m) {
-                        var t = document[e(628)](e(657))[e(356)];
-                        0 != t[e(500)] && a[e(197)](Or({
+                        var t = document.getElementById("freename").value;
+                        0 != t.length && a.send(Or({
                             aaaa: t
                         }))
                     }
