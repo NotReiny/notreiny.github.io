@@ -2597,5 +2597,49 @@ try{
                     Ge.length > 4 && Ge.pop()
             }
             var Dn, Nn = false, jn = 0;
+            function Un(e) {
+                var t = n;
+                e.isTrusted && (e.preventDefault(),
+                    e.pointerId == Dn && (Dn = void 0))
+            }
+            function Wn(e) {
+                var t = n;
+                return {
+                    x: Math.floor((e.pageX * devicePixelRatio - qe.offset.x) / (10 * v)),
+                    y: Math.floor((e.pageY * devicePixelRatio - qe.offset.y) / (20 * v))
+                }
+            }
+            function Hn() {
+                var e = n;
+                He.innerText = Ce.x + "," + -Ce.y,
+                    Ce.x + qe.offset.x / v / 10 <= 0 && Mn(10 * -Ce.x * v, qe.offset.y),
+                    Ce.x + qe.offset.x / v / 10 >= window.innerWidth / at / 10 - 1 && Mn((10 * -Ce.x + window.innerWidth / at - 10) * v, qe.offset.y),
+                    Ce.y + qe.offset.y / v / 20 <= 0 && Mn(qe.offset.x, 20 * -Ce.y * v);
+                var t = window.innerWidth < 750 ? l.clientHeight : 0;
+                Ce.y + qe.offset.y / v / 20 >= (window.innerHeight - t) / at / 20 - 1 && Mn(qe.offset.x, (20 * -Ce.y + window.innerHeight / at - 20 - t / at) * v),
+                    Le = Ae.x != Ce.x || Ae.y != Ce.y || Le,
+                    Ae.x = Ce.x,
+                    Ae.y = Ce.y,
+                    tt.smoothcursors.checked || (Ce.rawx = Ce.x,
+                        Ce.rawy = Ce.y),
+                    (Math.abs(Ce.lastedit.x - Ce.x) > 300 || Math.abs(Ce.lastedit.y - Ce.y) > 300) && (Ce.start = Ce.x,
+                        Xn()),
+                    Ce.x < Ce.start && (Ce.start = Ce.x),
+                    ge = !0,
+                    localStorage.setItem("x", Ce.x),
+                    localStorage.setItem("y", Ce.y)
+            }
+            function Kn(e, t, r, a) {
+
+                var o = n;
+                tt.disablecolour.checked && (r = 0),
+                    r = Zr(r)[0],
+                    xt([e, t], bt(20)) || Ne.push([e, t, tt.showFeedback.checked ? .1 : 0, r, a])
+            }
+
+            function Xn() {
+                Be = [],
+                    Fe = []
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
