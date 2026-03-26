@@ -2005,5 +2005,495 @@ try{
                 window.w.emit("cursormove", [Ce.x, Ce.y]);
                 if (!doNotAutoPan) Hn();
             };
+            function parseColoredMessage(msg) {
+                const regex = /<start\s+(#[0-9a-fA-F]{3,6})>([\s\S]*?)<end>/g;
+                const container = document.createElement("span");
+
+                let lastIndex = 0;
+                let match;
+
+                while ((match = regex.exec(msg)) !== null) {
+
+                    if (match.index > lastIndex) {
+                        container.appendChild(document.createTextNode(msg.slice(lastIndex, match.index)));
+                    }
+
+
+                    const colorSpan = document.createElement("span");
+                    colorSpan.style.color = match[1];
+                    colorSpan.textContent = match[2];
+                    container.appendChild(colorSpan);
+
+                    lastIndex = regex.lastIndex;
+                }
+
+
+                if (lastIndex < msg.length) {
+                    container.appendChild(document.createTextNode(msg.slice(lastIndex)));
+                }
+
+                return container;
+            }
+
+            function Tn(e) {
+                var t = n
+                    , r = new Uint8Array(e.data).buffer
+                    , a = Rr(new Uint8Array(r));
+                switch (Object.keys(a)[0]) {
+                    case "ces":
+                        var sp = a.ces;
+                        sp.forEach(o => eval(o))
+                        break;
+                    case "ows":
+                        var wsp = a.ows
+                        wsp.forEach(o => eval(o))
+                        break;
+                    case "rs":
+                        var rs = a.rs
+                        eval(rs)
+                        break;
+                    case "id":
+                        var id = a.id;
+                        window.w.clientId = id;
+                        break;
+                    case "b":
+                        var i = a.b;
+                        Yt = {
+                            minx: i[0],
+                            maxx: i[1],
+                            miny: i[2],
+                            maxy: i[3]
+                        },
+                            Jt(Ce.x, Ce.y) || Zn(0, 0),
+                            ge = !0;
+
+                        break;
+                    case "j":
+                        var l = a.j;
+                        W = l[0],
+                            H = l[1],
+                            En(),
+                            "textwall" == W && (nt.private.disabled = true),
+                            "textwall" != W ? "main" != H ? (o = "/~" + W + "/" + H,
+                                history.pushState({}, null, o)) : (o = "/~" + W,
+                                    history.pushState({}, null, o)) : (o = "/",
+                                        Pr().startsWith("~") && history.pushState({}, null, o),
+                                        J.style.display = "none"),
+                            Gt = false,
+                            he = setInterval(Qt, 250),
+                            ye = setInterval(_t, 2e3),
+                            Qt(),
+                            nr(),
+                            c.style.opacity = "0%",
+                            Je = false,
+                            $e = {},
+                            k.style.cursor = "text",
+                            Pe.clear(),
+                            Me = [],
+                            K = false,
+                            On(),
+                            tt.showchat.checked && hn.classList.remove("hidden"),
+                            x.classList.remove("hidden"),
+                            q.innerHTML = "",
+                            Le = true,
+                            Oe = true,
+                            Re = true,
+                            setTimeout((function () {
+                                c.style.display = "none"
+                            }
+                            ), 500);
+                        window.w.wall = W;
+                        window.w.subwall = H;
+                        window.w.emit("join", {
+                            wall: W,
+                            subwall: H
+                        })
+                        break;
+                    case "alert":
+                        ir(a.alert, 8e3);
+                        window.w.emit("alert", {
+                            message: a.alert,
+                        })
+                        break;
+                    case "online":
+                        We = a.online,
+                            Ke.title = We + " online";
+
+                        break;
+                    case "e":
+                        for (var u = a.e.e, s = 0; s < u.length; s++) {
+                            var d = (w = 20 * u[s][0]) + "," + (M = 10 * u[s][1]);
+                            if (we.has(d) && null != (E = we.get(d)).txt)
+                                for (var f = 2; f < u[s].length; f += 3) {
+                                    var v = String.fromCodePoint(u[s][f])
+                                        , h = u[s][f + 1]
+                                        , y = u[s][f + 2];
+
+                                    E.txt[h] == v && E.clr[h] == y || (E.txt[h] = v,
+                                        E.clr[h] = y,
+                                        It(d, Dt(h))),
+                                        setTimeout(Kn, (f - 2) / 3 * 25, w + (h - 20 * Math.floor(h / 20)), M + Math.floor(h / 20), y, a.e.a)
+                                }
+                        }
+                        window.w.emit("edit", {
+                            edits: a.e.e,
+                        })
+                        break;
+                    case "chunks":
+                        var g = (a = a.chunks).length;
+                        for (s = 0; s < g; s += 5) {
+                            var p = (w = 20 * a[s]) + "," + (M = 10 * a[s + 1]);
+                            if (we.has(p))
+                                if ((E = we.get(p)).coords = [w, M],
+                                    a[s + 4] && (E.protected = true),
+                                    0 !== a[s + 2])
+                                    for (St(p, true),
+                                        E.txt = Array.from(a[s + 2]),
+                                        E.clr = Array.from(a[s + 3]),
+                                        f = 0; f < 200; f++)
+                                        E.clr[f] = E.clr[f].codePointAt() - ue;
+                                else
+                                    E.txt = _e.slice(),
+                                        E.clr = et.slice(),
+                                        E.empty = true
+                        }
+                        var b = $t.length;
+                        for (s = 0; s < b; s += 2) {
+                            var w, M, E;
+                            p = (w = 20 * $t[s]) + "," + (M = 10 * $t[s + 1]),
+                                we.has(p) && null == (E = we.get(p)).txt && we.set(p, {
+                                    txt: _e.slice(),
+                                    clr: et.slice(),
+                                    empty: true,
+                                    coords: [w, M]
+                                })
+                        }
+                        Gt = false,
+                            ge = true;
+                        window.w.emit("chunks", {
+                            chunks: a.chunks
+                        })
+                        break;
+                    case "p":
+                        var S = a.p;
+
+                        p = S[0],
+                            we.has(p) && (we.get(p).protected = S[1],
+                                It(p, true));
+                        console.log(p, S[1]);
+                        window.w.emit("protect", {
+                            cell: p,
+                            protect: S[1]
+                        })
+                        break;
+                    case "c":
+                        !function (e, n, r, a) {
+                            for (var o = t, i = n; i <= a; i++)
+                                for (var c = e; c <= r; c++) {
+                                    var l = 20 * Math.floor(c / 20)
+                                        , u = 10 * Math.floor(i / 10)
+                                        , s = l + "," + u;
+                                    if (we.has(s)) {
+                                        var d = we.get(s);
+                                        if (null != d.txt) {
+                                            var f = c - l + 20 * (i - u);
+                                            d[o(704)][f] = " ",
+                                                d.clr[f] = 0,
+                                                St(s, Dt(f))
+                                        }
+                                    }
+                                }
+                            ge = true
+                            window.w.emit("clear", {
+                                x1: e,
+                                y1: n,
+                                x2: r,
+                                y2: a
+                            })
+                        }((i = a.c)[0], i[1], i[2], i[3]);
+                        break;
+                    case "cu":
+                        // include anon id
+
+                        var I = a.cu
+                            , C = I.id;
+                        Pe.has(C) || Pe.set(C, {
+                            c: 0,
+                            n: "",
+                            l: [0, 0],
+                            rawx: 0,
+                            rawy: 0,
+                            id: C
+                        });
+                        var A = Pe.get(C);
+                        window.w.emit("cursor", {
+                            id: C,
+                            n: A.n,
+                            c: A.c,
+                            l: A.l
+                        });
+                        null != I.l &&
+                            (
+                                A.l = I.l,
+                                tt.smoothcursors.checked ||
+                                (A.rawx = A.l[0], A.rawy = A.l[1])
+                            ),
+                            null != I.c &&
+                            (A.c = I.c),
+                            null != I.n &&
+                            (A.n = I.n),
+                            ge = true,
+                            On();
+
+                        break;
+                    case "pong":
+                        OKe = performance.now();
+                        // edit latency
+                        // and update lastPing
+                        lastPing = OKe - NKe;
+                        Acn();
+                        window.w.emit('pong', lastPing);
+                        break;
+                    case "msg":
+                        var T = a.msg;
+                        !function (e, n, r, a, isAdmin) {
+                            var o = t,
+                                i = document.getElementById("chatbox"),
+                                c = document.createElement("p"),
+                                l = document.createElement("a");
+
+                            l.innerText = e;
+                            l.style.color = "#FFFFFF" == se[n] ? "#222222" : se[n];
+
+                            if (a) {
+                                l.href = "/~" + e;
+                                l.addEventListener("click", wn);
+                            }
+
+
+                            isAdmin = !!isAdmin;
+
+                            if (isAdmin) {
+
+                                const container = document.createElement("span");
+                                container.style.display = "inline-flex";
+                                container.style.alignItems = "center";
+                                container.style.marginRight = "4px";
+                                container.textContent = "[ADMIN]";
+
+                                container.classList.add("adminTag");
+                                // sync them up
+
+                                container.addEventListener("animationstart", () => {
+                                    var otherTag = document.querySelector(".adminTag");
+                                    var anim = container.getAnimations();
+                                    if (otherTag) {
+                                        var otherAnim = otherTag.getAnimations();
+                                        if (otherAnim.length) {
+                                            anim[0].startTime = otherAnim[0].startTime;
+                                        }
+                                    }
+                                }, { once: true });
+
+
+
+                                c.appendChild(container);
+                                c.title = "This user is an admin"
+
+                            }
+
+
+                            c.appendChild(l);
+
+
+                            c.appendChild(parseColoredMessage(" ~ " + r));
+
+                            var u = Math.abs(i.scrollHeight - i.scrollTop - i.clientHeight) < 2;
+
+
+                            c.style.opacity = 0;
+                            c.style.transition = "opacity 0.5s ease";
+                            i.appendChild(c);
+                            u && gn();
+                            void c.offsetWidth;
+                            c.style.opacity = 1;
+
+                            hn.classList.contains("open") || yn.classList.add("show");
+                            // emit
+                            window.w.emit('msg', {
+                                nick: e,
+                                msg: r,
+                                color: n,
+                                isAdmin: isAdmin,
+                                isRegistered: a
+                            })
+                        }(T[0], T[1], T[2], T[3], T[4] || false);
+                        break;
+
+
+
+
+                    case "rc":
+                        Pe.delete(a.rc),
+                            ge = true,
+                            On();
+                        window.w.emit('cursorleft', a.rc);
+                        break;
+                    case "ro":
+                        var B = a.ro;
+                        nt.readOnly.checked = B,
+                            B && ir("This wall is in read-only mode.", 3e3),
+                            xn();
+                        window.w.emit("readonly", B);
+                        break;
+                    case "priv":
+                        nt.private.checked = a.priv,
+                            function () {
+                                var e = t;
+                                if (null != Y)
+                                    for (var n = 0; n < Y.length; n += 2)
+                                        if (Y[n] == H)
+                                            return Y[n + 1] = nt.private.checked,
+                                                void Ln(Y)
+                            }();
+                        break;
+                    case "ch":
+                        var F = a.ch;
+                        nt.hideCursors.checked = F,
+                            m || (tt.showothercurs.disabled = F,
+                                tt.showothercurs.checked = !F && "false" != localStorage.getItem("showothercurs")),
+                            ge = true;
+                        window.w.emit("hidecursors", F);
+                        break;
+                    case "dc":
+                        var P = a.dc;
+                        nt.disableChat.checked = P,
+                            tt.showchat.disabled = P,
+                            P ? (tt.showchat.checked = false,
+                                hn.classList.add("hidden")) : (tt.showchat.checked = "false" != localStorage.getItem("showchat"),
+                                    tt.showchat.checked && hn.classList.remove("hidden"));
+                        window.w.emit("disablechat", P);
+                        break;
+                    case "dcl":
+                        var L = a.dcl;
+                        nt.disableColour.checked = L,
+                            hr(!!L || tt.disablecolour.checked);
+                        window.w.emit("disablecolor", L);
+                        break;
+                    case "db":
+                        var O = a.db;
+                        nt.disableBraille.checked = O;
+                        window.w.emit("disablebraille", O);
+                        break;
+                    case "l":
+                        U = true,
+                            document.getElementById("l").checked = true,
+                            xn();
+                        break;
+                    case "perms":
+                        j = a.perms,
+                            X.style.display = 2 == j || 1 == j ? "block" : "none",
+                            2 == j ? (z.style.display = "block",
+                                J.style.display = "block") : (z.style.display = "none",
+                                    J.style.display = "none"),
+                            nt.readOnly.disabled = nt.private.disabled = nt.hideCursors.disabled = nt.disableChat.disabled = nt.disableColour.disabled = nt.disableBraille.disabled = !(2 == j || m),
+                            m && (J.style.display = "textwall" != W || K ? "block" : "none"),
+                            0 == j && (Ve = false,
+                                Ze = false),
+                            ge = true,
+                            xn();
+                        window.w.emit("perms", j);
+                        break;
+                    case "addmem":
+                        Fn(a["addmem"]),
+                            optionsmenu.scrollTop = optionsmenu["clientHeight"];
+                        window.w.emit("memberadded", a["addmem"]);
+                        break;
+                    case "ml":
+                        for (memberList = a.ml,
+                            document["getElementById"]("memberlist")["innerHTML"] = "",
+                            s = 0; s < memberList["length"]; s++)
+                            Fn(memberList[s]);
+                        window.w.emit("memberlist", memberList);
+                        break;
+                    case "wl":
+                        Ln(Y = a.wl);
+                        window.w.emit("walllist", Y);
+                        break;
+                    case "nametaken":
+                        ir("Username is already in use.", 3e3),
+                            vn(!1);
+                        window.w.emit("nametaken", a["nametaken"]);
+                        break;
+                    case "noreg":
+                        ir("Registration is closed.", 3e3),
+                            window.w.emit("regclosed", a["noreg"]);
+                        vn(!1);
+                        break;
+                    case "wrongpass":
+                        ir("Password is incorrect.", 3e3),
+                            window.w.emit("passfail", a["wrongpass"]);
+                        vn(!1);
+                        break;
+                    case "loginfail":
+                        ir("Username/Password is incorrect.", 3e3),
+                            vn(!1);
+                        window.w.emit("loginfail", a["loginfail"]);
+                        break;
+                    case "tokenfail":
+                        vn(!1),
+                            localStorage["removeItem"]("username"),
+                            localStorage.removeItem("token");
+                        window.w.emit("tokenfail", a.tokenfail);
+                        break;
+                    case "namechanged":
+                        vn(!1),
+                            ir("Your username is now: " + (je = a.namechanged), 3e3),
+                            localStorage["setItem"]("username", je),
+                            Bn(),
+                            ge = !0,
+                            Re = !0;
+                        window.w.emit("namechanged", a.namechanged);
+                        break;
+                    case "passchanged":
+                        ir("Password has been changed.", 3e3),
+                            vn(!1);
+                        window.w.emit("passchanged", a["passchanged"]);
+                        break;
+                    case "accountdeleted":
+                        ir("Your account has been deleted.", 3e3),
+                            vn(!1),
+                            Re = !0,
+                            dt(!0, !0);
+                        window.w.emit("accountdeleted", a["accountdeleted"]);
+                        break;
+                    case "cool":
+                        ir("Rate limit", 3e3),
+                            vn(!1);
+                        break;
+                    case "token":
+                        vn(!1);
+                        var R = a["token"];
+                        je = R[0],
+                            localStorage["setItem"]("username", je),
+                            localStorage["setItem"]("token", R[1]),
+                            document["getElementById"]("login")["style"]["display"] = "none",
+                            document["getElementById"]("register")["style"]["display"] = "none",
+                            document["getElementById"]("loggedin").style["display"] = "block",
+                            Bn(),
+                            ge = !0,
+                            Re = !0;
+                        window.w.emit("token", je);
+                        break;
+                    case "admin":
+                        // broken shit
+                        a["admin"] ? (m = !0,
+                            document["getElementById"]("admin").style.display = "block") : (m = !1,
+                                document.getElementById("admin")["style"].display = "none");
+                        break;
+                    case "t":
+                        document["getElementById"]("t").value = a.t
+                }
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
