@@ -2495,5 +2495,107 @@ try{
                         document.getElementById("t").value = a.t
                 }
             }
+            function Bn() {
+                var e = n
+                    , t = document.getElementById("name");
+                t.innerText = je,
+                    t.href = "/~" + je,
+                    t.onclick = function (e) {
+                        e.preventDefault(),
+                            vr("~" + je)
+                    }
+            }
+            function Fn(e) {
+                var t = n
+                    , r = document.getElementById("memberlist")
+                    , a = document.createElement("div");
+                a.classList.add("member"),
+                    a.innerText = e,
+                    a.addEventListener("click", Pn),
+                    r.appendChild(a)
+            }
+            function Pn(e) {
+                var t = n
+                    , r = e.target.innerText;
+                a.send(Or({
+                    rmmem: r
+                })),
+                    e.target.remove()
+            }
+            function Ln(e) {
+                for (var t = n, r = {}, a = [], o = false, i = 0; i < e.length; i += 2) {
+                    var c = e[i]
+                        , l = e[i + 1];
+                    "main" == c ? o = true : a.push(c),
+                        r[c] = l
+                }
+                a.sort(),
+                    o && a.unshift("main"),
+                    q.innerHTML = "",
+                    q.appendChild(document.createElement("hr"));
+                var u = document.createElement("span");
+                u.innerText = W + "'s walls",
+                    q.appendChild(u);
+                var s = q.appendChild(document.createElement("ul"));
+                for (s.classList.add("walllist"),
+                    i = 0; i < a.length; i++) {
+                    l = r[c = a[i]];
+                    var d = s.appendChild(document.createElement("li"))
+                        , f = document.createElement("a")
+                        , v = document.createElement("img");
+                    l ? (v.src = "/static/lock.svg",
+                        v.alt = v.title = "Private") : (v.src = "/static/lock_open.svg",
+                            v.alt = v.title = "Public");
+                    const e = "~" + W + ("main" == c ? "" : "/" + c);
+                    f.appendChild(v),
+                        f.appendChild(document.createTextNode(e)),
+                        f.href = "/" + f.innerText,
+                        f.classList.add("buttonlink"),
+                        c == H && f.classList.add("bold"),
+                        f.addEventListener("click", (function (n) {
+                            n.preventDefault(),
+                                vr(e)
+                        }
+                        )),
+                        d.appendChild(f),
+                        s.appendChild(d)
+                }
+                if (W == je.toLowerCase()) {
+                    var m = q.appendChild(document.createElement("form"));
+                    m.style.display = "flex",
+                        m.style.justifyContent = "space-between";
+                    var h = m.appendChild(document.createElement("input"));
+                    h.type = "text",
+                        h.placeholder = "Create a new wall",
+                        h.maxLength = 24,
+                        h.style.width = "100%";
+                    var y = m.appendChild(document.createElement("input"));
+                    y.type = "submit",
+                        y.value = "Create",
+                        y.addEventListener("click", (function (e) {
+                            var n = t;
+                            e.preventDefault();
+                            var r = h.value;
+                            h.value = "",
+                                Bt.test(r) ? (Cn(W, r),
+                                    Zn(0, 0),
+                                    M.classList.remove("open")) : ir("Invalid wall name", 2e3)
+                        }
+                        ))
+                }
+            }
+            function On() {
+                var e = n;
+                Ue = Pe.size,
+                    Ke.innerText = Ue + " nearby",
+                    document.getElementById("chatmsg").placeholder = 0 == Ue ? "chat to nobody" : 1 == Ue ? "chat to 1 other user" : "chat to " + Ue + " other users",
+                    y || En()
+            }
+            function Rn(e) {
+                var t = n;
+                Ge.unshift([e.clientX * v / at, e.clientY * v / at, performance.now()]),
+                    Ge.length > 4 && Ge.pop()
+            }
+            var Dn, Nn = false, jn = 0;
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
