@@ -2625,7 +2625,7 @@ try{
                     (Math.abs(Ce.lastedit.x - Ce.x) > 300 || Math.abs(Ce.lastedit.y - Ce.y) > 300) && (Ce.start = Ce.x,
                         Xn()),
                     Ce.x < Ce.start && (Ce.start = Ce.x),
-                    ge = !0,
+                    ge = true,
                     localStorage.setItem("x", Ce.x),
                     localStorage.setItem("y", Ce.y)
             }
@@ -2641,5 +2641,38 @@ try{
                 Be = [],
                     Fe = []
             }
+            k.addEventListener("touchstart", (function (e) {
+                var t = n;
+                2 === e.touches.length && (Nn = true,
+                    Dn = void 0,
+                    jn = 0,
+                    i.blur())
+            }
+            ), {
+                passive: true
+            }),
+                k.addEventListener("touchmove", (function (e) {
+                    var r = n;
+                    Nn && (function (e) {
+                        var n = t;
+                        if (e.touches.length > 1) {
+                            var r = Math.sqrt(Jr(e.touches[0].pageX - e.touches[1].pageX) + Jr(e.touches[0].pageY - e.touches[1].pageY));
+                            0 != jn && it(rt - (jn - r) / 300, true),
+                                Dn = void 0,
+                                jn = r
+                        }
+                    }(e),
+                        i.blur())
+                }
+                ), {
+                    passive: true
+                }),
+                k.addEventListener("touchend", (function (e) {
+                    Nn && (Dn = void 0,
+                        jn = 0,
+                        Nn = false,
+                        i.blur())
+                }
+                ));
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
