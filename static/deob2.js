@@ -755,5 +755,5 @@
                     }
                 }
                 )),
-                b[n(388)]("id", n(525)),
-                i.setAttribute("id", n(345));
+                b.setAttribute("id", "textarea"),
+                i.setAttribute("id", "clipboard");
