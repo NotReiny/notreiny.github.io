@@ -2765,7 +2765,7 @@ try{
             function writeCharAt(char, color, coordX, coordY, r, a) {
                 var Ce = { x: coordX, y: coordY };
                 var o = n;
-                if (ie(!1),
+                if (ie(false),
                     performance.now() - qn >= 100 && (qn = performance.now(),
                         zn = 0),
                     !char || zn >= 3)
@@ -2910,5 +2910,93 @@ try{
                 return Gn(e) && 0 == (2 & t) && 0 == (1 & t)
             }
             const _n = Math.log(5 / 3) / 1e3;
+            var er = false;
+            function tr(e) {
+                var t = n;
+                if (!Ie) {
+                    var r, a, o = (e = e.replace(Tt, "")).split(Z), i = false;
+                    if (2 == o.length ? (i = true,
+                        r = Array.from(o[0]),
+                        a = Array.from(o[1]),
+                        (r.length != a.length || tt.rainbow.checked) && (i = false)) : (e = e.replace(At, "   "),
+                            r = Array.from(e)),
+                        1 != r.length) {
+                        if (Ie = true,
+                            !er) {
+                            er = true,
+                                Ce.start = Ce.x;
+                            var c = pe
+                                , l = ce();
+                            !function e(n, o) {
+                                var u = t;
+                                if (n == r.length || !Ie)
+                                    return nr(),
+                                        er = false,
+                                        mr(c),
+                                        void le(l);
+                                if ("\n" == r[n])
+                                    return cr(),
+                                        setTimeout(e, 20, n + 1, o);
+                                var s, d, f = r[n];
+                                if (i) {
+                                    var v = (s = a[n],
+                                        d = s.codePointAt(),
+                                        ((d -= d < ue ? 65 : ue) < 0 || d > 495) && (d = 0),
+                                        d)
+                                        , [m, h] = Zr(v);
+                                    Qn(f, h) || mr(m),
+                                        le(h)
+                                }
+                                switch (zn = 0,
+                                Vn(f, 1)) {
+                                    case 0:
+                                    case 1:
+                                        return setTimeout(e, 10, n + 1, o);
+                                    default:
+                                        return setTimeout(e, 36 * Math.pow(Math.E, _n * o), n + 1, o + 1)
+                                }
+                            }(0, 0)
+                        }
+                    } else
+                        Vn(r[0], 1)
+                }
+            }
+            function nr() {
+                Ie = false
+            }
+            function rr() {
+                var e = n
+                    , t = 20 * Math.floor(Ce.x / 20)
+                    , r = 10 * Math.floor(Ce.y / 10)
+                    , a = we.get(t + "," + r);
+                if (!a || null == a.txt)
+                    return false;
+                var o = Ce.x - t + 20 * (Ce.y - r);
+                return [a.txt[o], a.clr[o]]
+            }
+            function ar(e) {
+                var t = n;
+                navigator.clipboard ? navigator.clipboard.writeText(e) : (b.value = e,
+                    b.focus(),
+                    b.select(),
+                    document.execCommand("copy"))
+            }
+            function or(e) {
+                var t = n;
+                e.preventDefault(),
+                    Je = true,
+                    k.style.cursor = "crosshair",
+                    ir("Select an area to copy.", 1500)
+            }
+            function ir(e, t) {
+                var r = n;
+                clearTimeout(p),
+                    g.innerText = e,
+                    g.classList.add("toasting"),
+                    p = setTimeout((function () {
+                        g.classList.remove("toasting")
+                    }
+                    ), t)
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
