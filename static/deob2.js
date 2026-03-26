@@ -606,32 +606,32 @@
                     }
                 }
                 )),
-                nt[n(708)].addEventListener("click", (function (e) {
-                    Ve = e[n(510)].checked,
-                        ge = !0
+                nt.protect.addEventListener("click", (function (e) {
+                    Ve = e.target.checked,
+                        ge = true
                 }
                 )),
-                nt[n(222)].addEventListener("click", (function (e) {
+                nt.clear.addEventListener("click", (function (e) {
                     var t = n;
-                    Ze = e.target[t(427)],
-                        ge = !0
+                    Ze = e.target.checked,
+                        ge = true
                 }
                 )),
-                nt[n(435)].addEventListener("click", (function (e) {
+                nt.readOnly.addEventListener("click", (function (e) {
                     var t = n;
                     a.send(Or({
-                        ro: e[t(510)][t(427)]
+                        ro: e.target.checked
                     }))
                 }
                 )),
                 nt.private.addEventListener("click", (function (e) {
                     var t = n;
-                    a[t(197)](Or({
-                        priv: e[t(510)][t(427)]
+                    a.send(Or({
+                        priv: e.target.checked
                     }))
                 }
                 )),
-                nt[n(476)].addEventListener("click", (function (e) {
+                nt.hideCursors.addEventListener("click", (function (e) {
                     var t = n;
                     a[t(197)](Or({
                         ch: e.target[t(427)]
@@ -645,17 +645,17 @@
                     }))
                 }
                 )),
-                nt[n(604)].addEventListener("click", (function (e) {
+                nt.disableColour.addEventListener("click", (function (e) {
                     var t = n;
-                    a[t(197)](Or({
-                        dcl: e[t(510)].checked
+                    a.send(Or({
+                        dcl: e.target.checked
                     }))
                 }
                 )),
-                nt[n(363)].addEventListener("click", (function (e) {
+                nt.disableBraille.addEventListener("click", (function (e) {
                     var t = n;
-                    a[t(197)](Or({
-                        db: e[t(510)][t(427)]
+                    a.send(Or({
+                        db: e.target.checked
                     }))
                 }
                 )),
