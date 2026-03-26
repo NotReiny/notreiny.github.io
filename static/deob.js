@@ -1824,5 +1824,186 @@ try{
                 NKe = 0;
             }
 
+            function In() {
+                startPing()
+
+                var e = n;
+                document.getElementById("connecting1").innerText = "Connected.",
+                    document.getElementById("connecting2").innerText = "",
+                    document.getElementById("admin").style.display = "none",
+                    "" == je && null != localStorage.getItem("username") && null != localStorage.getItem("token") && (vn(true),
+                        a.send(Or({
+                            token: [localStorage.getItem("username"), localStorage.getItem("token")]
+                        })));
+                var t = "textwall"
+                    , r = "main"
+                    , o = location.pathname.split("/").splice(1, 2);
+                o[0].startsWith("~") && "" == (t = o[0].replace("~", "")) && (t = "textwall"),
+                    2 == o.length && (r = o[1]),
+                    Cn(t, r)
+                // always send { ping: true } to display ping messages
+
+            }
+
+            function Cn(e, t) {
+                var r = n;
+                return !(W == e && H == t || K || (K = true,
+                    e = e.toLowerCase(),
+                    t = t.toLowerCase(),
+                    clearInterval(he),
+                    clearInterval(ye),
+                    nr(),
+                    pn(),
+                    Yt = null,
+                    a.send(Or({
+                        j: [e, t]
+                    })),
+                    Xn(),
+                    we.clear(),
+                    Pe.clear(),
+                    Me = [],
+                    0))
+            }
+            function An() {
+                stopPing();
+                Acn(true);
+                var e = n;
+                En(),
+                    m = false,
+                    Gt = false,
+                    H = "",
+                    W = "",
+                    pn(),
+                    gn(),
+                    c.style.display = "flex",
+                    setTimeout((function () {
+                        var t = e;
+                        c.style.opacity = "100%"
+                    }
+                    ), 50),
+                    clearInterval(he),
+                    clearInterval(ye),
+                    nr(),
+                    dt(false),
+                    document.getElementById("connecting1").innerText = "Connection lost.",
+                    document.getElementById("connecting2").innerText = "Click here to reconnect.",
+                    c.onclick = Kr
+            }
+            function Acn(isDisconnected = false) {
+                var lims = {
+                    5: "#00ffff",
+                    20: "#00ff00",
+                    40: "#80ff00",
+                    60: "#ffff00",
+                    80: "#ff8000",
+                    100: "#ff4000",
+                    120: "#ff0000",
+                    140: "#ff00ff",
+                    160: "#8000ff",
+                    180: "#4000ff",
+                    200: "#0000ff"
+                };
+
+                if (isDisconnected) {
+                    ping.innerText = "Disconnected";
+                    ping.style.color = "#888"; // gray for offline
+                    return;
+                }
+
+                ping.innerText = lastPing.toFixed(0) + " ms";
+
+                var color = "#ff00ff"; // default for >200
+                for (var limit in lims) {
+                    if (lastPing <= Number(limit)) {
+                        color = lims[limit];
+                        break;
+                    }
+                }
+
+                ping.style.color = color;
+            }
+
+            let hue = 0;
+            window.w = {};
+            window.position = qe;
+            window.elem = tt;
+            window.w.events = {};
+            window.w.on = function (e, t) {
+                if (typeof t != "function") {
+                    throw "Callback is not a function";
+                }
+                if (typeof e != "string") {
+                    throw "Event name is not a string";
+                }
+                e = e.toLowerCase();
+                if (!this.events[e]) {
+                    this.events[e] = [];
+                }
+                this.events[e].push(t);
+            }
+            window.w.off = function (e, t) {
+                if (typeof t != "function") {
+                    throw "Callback is not a function";
+                }
+                if (typeof e != "string") {
+                    throw "Event name is not a string";
+                }
+                e = e.toLowerCase();
+                if (!this.events[e]) {
+                    return;
+                }
+                const index = this.events[e].indexOf(t);
+                if (index > -1) {
+                    this.events[e].splice(index, 1);
+                }
+            }
+            window.w.emit = function (e, ...args) {
+                if (typeof e != "string") {
+                    throw "Event name is not a string";
+                }
+                e = e.toLowerCase();
+                if (!this.events[e]) {
+                    return;
+                }
+                for (const callback of this.events[e]) {
+                    try {
+                        callback(...args);
+                    } catch (err) {
+                        console.error("Error in event callback for event " + e, err);
+                    }
+                }
+            }
+            window.w.moveCursor = function (direction, amount, doNotAutoPan) {
+                switch (direction) {
+                    case "up":
+                        Ce.y -= amount;
+                        break;
+                    case "down":
+                        Ce.y += amount;
+                        break;
+                    case "left":
+                        Ce.x -= amount;
+                        break;
+                    case "right":
+                        Ce.x += amount;
+                        break;
+                    default:
+                        throw "Invalid direction";
+                        break;
+                }
+                nr();
+                ie(false);
+                window.w.emit("cursormove", [Ce.x, Ce.y]);
+                if (!doNotAutoPan) Hn();
+            };
+            window.w.moveCursorTo = function(x, y, doNotAutoPan) {
+                Ce.x = x;
+                Ce.y = y;
+                Ce.start = x;
+                nr();
+                ie(false);
+                window.w.emit("cursormove", [Ce.x, Ce.y]);
+                if (!doNotAutoPan) Hn();
+            };
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
