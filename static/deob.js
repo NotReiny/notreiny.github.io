@@ -515,7 +515,7 @@ try{
                     E.fillStyle = "rgba(34, 34, 34, 0.4)";
                     var i = E.measureText(e);
                     E.beginPath(),
-                        E.roundRect(Math.round(t - i.width / 2), Math.round(r + 21 * v), Math.round(i[o(381)] + 10 * v), Math.round(14 * v), [a]),
+                        E.roundRect(Math.round(t - i.width / 2), Math.round(r + 21 * v), Math.round(i.width + 10 * v), Math.round(14 * v), [a]),
                         E.fill(),
                         E.fillStyle = "#FFFFFF",
                         E.fillText(e, Math.round(t - i.width / 2 + 5 * v), Math.round(r + 31 * v))
@@ -936,7 +936,7 @@ try{
                 e.preventDefault()
             }
             function vn(e) {
-                for (var t = n, r = ["loginbtn", "registerbtn", "loginname", "loginpass", "username", "password", "password2", "registerbtn", "chngusername", "chngeusrpass", "submitnamechange", "oldpass", "newpass", "newpass2", "submitpasschange", "deletepassword", "deleteaccount"], a = 0; a < r[t(500)]; a++)
+                for (var t = n, r = ["loginbtn", "registerbtn", "loginname", "loginpass", "username", "password", "password2", "registerbtn", "chngusername", "chngeusrpass", "submitnamechange", "oldpass", "newpass", "newpass2", "submitpasschange", "deletepassword", "deleteaccount"], a = 0; a < r.length; a++)
                     document.getElementById(r[a]).disabled = e;
                 if (!e) {
                     var o = ["loginname", "loginpass", "username", "password", "password2", "chngusername", "chngeusrpass", "oldpass", "newpass", "newpass2", "deletepassword"];
@@ -1303,8 +1303,8 @@ try{
                 )),
                 document.getElementById("home").addEventListener("contextmenu", (function (e) {
                     var t = n;
-                    e[t(423)](),
-                        Cn(t(391), t(622)) && Zn(0, 0)
+                    e.preventDefault(),
+                        Cn("textwall", "main") && Zn(0, 0)
                 }
                 )),
                 document.getElementById("copy").addEventListener("click", or),
@@ -2197,7 +2197,7 @@ try{
                                         var d = we.get(s);
                                         if (null != d.txt) {
                                             var f = c - l + 20 * (i - u);
-                                            d[o(704)][f] = " ",
+                                            d.txt[f] = " ",
                                                 d.clr[f] = 0,
                                                 St(s, Dt(f))
                                         }
