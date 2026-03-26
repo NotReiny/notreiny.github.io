@@ -2674,5 +2674,241 @@ try{
                         i.blur())
                 }
                 ));
+            var zn = 0
+                , qn = performance.now()
+                , Yn = 0;
+            const Jn = [4, 5, 7, 8, 9, 18, 11, 20, 13, 28, 15];
+            window.prsCol = function (title) {
+                var titles = [
+                    "black",
+                    "grey",
+                    "light grey",
+                    "light pink",
+                    "red",
+                    "orange",
+                    "brown",
+                    "yellow",
+                    "light green",
+                    "green",
+                    "light blue",
+                    "blue",
+                    "dark blue",
+                    "purple",
+                    "dark purple",
+                    "dark red",
+                    "dark green",
+                    "dark teal",
+                    "teal",
+                    "indigo",
+                    "periwinkle",
+                    "pink",
+                    "dark brown",
+                    "burgundy",
+                    "pale yellow",
+                    "light teal",
+                    "lavender",
+                    "pale purple",
+                    "magenta",
+                    "beige",
+                    "dark grey"
+                ];
+                function tmp(e, t) {
+                    const idx = e.indexOf(t)
+                    return idx === -1 ? 0 : idx;
+                }
+                return tmp(titles, title);
+            }
+            window.prsTil = function (idx) {
+                const titles = [
+                    "black", "grey", "light grey", "light pink", "red", "orange", "brown", "yellow",
+                    "light green", "green", "light blue", "blue", "dark blue", "purple", "dark purple",
+                    "dark red", "dark green", "dark teal", "teal", "indigo", "periwinkle", "pink",
+                    "dark brown", "burgundy", "pale yellow", "light teal", "lavender", "pale purple",
+                    "magenta", "beige", "dark grey"
+                ];
+                return titles[idx] || 'black';
+            };
+            window.colFmt = function (idx = 0, opts = {}) {
+                let n = parseInt(idx, 10);
+                if (isNaN(n)) n = 0
+
+                // clamp
+                n = Math.max(0, Math.min(30, n));
+
+                const {
+                    bold = false,
+                    italic = false,
+                    underline = false,
+                    strikethrough = false
+                } = opts;
+                // build
+                let bd = 0
+                if (bold) bd += 31 * 8
+                if (italic) bd += 31 * 4
+                if (underline) bd += 31 * 2
+                if (strikethrough) bd += 31 * 1
+
+                return n + bd
+            }
+            window.prsFmt = function (chr) {
+                var col = chr % 31;
+                var format = Math.floor(chr / 31);
+                return {
+                    color: col,
+                    bold: (format & 8) == 8,
+                    italic: (format & 4) == 4,
+                    underline: (format & 2) == 2,
+                    strikethrough: (format & 1) == 1
+                };
+            }
+            window.writeCharAt = writeCharAt;
+            function writeCharAt(char, color, coordX, coordY, r, a) {
+                var Ce = { x: coordX, y: coordY };
+                var o = n;
+                if (ie(!1),
+                    performance.now() - qn >= 100 && (qn = performance.now(),
+                        zn = 0),
+                    !char || zn >= 3)
+                    return 0;
+                var chr = prsFmt(color);
+                var data = {
+                    char: char,
+                    color: chr.color,
+                    x: Ce.x,
+                    y: Ce.y,
+                    bold: chr.bold,
+                    italic: chr.italic,
+                    underline: chr.underline,
+                    strikethrough: chr.strikethrough
+                };
+                window.w.emit("writeBefore", data);
+                var newColFmt = colFmt(data.color, data);
+                Ce.x = data.x;
+                Ce.y = data.y;
+                char = data.char;
+                var i = (char = Array.from(char)[0]).codePointAt();
+                if (nt.disableBraille.checked && qr(i))
+                    return 0;
+                var c = 20 * Math.floor(Ce.x / 20)
+                    , l = 10 * Math.floor(Ce.y / 10)
+                    , u = c + "," + l;
+                if (!we.has(u))
+                    return 0;
+                var s = we.get(u);
+                if ((s.protected || nt.readOnly.checked || U && "" == je) && !m && 0 == j || null == s.txt || K)
+                    return U && "" == je && !nt.readOnly.checked && ir("Please log in before typing.", 3e3),
+                        0;
+                tt.rainbow.checked && !r && (mr(Jn[Yn]),
+                    ++Yn == Jn.length && (Yn = 0));
+                var d, f, v, h, y, g, p, b, x, w, M, k, E, S = 1, I = Math.floor(newColFmt / 31), C = newColFmt, A = Ce.x - c + 20 * (Ce.y - l), T = s.clr[A], B = Zr(T), F = B[0], P = B[1], L = s.txt[A];
+                return L == e && T == C || Qn(e, I) && Qn(L, P) || (M = P,
+                    k = e,
+                    E = I,
+                    Gn(L) && Gn(k) && (2 & M) == (2 & E) && (1 & M) == (1 & E) && F == color) || (r ? (g = Ce.x,
+                        p = Ce.y,
+                        b = s.txt[A],
+                        x = T,
+                        w = o,
+                        Fe.unshift([g, p, b, x]),
+                        Fe.length > 1e3 && Fe.pop()) : (d = Ce.x,
+                            f = Ce.y,
+                            v = s.txt[A],
+                            h = T,
+                            Be.unshift([d, f, v, h]),
+                            Be.length > 1e3 && Be.pop()),
+                        s.txt[A] = char,
+                        s.clr[A] = C,
+                        Me.push([c / 20, l / 10, char.codePointAt(), A, C]),
+                        S = 2,
+                        It(u, Dt(A))),
+                    Hn(),
+                    S
+            }
+            function Vn(e, t, r, a) {
+                var o = n;
+                if (ie(false),
+                    performance.now() - qn >= 100 && (qn = performance.now(),
+                        zn = 0),
+                    !e || zn >= 3)
+                    return 0;
+                var chr = prsFmt(Vr(pe, a ? 0 : ce()));
+                var data = {
+                    char: e,
+                    color: chr.color,
+                    x: Ce.x,
+                    y: Ce.y,
+                    bold: chr.bold,
+                    italic: chr.italic,
+                    underline: chr.underline,
+                    strikethrough: chr.strikethrough
+                };
+                window.w.emit("writeBefore", data);
+                var newColFmt = colFmt(data.color, data);
+                e = data.char;
+                var i = (e = Array.from(e)[0]).codePointAt();
+                if (nt.disableBraille.checked && qr(i))
+                    return 0;
+                var c = 20 * Math.floor(data.x / 20)
+                    , l = 10 * Math.floor(data.y / 10)
+                    , u = c + "," + l;
+                if (!we.has(u))
+                    return 0;
+                var s = weget(u);
+                if ((s.protected || nt.readOnly.checked || U && "" == je) && !m && 0 == j || null == s.txt || K)
+                    return U && "" == je && !nt.readOnly.checked && ir("Please log in before typing.", 3e3),
+                        0;
+                tt.rainbow.checked && !r && (mr(Jn[Yn]),
+                    ++Yn == Jn.length && (Yn = 0));
+                var d, f, v, h, y, g, p, b, x, w, M, k, E, S = 1, I = Math.floor(newColFmt / 31), C = newColFmt, A = data.x - c + 20 * (data.y - l), T = s.clr[A], B = Zr(T), F = B[0], P = B[1], L = s.txt[A];
+                return L == e && T == C || Qn(e, I) && Qn(L, P) || (M = P,
+                    k = e,
+                    E = I,
+                    Gn(L) && Gn(k) && (2 & M) == (2 & E) && (1 & M) == (1 & E) && F == pe) || (r ? (g = data.x,
+                        p = data.y,
+                        b = s.txt[A],
+                        x = T,
+                        w = o,
+                        Fe.unshift([g, p, b, x]),
+                        Fe.length > 1e3 && Fe.pop()) : (d = data.x,
+                            f = data.y,
+                            v = s.txt[A],
+                            h = T,
+                            Be.unshift([d, f, v, h]),
+                            Be.length > 1e3 && Be.pop()),
+                        s.txt[A] = e,
+                        s.clr[A] = C,
+                        Me.push([c / 20, l / 10, e.codePointAt(), A, C]),
+                        S = 2,
+                        It(u, Dt(A))),
+                    Ce.lastedit.x = data.x,
+                    Ce.lastedit.y = data.y,
+                    Ce.x += t,
+                    Hn(),
+                    S
+            }
+            function Zn(e, t) {
+                var r = n;
+                ie(false),
+                    Ce.x = e,
+                    Ce.y = t,
+                    Mn((10 * -Ce.x + window.innerWidth / at / 2) * v, (20 * -Ce.y + window["innerHeight"] / at / 2) * v),
+                    document.getElementById("tpword").value = "",
+                    document.getElementById("tpx").value = 0,
+                    document.getElementById("tpy").value = 0,
+                    nr(),
+                    Hn(),
+                    _t()
+            }
+            window.writeChar = Vn
+            function $n() {
+                history.pushState({}, null, o)
+            }
+            function Gn(e) {
+                return " " == e || e == V
+            }
+            function Qn(e, t) {
+                return Gn(e) && 0 == (2 & t) && 0 == (1 & t)
+            }
+            const _n = Math.log(5 / 3) / 1e3;
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
