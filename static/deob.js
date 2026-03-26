@@ -2405,14 +2405,14 @@ try{
                         window.w.emit("perms", j);
                         break;
                     case "addmem":
-                        Fn(a["addmem"]),
-                            optionsmenu.scrollTop = optionsmenu["clientHeight"];
-                        window.w.emit("memberadded", a["addmem"]);
+                        Fn(a.addmem),
+                            optionsmenu.scrollTop = optionsmenu.clientHeight;
+                        window.w.emit("memberadded", a.addmem);
                         break;
                     case "ml":
                         for (memberList = a.ml,
-                            document["getElementById"]("memberlist")["innerHTML"] = "",
-                            s = 0; s < memberList["length"]; s++)
+                            document.getElementById("memberlist").innerHTML = "",
+                            s = 0; s < memberList.length; s++)
                             Fn(memberList[s]);
                         window.w.emit("memberlist", memberList);
                         break;
@@ -2422,77 +2422,77 @@ try{
                         break;
                     case "nametaken":
                         ir("Username is already in use.", 3e3),
-                            vn(!1);
-                        window.w.emit("nametaken", a["nametaken"]);
+                            vn(false);
+                        window.w.emit("nametaken", a.nametaken);
                         break;
                     case "noreg":
                         ir("Registration is closed.", 3e3),
-                            window.w.emit("regclosed", a["noreg"]);
-                        vn(!1);
+                            window.w.emit("regclosed", a.noreg);
+                        vn(false);
                         break;
                     case "wrongpass":
                         ir("Password is incorrect.", 3e3),
-                            window.w.emit("passfail", a["wrongpass"]);
-                        vn(!1);
+                            window.w.emit("passfail", a.wrongpass);
+                        vn(false);
                         break;
                     case "loginfail":
                         ir("Username/Password is incorrect.", 3e3),
-                            vn(!1);
-                        window.w.emit("loginfail", a["loginfail"]);
+                            vn(false);
+                        window.w.emit("loginfail", a.loginfail);
                         break;
                     case "tokenfail":
-                        vn(!1),
-                            localStorage["removeItem"]("username"),
+                        vn(false),
+                            localStorage.removeItem("username"),
                             localStorage.removeItem("token");
                         window.w.emit("tokenfail", a.tokenfail);
                         break;
                     case "namechanged":
-                        vn(!1),
+                        vn(false),
                             ir("Your username is now: " + (je = a.namechanged), 3e3),
-                            localStorage["setItem"]("username", je),
+                            localStorage.setItem("username", je),
                             Bn(),
-                            ge = !0,
-                            Re = !0;
+                            ge = true,
+                            Re = true;
                         window.w.emit("namechanged", a.namechanged);
                         break;
                     case "passchanged":
                         ir("Password has been changed.", 3e3),
-                            vn(!1);
-                        window.w.emit("passchanged", a["passchanged"]);
+                            vn(false);
+                        window.w.emit("passchanged", a.passchanged);
                         break;
                     case "accountdeleted":
                         ir("Your account has been deleted.", 3e3),
-                            vn(!1),
-                            Re = !0,
-                            dt(!0, !0);
-                        window.w.emit("accountdeleted", a["accountdeleted"]);
+                            vn(false),
+                            Re = true,
+                            dt(true, true);
+                        window.w.emit("accountdeleted", a.accountdeleted);
                         break;
                     case "cool":
                         ir("Rate limit", 3e3),
-                            vn(!1);
+                            vn(false);
                         break;
                     case "token":
-                        vn(!1);
-                        var R = a["token"];
+                        vn(false);
+                        var R = a.token;
                         je = R[0],
-                            localStorage["setItem"]("username", je),
-                            localStorage["setItem"]("token", R[1]),
-                            document["getElementById"]("login")["style"]["display"] = "none",
-                            document["getElementById"]("register")["style"]["display"] = "none",
-                            document["getElementById"]("loggedin").style["display"] = "block",
+                            localStorage.setItem("username", je),
+                            localStorage.setItem("token", R[1]),
+                            document.getElementById("login").style.display = "none",
+                            document.getElementById("register").style.display = "none",
+                            document.getElementById("loggedin").style.display = "block",
                             Bn(),
-                            ge = !0,
-                            Re = !0;
+                            ge = true,
+                            Re = true;
                         window.w.emit("token", je);
                         break;
                     case "admin":
                         // broken shit
-                        a["admin"] ? (m = !0,
-                            document["getElementById"]("admin").style.display = "block") : (m = !1,
-                                document.getElementById("admin")["style"].display = "none");
+                        a.admin ? (m = true,
+                            document.getElementById("admin").style.display = "block") : (m = false,
+                                document.getElementById("admin").style.display = "none");
                         break;
                     case "t":
-                        document["getElementById"]("t").value = a.t
+                        document.getElementById("t").value = a.t
                 }
             }
         }("undefined" == typeof browser ? browser = {} : browser)
