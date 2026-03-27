@@ -3716,5 +3716,26 @@ try{
                     , c = 255 & a;
                 return t ? "rgba(" + o + ", " + i + ", " + c + ", " + t + ")" : "rgb(" + o + ", " + i + ", " + c + ")"
             }
+            function Jr(e) {
+                return e * e
+            }
+            function Vr(e, t) {
+                return 31 * t + e
+            }
+            function Zr(e) {
+                return [e % 31, Math.floor(e / 31)]
+            }
+            isNaN(Ce.x) && (Ce.x = 0),
+                isNaN(Ce.y) && (Ce.y = 0),
+                Ce.start = Ce.x,
+                setTimeout((function () {
+                    var e = n;
+                    window.history.replaceState({}, document.title, location.pathname)
+                }
+                ), 0),
+                Zn(Ce.x, Ce.y),
+                null != localStorage.getItem("zoom") && it(JSON.parse(localStorage.getItem("zoom")), false),
+                Kr(),
+                Or
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
