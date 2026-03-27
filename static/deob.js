@@ -3927,11 +3927,11 @@ try{
                     if (e instanceof ArrayBuffer && (e = new Uint8Array(e)),
                         "object" != typeof e || void 0 === e[a(500)])
                         throw new Error;
-                    if (!e[a(500)])
+                    if (!e.length)
                         throw new Error;
                     if (e instanceof Uint8Array || (e = new Uint8Array(e)),
                         r && r.bdtiple)
-                        for (o = []; i < e[a(500)];)
+                        for (o = []; i < e.length;)
                             o[a(398)](c());
                     else
                         o = c();
@@ -3951,9 +3951,9 @@ try{
                         if (193 === t)
                             throw new Error;
                         if (194 === t)
-                            return !1;
+                            return false;
                         if (195 === t)
-                            return !0;
+                            return true;
                         if (196 === t)
                             return d(-1, 1);
                         if (197 === t)
@@ -4017,13 +4017,13 @@ try{
                     }
                     function l(t) {
                         let n = 0
-                            , r = !0;
+                            , r = true;
                         for (; t-- > 0;)
                             if (r) {
                                 let t = e[i++];
                                 n += 127 & t,
                                     128 & t && (n -= 128),
-                                    r = !1
+                                    r = false
                             } else
                                 n *= 256,
                                     n += e[i++];
@@ -4038,14 +4038,14 @@ try{
                     }
                     function s(t) {
                         var n = a;
-                        let r = new DataView(e.buffer, i + e[n(592)], t);
+                        let r = new DataView(e.buffer, i + e.byteOffset, t);
                         return i += t,
-                            4 === t ? r.getFloat32(0, !1) : 8 === t ? r[n(574)](0, !1) : void 0
+                            4 === t ? r.getFloat32(0, false) : 8 === t ? r.getFloat64(0, false) : void 0
                     }
                     function d(t, n) {
                         var r = a;
                         t < 0 && (t = u(n));
-                        let o = e[r(203)](i, i + t);
+                        let o = e.subarray(i, i + t);
                         return i += t,
                             o
                     }
@@ -4061,7 +4061,7 @@ try{
                         e < 0 && (e = u(t));
                         let r = [];
                         for (; e-- > 0;)
-                            r[n(398)](c());
+                            r.push(c());
                         return r
                     }
                     function m(n, r) {
@@ -4091,13 +4091,13 @@ try{
                                             t = (7 & t) << 18 | (63 & e[o++]) << 12 | (63 & e[o++]) << 6 | 63 & e[o++]
                                         }
                                     if (t <= 65535)
-                                        i += String[a(354)](t);
+                                        i += String.fromCharCode(t);
                                     else {
                                         if (!(t <= 1114111))
                                             throw new Error;
                                         t -= 65536,
                                             i += String.fromCharCode(t >> 10 | 55296),
-                                            i += String[a(354)](1023 & t | 56320)
+                                            i += String.fromCharCode(1023 & t | 56320)
                                     }
                                 }
                                 return i
@@ -4109,16 +4109,16 @@ try{
                             , a = d(e);
                         return 255 === r ? function (e) {
                             var n = t;
-                            if (4 === e[n(500)]) {
+                            if (4 === e.length) {
                                 let t = (e[0] << 24 >>> 0) + (e[1] << 16 >>> 0) + (e[2] << 8 >>> 0) + e[3];
                                 return new Date(1e3 * t)
                             }
-                            if (8 === e[n(500)]) {
+                            if (8 === e.length) {
                                 let t = (e[0] << 22 >>> 0) + (e[1] << 14 >>> 0) + (e[2] << 6 >>> 0) + (e[3] >>> 2)
                                     , n = 4294967296 * (3 & e[3]) + (e[4] << 24 >>> 0) + (e[5] << 16 >>> 0) + (e[6] << 8 >>> 0) + e[7];
                                 return new Date(1e3 * n + t / 1e6)
                             }
-                            if (12 === e[n(500)]) {
+                            if (12 === e.length) {
                                 let t = (e[0] << 24 >>> 0) + (e[1] << 16 >>> 0) + (e[2] << 8 >>> 0) + e[3];
                                 i -= 8;
                                 let n = l(8);
