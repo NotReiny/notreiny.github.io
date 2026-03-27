@@ -3582,5 +3582,20 @@ try{
                 var Sr = Er[ne];
                 null != localStorage.getItem(Sr) && (tt[Sr].checked = "true" == localStorage.getItem(Sr))
             }
+            if (tt.showchat.checked || hn.classList.add("hidden"),
+                tt.disablecolour.checked && hr(true),
+                null != localStorage.getItem("customtheme")) {
+                var Ir = localStorage.getItem("customtheme");
+                try {
+                    var Cr = JSON.parse(Ir);
+                    null != Cr.primary && (B.value = Cr.primary),
+                        null != Cr.secondary && (F.value = Cr.secondary),
+                        null != Cr.texttheme && (P.checked = Cr.texttheme)
+                } catch (e) { }
+            }
+            if (null != localStorage.getItem("theme")) {
+                var Ar = localStorage.getItem("theme");
+                yr(0 == Ar || 1 == Ar || 2 == Ar ? Number(Ar) : N)
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
