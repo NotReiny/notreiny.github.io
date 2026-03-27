@@ -3793,22 +3793,22 @@ try{
                                             m(new Uint8Array(i))
                                 }(e);
                                 break;
-                            case l(511):
+                            case "string":
                                 !function (e) {
                                     var n = l;
                                     let r = function (e) {
                                         var n = t;
-                                        let r = !0
-                                            , a = e[n(500)];
+                                        let r = true
+                                            , a = e.length;
                                         for (let t = 0; t < a; t++)
-                                            if (e[n(656)](t) > 127) {
-                                                r = !1;
+                                            if (e.charCodeAt(t) > 127) {
+                                                r = false;
                                                 break
                                             }
                                         let o = 0
-                                            , i = new Uint8Array(e[n(500)] * (r ? 1 : 4));
+                                            , i = new Uint8Array(e.length * (r ? 1 : 4));
                                         for (let t = 0; t !== a; t++) {
-                                            let r = e[n(656)](t);
+                                            let r = e.charCodeAt(t);
                                             if (r < 128)
                                                 i[o++] = r;
                                             else {
@@ -3833,12 +3833,12 @@ try{
                                         }
                                         return r ? i : i.subarray(0, o)
                                     }(e)
-                                        , a = r[n(500)];
+                                        , a = r.length;
                                     a <= 31 ? v(160 + a) : m(a <= 255 ? [217, a] : a <= 65535 ? [218, a >>> 8, a] : [219, a >>> 24, a >>> 16, a >>> 8, a]),
                                         m(r)
                                 }(e);
                                 break;
-                            case l(279):
+                            case "object":
                                 null === e ? d() : e instanceof Date ? function (e) {
                                     let t = e.getTime() / 1e3;
                                     if (0 === e.getMilliseconds() && t >= 0 && t < 4294967296)
@@ -3851,8 +3851,8 @@ try{
                                         m([199, 12, 255, n >>> 24, n >>> 16, n >>> 8, n]),
                                             h(t)
                                     }
-                                }(e) : Array[l(662)](e) ? f(e) : e instanceof Uint8Array || e instanceof Uint8ClampedArray ? function (e) {
-                                    let t = e[l(500)];
+                                }(e) : Array.isArray(e) ? f(e) : e instanceof Uint8Array || e instanceof Uint8ClampedArray ? function (e) {
+                                    let t = e.length;
                                     m(t <= 15 ? [196, t] : t <= 65535 ? [197, t >>> 8, t] : [198, t >>> 24, t >>> 16, t >>> 8, t]),
                                         m(e)
                                 }(e) : e instanceof Int8Array || e instanceof Int16Array || e instanceof Uint16Array || e instanceof Int32Array || e instanceof Uint32Array || e instanceof Float32Array || e instanceof Float64Array ? f(e) : function (e) {
@@ -3868,9 +3868,9 @@ try{
                                 }(e);
                                 break;
                             default:
-                                if (n || !r || !r[l(313)])
+                                if (n || !r || !r.invalidTypeReplacement)
                                     throw new Error;
-                                l(688) == typeof r[l(313)] ? s(r[l(313)](e), !0) : s(r[l(313)], !0)
+                                "function" == typeof r.invalidTypeReplacement ? s(r.invalidTypeReplacement(e), true) : s(r.invalidTypeReplacement, true)
                         }
                     }
                     function d(e) {
@@ -3884,8 +3884,8 @@ try{
                     }
                     function v(e) {
                         var t = a;
-                        if (l[t(500)] < u + 1) {
-                            let e = 2 * l[t(500)];
+                        if (l.length < u + 1) {
+                            let e = 2 * l.length;
                             for (; e < u + 1;)
                                 e *= 2;
                             let n = new Uint8Array(e);
@@ -3897,16 +3897,16 @@ try{
                     }
                     function m(e) {
                         var t = a;
-                        if (l[t(500)] < u + e.length) {
+                        if (l.length < u + e.length) {
                             let n = 2 * l.length;
-                            for (; n < u + e[t(500)];)
+                            for (; n < u + e.length;)
                                 n *= 2;
                             let r = new Uint8Array(n);
                             r.set(l),
                                 l = r
                         }
-                        l[t(644)](e, u),
-                            u += e[t(500)]
+                        l.set(e, u),
+                            u += e.length
                     }
                     function h(e) {
                         var t = a;
@@ -3914,7 +3914,7 @@ try{
                         e >= 0 ? (n = e / o,
                             r = e % o) : (e++,
                                 n = Math.abs(e) / o,
-                                r = Math[t(330)](e) % o,
+                                r = Math.abs(e) % o,
                                 n = ~n,
                                 r = ~r),
                             m([n >>> 24, n >>> 16, n >>> 8, n, r >>> 24, r >>> 16, r >>> 8, r])
