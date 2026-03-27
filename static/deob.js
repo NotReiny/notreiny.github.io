@@ -3606,5 +3606,48 @@ try{
             function Pr() {
                 return fr(location.pathname)
             }
+            function Lr(e) {
+                var t = n;
+                if ("" == (e = decodeURI(e.toLowerCase())) || "~main" == e)
+                    return {
+                        x: 0,
+                        y: 0
+                    };
+                var r = function (e) {
+                    for (var n, r = t, a = [], o = e + "", i = 0; i < o.length;)
+                        a[255 & i] = 255 & (n ^= 19 * a[255 & i]) + o.codePointAt(i++);
+                    var c, l = a.length, u = this, s = 0, d = (i = u.i = u.j = 0,
+                        u.S = []);
+                    for (l || (a = [l++]); s < 256;)
+                        d[s] = s++;
+                    for (s = 0; s < 256; s++)
+                        d[s] = d[i = 255 & i + a[s % l] + (c = d[s])],
+                            d[i] = c;
+                    var f = function (e) {
+                        for (var t, n = 0, r = u.i, a = u.j, o = u.S; e--;)
+                            t = o[r = 255 & r + 1],
+                                n = 256 * n + o[255 & (o[r] = o[a = 255 & a + t]) + (o[a] = t)];
+                        return u.i = r,
+                            u.j = a,
+                            n
+                    };
+                    return f(256),
+                        function () {
+                            for (var e = f(6), t = 281474976710656, n = 0; e < 4503599627370496;)
+                                e = 256 * (e + n),
+                                    t *= 256,
+                                    n = f(1);
+                            for (; e >= 9007199254740992;)
+                                e /= 2,
+                                    t /= 2,
+                                    n >>>= 1;
+                            return (e + n) / t
+                        }
+                }(e);
+                return {
+                    x: 20 * Math.floor((Math.floor(2e5 * r()) - 1e5) / 20),
+                    y: 10 * Math.floor((Math.floor(2e5 * r()) - 1e5) / 10)
+                }
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
