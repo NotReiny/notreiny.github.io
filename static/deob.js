@@ -2998,5 +2998,93 @@ try{
                     }
                     ), t)
             }
+            null == navigator.clipboard.readText && (document.getElementById("paste").style.display = "none");
+            var lr = 0;
+            function ur(e) {
+                var t = n;
+                switch (ie(false),
+                (2 == e && 2 == lr || 1 == e && 1 == lr) && (e = 0),
+                e) {
+                    case 0:
+                        x.style.transform = "translateX(-105%)";
+                        break;
+                    case 1:
+                        var r = document.getElementById("optionsmenu").clientWidth;
+                        x.style.transform = "translateX(" + -r + "px)";
+                        break;
+                    default:
+                        x.style.transform = "translateX(0px)",
+                            M.classList.contains("open") && M.classList.remove("open")
+                }
+                lr = e,
+                    en()
+            }
+            function sr(e) {
+                var t = n
+                    , r = document.createElement("div");
+                r.classList.add("colour"),
+                    r.addEventListener("click", (function (t) {
+                        mr(e),
+                            nn(t)
+                    }
+                    )),
+                    r.setAttribute("id", e),
+                    r.style.backgroundColor = se[e],
+                    r.title = de[e],
+                    w.appendChild(r)
+            }
+            function dr() {
+                var e = n;
+                ie(false),
+                    M.classList.contains("open") ? (M.classList.remove("open"),
+                        en()) : (M.classList.add("open"),
+                            2 == lr && ur(0),
+                            document.getElementById("tpword").focus())
+            }
+            function fr(e) {
+                return e.replace(/^\/|\/$/g, "")
+            }
+            function vr(e) {
+                var t = n
+                    , r = (e = (e = fr(e)).replace(/\~\/*/, "~")).split("/");
+                if (e = r.shift(),
+                    r.length > 0 && (e += "/" + r.shift()),
+                    (e = (e = fr(e)).toLowerCase()).startsWith("~") && "~main" != e) {
+                    var a = e.split("/")
+                        , o = a[0].replace("~", "")
+                        , i = "main";
+                    a.length > 1 && (i = a[1]),
+                        Cn(o, i),
+                        Zn(0, 0)
+                } else {
+                    var c = Lr(e);
+                    Zn(c.x, c.y),
+                        Cn("textwall", "main"),
+                        0 == c.x && 0 == c.y ? $n() : history["pushState"]({}, null, e)
+                }
+                M["classList"]["remove"]("open")
+            }
+            function mr(e) {
+                e = parseInt(e, 10);
+
+                if (isNaN(e) || !isFinite(e) || e < 0 || e > 30) {
+                    throw new TypeError("supported colors: 0 to 30")
+                }
+
+                var t = n;
+                (tt.disablecolour.checked || nt.disableColour.checked) && (e = 0),
+                    pe != e && (Oe = true);
+                var r = document.getElementById(pe);
+                r.classList.remove("selected"),
+                    pe = e,
+                    window.color = pe,
+                    be = xe && 0 == pe ? "rgba(255, 255, 255, 0.6)" : Yr(se[pe], .6),
+                    (r = document.getElementById(pe)).classList.add("selected"),
+                    r.offsetTop < w.scrollTop + 36 && (w.scrollTop = r.offsetTop - 36),
+                    r.offsetTop > w.scrollTop + w.clientHeight && (w.scrollTop = r.offsetTop - w.clientHeight),
+                    document.getElementById("theme-colour").setAttribute("content", se[e]),
+                    localStorage.setItem("col", e),
+                    ge = true
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
