@@ -3569,6 +3569,18 @@ try{
                 }
                 window.requestAnimationFrame(e)
             }
-            ))
+            )),
+                null != localStorage.getItem("x") && (Ce.x = parseInt(localStorage.getItem("x"))),
+                null != localStorage.getItem("y") && (Ce.y = parseInt(localStorage.getItem("y"))),
+                null != localStorage.getItem("col") ? mr(parseInt(localStorage.getItem("col"))) : mr(0),
+                null != localStorage.getItem("dec") && le(localStorage.getItem("dec")),
+                null != localStorage.getItem("customfont") && (O.value = localStorage.getItem("customfont")),
+                null != localStorage.getItem("customfontsize") && (R.value = localStorage.getItem("customfontsize")),
+                null != $[localStorage.getItem("font")] && vt(localStorage.getItem("font"));
+            var Er = Object.keys(tt);
+            for (ne = 0; ne < Er.length; ne++) {
+                var Sr = Er[ne];
+                null != localStorage.getItem(Sr) && (tt[Sr].checked = "true" == localStorage.getItem(Sr))
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
