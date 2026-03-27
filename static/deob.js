@@ -3086,5 +3086,57 @@ try{
                     localStorage.setItem("col", e),
                     ge = true
             }
+            function yr(e) {
+                var t = n;
+                if (null != e)
+                    N = e;
+                else
+                    switch (N) {
+                        case 0:
+                            N = 1;
+                            break;
+                        case 1:
+                            N = 2;
+                            break;
+                        case 2:
+                            N = 0
+                    }
+                0 == N && (xe = false,
+                    document.getElementById("themeico").src = "/static/sun.svg",
+                    C = S,
+                    A = I),
+                    1 == N && (xe = true,
+                        document.getElementById("themeico").src = "/static/moon.svg",
+                        C = "#000000",
+                        A = "#141414"),
+                    2 == N ? (xe = P.checked,
+                        document.getElementById("themeico").src = "/static/star.svg",
+                        C = B.value,
+                        A = F.value,
+                        L.classList.remove("hidden")) : L.classList.add("hidden"),
+                    T = Xr(A, 10),
+                    localStorage.setItem("theme", N),
+                    ge = true,
+                    en(),
+                    mr(pe),
+                    Sn()
+            }
+            function gr(e) {
+                var t = n;
+                e.target == B ? (C = B.value,
+                    Sn()) : e.target == F && (A = F.value,
+                        T = Xr(A, 10),
+                        Sn(true)),
+                    localStorage.setItem("customtheme", JSON.stringify({
+                        primary: B.value,
+                        secondary: F.value,
+                        texttheme: P.checked
+                    }))
+            }
+            function pr(e) {
+                var t = n;
+                br(e.target.parentElement.id),
+                    en()
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
