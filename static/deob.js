@@ -4177,12 +4177,12 @@ try{
                         return -1
                     }
                 }(Object, Math.max, Math.min)),
-                Array[n(296)] || (Array[n(296)] = (Dr = Object[n(246)][n(561)],
+                Array.from || (Array.from = (Dr = Object.prototype.toString,
                     Nr = function (e) {
-                        return "function" == typeof e || n(247) === Dr.call(e)
+                        return "function" == typeof e || "[object Function]" === Dr.call(e)
                     }
                     ,
-                    jr = Math[n(396)](2, 53) - 1,
+                    jr = Math.pow(2, 53) - 1,
                     Ur = function (e) {
                         var r, a, o = n, i = (r = t,
                             a = Number(e),
