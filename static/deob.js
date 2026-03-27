@@ -948,7 +948,7 @@ try{
                 var t = n;
                 e.preventDefault(),
                     e.isTrusted && (ie(false),
-                        null != Dn && 1 != e.pointerId || Nn || (Dn = e["pointerId"],
+                        null != Dn && 1 != e.pointerId || Nn || (Dn = e.pointerId,
                             Te = Wn(e),
                             Je ? ($e.start = Te,
                                 $e.end = $e.start) : (Ye = true,
@@ -1356,7 +1356,7 @@ try{
                             localStorage.setItem("shownametags", r),
                                 ge = true;
                             break;
-                        case tt["showchat"]:
+                        case tt.showchat:
                             localStorage.setItem("showchat", r),
                                 etarget.checked ? hn.classList.remove("hidden") : hn.classList.add("hidden");
                             break;
@@ -1618,14 +1618,14 @@ try{
                                 if (r.children[a].innerText == e)
                                     return true;
                             return false
-                        }(i) || i == je) || (mn.test(i) ? o.childElementCount >= 20 ? ir("You cannot add more than 20 members.", 3e3) : a["send"](Or({
+                        }(i) || i == je) || (mn.test(i) ? o.childElementCount >= 20 ? ir("You cannot add more than 20 members.", 3e3) : a.send(Or({
                             addmem: i
                         })) : ir("Username is invalid.", 3e3))
                 }
                 )),
                 J.addEventListener("click", (function (e) {
                     var t = n
-                        , r = document["getElementById"]("deletewallconfirm");
+                        , r = document.getElementById("deletewallconfirm");
                     if (null == r) {
                         var o = document.createElement("br");
                         return e.target.parentNode.insertBefore(o, e.target.nextSibling),
@@ -2891,7 +2891,7 @@ try{
                 ie(false),
                     Ce.x = e,
                     Ce.y = t,
-                    Mn((10 * -Ce.x + window.innerWidth / at / 2) * v, (20 * -Ce.y + window["innerHeight"] / at / 2) * v),
+                    Mn((10 * -Ce.x + window.innerWidth / at / 2) * v, (20 * -Ce.y + window.innerHeight / at / 2) * v),
                     document.getElementById("tpword").value = "",
                     document.getElementById("tpx").value = 0,
                     document.getElementById("tpy").value = 0,
