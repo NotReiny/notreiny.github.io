@@ -3553,21 +3553,21 @@ try{
                         E.fillRect(10 * C * v, 20 * T * v, 200 * v, 200 * v)
                     }
                 }(),
-                    ge = !1,
-                    t(307) != i.value && (i.value = t(307)),
-                    i[t(481)] = 4),
-                    0 != Ee[t(429)]) {
+                    ge = false,
+                    "\n\n\n\n\n\n\n\n\n" != i.value && (i.value = "\n\n\n\n\n\n\n\n\n"),
+                    i.selectionEnd = 4),
+                    0 != Ee.size) {
                     for (var l = wr + (Mr - 2); ;) {
                         var u = ke.shift()
-                            , s = Ee[t(520)](u);
-                        if (Ee[t(639)](u),
+                            , s = Ee.get(u);
+                        if (Ee.delete(u),
                             Xt(u, s),
                             0 == Ee.size || performance.now() >= l)
                             break
                     }
-                    ge = !0
+                    ge = true
                 }
-                window[t(300)](e)
+                window.requestAnimationFrame(e)
             }
             ))
         }("undefined" == typeof browser ? browser = {} : browser)
