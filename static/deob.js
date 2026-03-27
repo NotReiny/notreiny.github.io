@@ -3485,7 +3485,7 @@ try{
                     E.setTransform(1, 0, 0, 1, 0, 0),
                         E.fillStyle = A,
                         E.fillRect(0, 0, k.width, k.height),
-                        E.translate(Math.ceil(qe.offset.x), Math.(qe.offset.y));
+                        E.translate(Math.ceil(qe.offset.x), Math.ceil(qe.offset.y));
                     const r = 10 * v
                         , a = 20 * v
                         , o = Math.round(5 * v);
@@ -3596,6 +3596,15 @@ try{
             if (null != localStorage.getItem("theme")) {
                 var Ar = localStorage.getItem("theme");
                 yr(0 == Ar || 1 == Ar || 2 == Ar ? Number(Ar) : N)
+            }
+            var Tr, Br = (Tr = {},
+                window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, (function (e, t, n) {
+                    Tr[t] = n
+                }
+                )),
+                Tr), Fr = false;
+            function Pr() {
+                return fr(location.pathname)
             }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
