@@ -3697,5 +3697,13 @@ try{
                     "#" + zr(a.toString(16), 2) + zr(o.toString(16), 2) + zr(i.toString(16), 2)
             }
             window.Xr = Xr;
+            function zr(e, t) {
+                for (; e.length < t;)
+                    e = "0" + e;
+                return e
+            }
+            function qr(e) {
+                return e >= 10240 && e <= 10495
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
