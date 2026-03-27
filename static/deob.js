@@ -3060,9 +3060,9 @@ try{
                     var c = Lr(e);
                     Zn(c.x, c.y),
                         Cn("textwall", "main"),
-                        0 == c.x && 0 == c.y ? $n() : history["pushState"]({}, null, e)
+                        0 == c.x && 0 == c.y ? $n() : history.pushState({}, null, e)
                 }
-                M["classList"]["remove"]("open")
+                M.classList.remove("open")
             }
             function mr(e) {
                 e = parseInt(e, 10);
