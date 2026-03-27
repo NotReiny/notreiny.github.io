@@ -3138,5 +3138,104 @@ try{
                 br(e.target.parentElement.id),
                     en()
             }
+            function br(e, t) {
+                var r = n
+                    , a = ae[e];
+                a.enabled = null != t ? t : !a.enabled,
+                    a.enabled ? a.el.classList.add("enabled") : a.el.classList.remove("enabled"),
+                    localStorage.setItem("dec", ce())
+            }
+            function xr(e, t, r) {
+                var a = n;
+                if (Math.abs(e - t) > .1) {
+                    for (var o = 0; o < r; o++)
+                        e += (t - e) / 20;
+                    return ge = true,
+                        Math.round(100 * e) / 100
+                }
+                return e != t ? (ge = true,
+                    Math.round(e)) : e
+            }
+            var uP = 200;
+            var aB;
+
+            function setWriteInterval() {
+                if (aB) clearInterval(aB);
+                aB = setInterval(flushWrites, uP);
+            }
+            window.flushAmount = 250
+            function flushWrites() {
+                var e = n;
+                if (a && a.readyState == a.OPEN) {
+                    if ((Le || Oe || Re || De) && we.size !== 0) {
+                        var t = {};
+                        Le && (t.l = [Ce.x, Ce.y]);
+                        Oe && (t.c = pe);
+                        Re && (t.n = tt.anonymous.checked);
+                        De && (t.p = [qe.coords.x, qe.coords.y]);
+
+                        a.send(Or({ ce: t }));
+                        Le = Oe = Re = De = false;
+                    }
+
+                    if (Me.length > 0) {
+                        var r = Me.splice(0, window.flushAmount),
+                            tA = [];
+                        e: for (var o = 0; o < r.length; o++) {
+                            var [i, c, l, u, s] = r[o];
+                            for (var d = 0; d < tA.length; d++) {
+                                if (tA[d][0] === i && tA[d][1] === c) {
+                                    tA[d].push(l, u, s);
+                                    continue e;
+                                }
+                            }
+                            tA.push([i, c, l, u, s]);
+                        }
+                        a.send(Or({ e: tA }));
+                    }
+                }
+            }
+            window.setWriteInterval = setWriteInterval;
+            function setFlushInterval(newer) {
+                var int = parseInt(newer);
+                if (isNaN(int)) int = 200;
+                if (int < 0) int = 0;
+                uP = int;
+                setWriteInterval(); // restart interval
+            }
+
+            // always return the write buffer
+            Object.defineProperty(window, "writeBuffer", {
+                get: function () {
+                    return Me;
+                },
+                set: function () {
+                    console.warn("writeBuffer is read-only");
+                }
+            });
+            window.cursors = Pe;
+            window.cursor = Ce;
+            window.writeFlushRate = uP;
+            window.flushWrites = flushWrites;
+
+
+            window.w.setFlushInterval = setFlushInterval;
+            window.w.changeTheme = function (e) {
+                if (e === undefined) {
+                    yr(0)
+                    return;
+                }
+                if (e == "light") yr(0);
+                else if (e == "dark") yr(1);
+                else if (e == "custom") yr(2);
+                else yr(e);
+
+
+            }
+            window.w.setPrimaryColor = function (e) { B.value = e; gr({ target: B }); }
+            window.w.setSecondaryColor = function (e) { F.value = e; gr({ target: F }); }
+            window.w.toggleTeleport = dr;
+            window.w.color = function () { ur(1) }
+            window.w.settings = function () { ur(2) }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
