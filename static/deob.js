@@ -3665,5 +3665,37 @@ try{
                     Ce.x = Hr.x,
                         Ce.y = Hr.y
                 }
+            function Kr() {
+                var e = n;
+                if (null == a || a.readyState != WebSocket.CONNECTING && a.readyState != WebSocket.OPEN) {
+                    var t = "wss://" + location.host + "/ws";
+                    "https:" !== location.protocol && (t = "ws://" + location.host + "/ws"),
+                        (a = new WebSocket(t)).binaryType = "arraybuffer",
+                        a.onmessage = Tn,
+                        a.onclose = An,
+                        a.onerror = An,
+                        a.onopen = In,
+                        document.getElementById("connecting1").innerText = "Connecting...",
+                        document.getElementById("connecting2").innerText = "",
+                        c.onclick = void 0
+                }
+            }
+            function Xr(e, t) {
+                var r = n
+                    , a = parseInt(e.substring(1, 3), 16)
+                    , o = parseInt(e.substring(3, 5), 16)
+                    , i = parseInt(e.substring(5, 7), 16);
+                return a += t,
+                    o += t,
+                    i += t,
+                    a = Math.min(a, 255),
+                    o = Math.min(o, 255),
+                    i = Math.min(i, 255),
+                    a = Math.max(a, 0),
+                    o = Math.max(o, 0),
+                    i = Math.max(i, 0),
+                    "#" + zr(a.toString(16), 2) + zr(o.toString(16), 2) + zr(i.toString(16), 2)
+            }
+            window.Xr = Xr;
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
