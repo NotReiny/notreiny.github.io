@@ -3705,5 +3705,16 @@ try{
             function qr(e) {
                 return e >= 10240 && e <= 10495
             }
+            function Yr(e, t) {
+                var r = n;
+                if (3 == (e = e.replace("#", "")).length && (e = e[0] + e[0] + e[1] + e[1] + e[2] + e[2]),
+                    6 != e.length)
+                    throw new Error("invalid hex length");
+                var a = parseInt(e, 16)
+                    , o = (16711680 & a) >> 16
+                    , i = (65280 & a) >> 8
+                    , c = 255 & a;
+                return t ? "rgba(" + o + ", " + i + ", " + c + ", " + t + ")" : "rgb(" + o + ", " + i + ", " + c + ")"
+            }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
