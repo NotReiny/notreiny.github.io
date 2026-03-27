@@ -3649,5 +3649,21 @@ try{
                     y: 10 * Math.floor((Math.floor(2e5 * r()) - 1e5) / 10)
                 }
             }
+            null != Br.x && (Ce.x = parseInt(Br.x),
+                Fr = true),
+                null != Br.y && (Ce.y = -1 * parseInt(Br.y),
+                    Fr = true),
+                Br.noui && (l.classList.add("hidden"),
+                    hn.style.display = "none");
+            var Or, Rr, Dr, Nr, jr, Ur, Wr = Pr();
+            if (Wr.length > 0)
+                if (Wr.startsWith("~"))
+                    o = "/" + Wr,
+                        Fr || Zn(0, 0);
+                else {
+                    var Hr = Lr(Wr);
+                    Ce.x = Hr.x,
+                        Ce.y = Hr.y
+                }
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
