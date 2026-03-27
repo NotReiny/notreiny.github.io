@@ -552,6 +552,7 @@ try{
                 Ee.has(e) ? 0 == Ee.get(e) && t && Ee.set(e, t) : (ke.unshift(e),
                     Ee.set(e, t))
             }
+            window.It = It;
             var Ct, At, Tt;
             try {
                 Ct = RegExp("\\p{Extended_Pictographic}", "u")
@@ -2998,6 +2999,11 @@ try{
                     }
                     ), t)
             }
+            function cr() {
+                Ce.x = Ce.start,
+                    Ce.y++,
+                    Hn()
+            }
             null == navigator.clipboard.readText && (document.getElementById("paste").style.display = "none");
             var lr = 0;
             function ur(e) {
@@ -3085,6 +3091,14 @@ try{
                     document.getElementById("theme-colour").setAttribute("content", se[e]),
                     localStorage.setItem("col", e),
                     ge = true
+            }
+            for (w.children.length > 0 && (a = true),
+                ne = 0; ne < se.length; ne++)
+                sr(fe[ne]);
+            function hr(e) {
+                for (var t = n, r = 0; r < w.children.length; r++)
+                    "0" != w.children[r].id && (e ? w.children[r].classList.add("hidden") : w.children[r].classList.remove("hidden"));
+                e && mr(0)
             }
             function yr(e) {
                 var t = n;
@@ -4131,5 +4145,319 @@ try{
                         }
                     }
                 }
+                ,
+                Array.prototype[n(466)] || (Array[n(246)][n(466)] = function (e) {
+                    return !!~this.indexOf(e)
+                }
+                ),
+                Array[n(246)][n(198)] || (Array[n(246)].indexOf = function (e, n, r) {
+                    "use strict";
+                    return function (a, o) {
+                        if (null == this)
+                            throw TypeError(t(631));
+                        var i = e(this)
+                            , c = i.length >>> 0
+                            , l = r(0 | o, c);
+                        if (l < 0)
+                            l = n(0, c + l);
+                        else if (l >= c)
+                            return -1;
+                        if (void 0 === a) {
+                            for (; l !== c; ++l)
+                                if (void 0 === i[l] && l in i)
+                                    return l
+                        } else if (a != a) {
+                            for (; l !== c; ++l)
+                                if (i[l] != i[l])
+                                    return l
+                        } else
+                            for (; l !== c; ++l)
+                                if (i[l] === a)
+                                    return l;
+                        return -1
+                    }
+                }(Object, Math.max, Math[n(678)])),
+                Array[n(296)] || (Array[n(296)] = (Dr = Object[n(246)][n(561)],
+                    Nr = function (e) {
+                        return "function" == typeof e || n(247) === Dr.call(e)
+                    }
+                    ,
+                    jr = Math[n(396)](2, 53) - 1,
+                    Ur = function (e) {
+                        var r, a, o = n, i = (r = t,
+                            a = Number(e),
+                            isNaN(a) ? 0 : 0 !== a && isFinite(a) ? (a > 0 ? 1 : -1) * Math[r(437)](Math[r(330)](a)) : a);
+                        return Math[o(678)](Math[o(227)](i, 0), jr)
+                    }
+                    ,
+                    function (e) {
+                        var t = n
+                            , r = this
+                            , a = Object(e);
+                        if (null == e)
+                            throw new TypeError(t(578));
+                        var o, i = arguments[t(500)] > 1 ? arguments[1] : void 0;
+                        if (void 0 !== i) {
+                            if (!Nr(i))
+                                throw new TypeError(t(582));
+                            arguments.length > 2 && (o = arguments[2])
+                        }
+                        for (var c, l = Ur(a.length), u = Nr(r) ? Object(new r(l)) : new Array(l), s = 0; s < l;)
+                            c = a[s],
+                                u[s] = i ? void 0 === o ? i(c, s) : i[t(619)](o, c, s) : c,
+                                s += 1;
+                        return u[t(500)] = l,
+                            u
+                    }
+                )),
+                Math[n(636)] || (Math[n(636)] = function (e) {
+                    return (e > 0) - (e < 0) || +e
+                }
+                ),
+                String.prototype.startsWith || Object.defineProperty(String[n(246)], n(482), {
+                    value: function (e, t) {
+                        var r = n
+                            , a = t > 0 ? 0 | t : 0;
+                        return this.substring(a, a + e[r(500)]) === e
+                    }
+                }),
+                String[n(246)][n(546)] || function () {
+                    "use strict";
+                    var e = n
+                        , r = function () {
+                            var e = t;
+                            try {
+                                var n = {}
+                                    , r = Object[e(360)]
+                                    , a = r(n, n, n) && r
+                            } catch (e) { }
+                            return a
+                        }()
+                        , a = function (e) {
+                            var n = t;
+                            if (null == this)
+                                throw TypeError();
+                            var r = String(this)
+                                , a = r.length
+                                , o = e ? Number(e) : 0;
+                            if (o != o && (o = 0),
+                                !(o < 0 || o >= a)) {
+                                var i, c = r[n(656)](o);
+                                return c >= 55296 && c <= 56319 && a > o + 1 && (i = r[n(656)](o + 1)) >= 56320 && i <= 57343 ? 1024 * (c - 55296) + i - 56320 + 65536 : c
+                            }
+                        };
+                    r ? r(String.prototype, e(546), {
+                        value: a,
+                        configurable: !0,
+                        writable: !0
+                    }) : String[e(246)][e(546)] = a
+                }(),
+                String[n(438)] || function (e) {
+                    var r = n
+                        , a = function (n) {
+                            for (var r = t, a = [], o = 0, i = "", c = 0, l = arguments.length; c !== l; ++c) {
+                                var u = +arguments[c];
+                                if (!(u < 1114111 && u >>> 0 === u))
+                                    throw RangeError(r(575) + u);
+                                u <= 65535 ? o = a[r(398)](u) : (u -= 65536,
+                                    o = a.push(55296 + (u >> 10), u % 1024 + 56320)),
+                                    o >= 16383 && (i += e[r(411)](null, a),
+                                        a[r(500)] = 0)
+                            }
+                            return i + e[r(411)](null, a)
+                        };
+                    try {
+                        Object[r(360)](String, "fromCodePoint", {
+                            value: a,
+                            configurable: !0,
+                            writable: !0
+                        })
+                    } catch (e) {
+                        String.fromCodePoint = a
+                    }
+                }(String[n(354)]),
+                CanvasRenderingContext2D[n(246)][n(339)] || (CanvasRenderingContext2D.prototype[n(339)] = function (e, t, r, a, o) {
+                    var i = n
+                        , c = new Array(4);
+                    if (i(279) == typeof o)
+                        switch (o[i(500)]) {
+                            case 1:
+                                c[i(616)](o[0], 0, 4);
+                                break;
+                            case 2:
+                                c[i(616)](o[0], 0, 4),
+                                    c[1] = c[3] = o[1];
+                                break;
+                            case 3:
+                                c[0] = o[0],
+                                    c[1] = c[3] = o[1],
+                                    c[2] = o[2];
+                                break;
+                            case 4:
+                                c = o;
+                                break;
+                            default:
+                                c.fill(0, 0, 4)
+                        }
+                    this[i(410)](),
+                        this[i(409)](e + c[0], t),
+                        this[i(349)](e + r - c[1], t),
+                        this[i(453)](e + r, t, e + r, t + c[1]),
+                        this[i(349)](e + r, t + a - c[2]),
+                        this.quadraticCurveTo(e + r, t + a, e + r - c[2], t + a),
+                        this[i(349)](e + c[3], t + a),
+                        this.quadraticCurveTo(e, t + a, e, t + a - c[3]),
+                        this[i(349)](e, t + c[0]),
+                        this[i(453)](e, t, e + c[0], t),
+                        this.closePath()
+                }
+                );
+            const $r = 10 == f[n(558)]() && f[n(402)]() >= 28 || 11 == f[n(558)]() || 0 == f[n(558)]() && f[n(402)]() <= 6 || localStorage.getItem(n(355))
+                , Gr = [n(654), n(472)]
+                , Qr = [4, 7, 9, 12];
+            $r && setInterval((function () {
+                var e = n;
+                if (e(391) == W && e(622) == H && !tt.disablecolour.checked)
+                    for (var t = 0; t < Gr[e(500)]; t++) {
+                        var r = Gr[t]
+                            , a = we[e(520)](r);
+                        if (null != a && null != a[e(704)]) {
+                            for (var o = 0; o < 200; o++)
+                                switch (a[e(704)][o]) {
+                                    case "?":
+                                    case "'":
+                                        a[e(212)][o] = Qr[Math.floor(4 * Math[e(458)]())]
+                                }
+                            St(r, !1)
+                        }
+                    }
+            }
+            ), 400);
+            function advancedSplit(str, noSurrog, noComb, norm) {
+                if (str && str.constructor == Array) return str.slice(0);
+                var chars = [];
+                var buffer = "";
+                var surrogMode = false;
+                var charMode = false;
+                var combCount = 0;
+                var combLimit = 15;
+                for (var i = 0; i < str.length; i++) {
+                    var char = str[i];
+                    var code = char.charCodeAt();
+                    if (code >= 0xDC00 && code <= 0xDFFF) {
+                        if (surrogMode) {
+                            buffer += char;
+                        } else {
+                            buffer = "";
+                            chars.push("?");
+                        }
+                        surrogMode = false;
+                        combCount = 0;
+                        continue;
+                    } else if (surrogMode) {
+                        buffer = "";
+                        chars.push("?");
+                        surrogMode = false;
+                        continue;
+                    }
+                    if (!noSurrog && code >= 0xD800 && code <= 0xDBFF) {
+                        if (charMode) {
+                            chars.push(buffer);
+                        }
+                        charMode = true;
+                        surrogMode = true;
+                        buffer = char;
+                        continue;
+                    }
+                    if (!norm && ((code >= 0x0300 && code <= 0x036F) ||
+                        (code >= 0x1DC0 && code <= 0x1DFF) ||
+                        (code >= 0x20D0 && code <= 0x20FF) ||
+                        (code >= 0xFE20 && code <= 0xFE2F))) {
+                        if (!noComb && charMode && combCount < combLimit) {
+                            buffer += char;
+                            combCount++;
+                        }
+                        continue;
+                    } else {
+                        if (charMode) {
+                            chars.push(buffer);
+                        }
+                        combCount = 0;
+                        charMode = true;
+                        buffer = char;
+                    }
+                }
+                if (buffer) {
+                    chars.push(buffer);
+                }
+                return chars;
+            }
+            window.w.typeChar = writeChar;
+            window.w.socket = {}
+            Object.defineProperty(window.w, "socket", {
+                get: function () { return a }
+            });
+            window.w.clipboard = {
+                textarea: null,
+                init: function () {
+                    var area = document.createElement("textarea");
+                    area.value = "";
+                    area.id = "textCopy";
+                    area.style.width = "1px";
+                    area.style.height = "1px";
+                    area.style.position = "absolute";
+                    area.style.left = "-1000px";
+                    area.style.top = "-1000px";
+                    document.body.appendChild(area);
+                    window.w.clipboard.textarea = area;
+                },
+                copy: function (string) {
+                    window.w.clipboard.textarea.value = string;
+                    window.w.clipboard.textarea.select();
+                    document.execCommand("copy");
+                    window.w.clipboard.textarea.value = "";
+                }
+            }
+            window.w.clipboard.init();
+            window.w.showChat = function (toggle) {
+                const chat = document.getElementById("chat");
+                if (!chat) return; // safety check
+
+                if (toggle === undefined) {
+
+                    chat.classList.toggle("open");
+                    return;
+                }
+
+                const shouldShow = toggle === true || toggle === 1 || toggle === "1" || toggle === "true" || toggle === "show";
+
+                if (shouldShow) {
+                    chat.classList.add("open");
+                } else {
+                    chat.classList.remove("open");
+                }
+            };
+            window.w.split = advancedSplit;
+            window.w.chat = {};
+            window.w.chat.send = aib;
+            window.undoWrite = undoWrite;
+            window.network = {};
+            window.network.binary = Or;
+            window.network.text = Rr;
+            window.network.send = function (data) {
+                a.send(window.network.binary(data))
+            };
+            window.network.wsUrl = "wss://" + location.host + "/ws";
+            window.w.changeZoom = function (e, t) {
+                console.warn("remember, this won't save!");
+                var r = n;
+                rt = e < 0 ? 0 : e > 10000 ? 10000 : e,
+                    at = Math.round(100 * rt) / 100,
+                    ot[r(356)] = 10 * at,
+                    t && ir(Math[r(433)](100 * at) + "% ", 1e3),
+                    kn()
+            }
+            window.w.changeColor = mr;
+            window.w.showToast = ir;
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
