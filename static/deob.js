@@ -3237,5 +3237,211 @@ try{
             window.w.toggleTeleport = dr;
             window.w.color = function () { ur(1) }
             window.w.settings = function () { ur(2) }
+            window.Tile = {}
+            window.Tile.get = function (e, t) {
+                var r = n;
+                if (!we.has(e + "," + t))
+                    return null;
+                var a = we.get(e + "," + t);
+                return a
+            };
+            window.Tile.set = function (e, t, r, a) {
+                var o = n;
+                if (!we.has(e + "," + t))
+                    return false;
+                var i = we.get(e + "," + t);
+                return i.txt[r] = a,
+                    true
+            }
+            window.Tile.exists = function (e, t) {
+                var r = n;
+                return we.has(e + "," + t)
+            }
+            window.Tile.loaded = function (e, t) {
+                return !!Tile.get(e, t)
+            }
+            window.Tile.delete = function (e, t) {
+                var r = n;
+                if (!we.has(e + "," + t))
+                    return false;
+                var a = we.get(e + "," + t);
+                return a.protected ? false : (we.delete(e + "," + t),
+                    true)
+            }
+            window.Tile.visible = function (e, t) {
+                var r = n;
+                if (!we.has(e + "," + t))
+                    return false;
+                var a = we.get(e + "," + t);
+                return !xt([e, t], bt(20))
+            }
+            window.Tile.empty = function (e, t) {
+                return Tile.exists(e, t) && Tile.get(e, t).empty
+            }
+            window.Tile.protected = function (e, t) {
+                return Tile.exists(e, t) && Tile.get(e, t).protected
+            }
+            window.Tile.saveBlob = function (e, t) {
+                var r = n;
+                if (!we.has(e + "," + t)) return null;
+
+                var tile = we.get(e + "," + t);
+                if (!tile || !tile.img) return null;
+
+                var img = tile.img;
+
+                var canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                var ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+
+                canvas.toBlob(function (blob) {
+                    if (!blob) return;
+
+                    var url = URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = `tile_${e}_${t}.png`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 'image/png');
+            };
+
+            window.w.goto = vr;
+            window.w.tp = Zn;
+            window.w.cursors = Pe;
+            window.getTMapping = t;
+            window.w.renderChunkAmount = renderChunkAmount;
+            window.w.setRenderChunkAmount = function (e) { renderChunkAmount = parseInt(e, 0); ge = true };
+            window.w.getTheme = function () { return { mode: N, primary: C, secondary: A, texttheme: P.checked }; };
+            window.getChar = function (e, t, r = 0, a = 0) {
+                if (e === undefined || t === undefined || r === undefined || a === undefined) {
+                    [e, t, r, a] = window.cursorCoords;
+                }
+
+                const Xq = Tile.get(e, t);
+                if (!Xq) return null;
+
+                const Md = 20;
+                const Fh = 10;
+
+                if (r < 0) {
+                    e -= Math.ceil(Math.abs(r) / Md);
+                    r = (r % Md + Md) % Md;
+                }
+                if (a < 0) {
+                    t -= Math.ceil(Math.abs(a) / Fh);
+                    a = (a % Fh + Fh) % Fh;
+                }
+
+                const Tp = a * Md + r;
+                return Xq.txt[Tp];
+            };
+
+            window.getCharColor = function (e, t, r = 0, a = 0) {
+                if (e === undefined || t === undefined || r === undefined || a === undefined) {
+                    [e, t, r, a] = window.cursorCoords;
+                }
+
+                const Vz = Tile.get(e, t);
+                if (!Vz) return null;
+
+                const Rn = 20;
+                const Bw = 10;
+
+                if (r < 0) {
+                    e -= Math.ceil(Math.abs(r) / Rn);
+                    r = (r % Rn + Rn) % Rn;
+                }
+                if (a < 0) {
+                    t -= Math.ceil(Math.abs(a) / Bw);
+                    a = (a % Bw + Bw) % Bw;
+                }
+
+                const Kf = a * Rn + r;
+                return Vz.clr[Kf] % 31;
+            };
+
+            window.getCharDecoration = function (e) {
+
+                const Lj = Math.floor(e / 31);
+                return {
+
+                    bold: (Lj & 8) == 8,
+                    italic: (Lj & 4) == 4,
+                    underline: (Lj & 2) == 2,
+                    strike: (Lj & 1) == 1
+                };
+            };
+
+            window.getCharInfo = function (e, t, r = 0, a = 0) {
+                if (e === undefined || t === undefined || r === undefined || a === undefined) {
+                    [e, t, r, a] = window.cursorCoords;
+                }
+
+                const Qm = Tile.get(e, t);
+                if (!Qm) return null;
+
+                const Nw = 20;
+                const Xv = 10;
+
+                if (r < 0) {
+                    e -= Math.ceil(Math.abs(r) / Nw);
+                    r = (r % Nw + Nw) % Nw;
+                }
+                if (a < 0) {
+                    t -= Math.ceil(Math.abs(a) / Xv);
+                    a = (a % Xv + Xv) % Xv;
+                }
+
+                const Pd = a * Nw + r;
+                const Uf = Qm.txt[Pd];
+                const Jy = Qm.clr[Pd];
+                const Gh = Jy % 31;
+                return {
+                    tileCoords: [e, t, r, a],
+                    char: Uf,
+                    color: Gh,
+                    deco: getCharDecoration(Jy)
+                };
+            };
+
+            window.getCharInfoXY = function (e, t) {
+                const Rd = Math.floor(e / 20) * 20;
+                const Bs = Math.floor(t / 10) * 10;
+                const Qp = e % 20;
+                const Lk = t % 10;
+                return getCharInfo(Rd, Bs, Qp, Lk);
+            };
+
+
+            window.XYtoTile = function (x, y) {
+                const tileX = Math.floor(x / 20) * 20;
+                const tileY = Math.floor(y / 10) * 10;
+                const offsetX = x - Math.floor(x / 20) * 20;
+                const offsetY = y - Math.floor(y / 10) * 10;
+                return [tileX, tileY, offsetX, offsetY];
+            }
+            Object.defineProperty(window, "cursorCoords", {
+                get: function () {
+                    var e = n;
+                    const [tileX, tileY, offsetX, offsetY] = XYtoTile(Ce.x, Ce.y);
+                    return [tileX, tileY, offsetX, offsetY];
+                }
+            });
+            Object.defineProperty(window, "cursorCoordsXY", {
+                get: function () {
+                    return [Ce.x, Ce.y];
+                }
+            });
+            window.getTileCoordsFromMouseCoords = function (e) {
+                var { x, y } = Wn(e);
+                return XYtoTile(x, y);
+            }
+            window.getXYCoordsFromMouseCoords = Wn;
+            setWriteInterval();
         }("undefined" == typeof browser ? browser = {} : browser)
 }catch(fu){alert(fu.stack)}
