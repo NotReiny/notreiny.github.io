@@ -1770,7 +1770,7 @@ try{
                 if (v = devicePixelRatio * at,
                     k.width = Math.round(window.innerWidth * devicePixelRatio),
                     k.height = Math.round(window.innerHeight * devicePixelRatio),
-                    k.style["width"] = Math.round(k.width / devicePixelRatio) + "px",
+                    k.style.width = Math.round(k.width / devicePixelRatio) + "px",
                     k.style.height = Math.round(k.height / devicePixelRatio) + "px",
                     E.imageSmoothingEnabled = false,
                     ge = true,
