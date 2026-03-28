@@ -4186,8 +4186,8 @@ try{
                     Ur = function (e) {
                         var r, a, o = n, i = (r = t,
                             a = Number(e),
-                            isNaN(a) ? 0 : 0 !== a && isFinite(a) ? (a > 0 ? 1 : -1) * Math[r(437)](Math[r(330)](a)) : a);
-                        return Math[o(678)](Math[o(227)](i, 0), jr)
+                            isNaN(a) ? 0 : 0 !== a && isFinite(a) ? (a > 0 ? 1 : -1) * Math.floor(Math.abs(a)) : a);
+                        return Math.min(Math.max(i, 0), jr)
                     }
                     ,
                     function (e) {
@@ -4195,18 +4195,18 @@ try{
                             , r = this
                             , a = Object(e);
                         if (null == e)
-                            throw new TypeError(t(578));
-                        var o, i = arguments[t(500)] > 1 ? arguments[1] : void 0;
+                            throw new TypeError("Array.from requires an array-like object - not null or undefined");
+                        var o, i = arguments.length > 1 ? arguments[1] : void 0;
                         if (void 0 !== i) {
                             if (!Nr(i))
-                                throw new TypeError(t(582));
+                                throw new TypeError("Array.from: when provided, the second argument must be a function");
                             arguments.length > 2 && (o = arguments[2])
                         }
                         for (var c, l = Ur(a.length), u = Nr(r) ? Object(new r(l)) : new Array(l), s = 0; s < l;)
                             c = a[s],
-                                u[s] = i ? void 0 === o ? i(c, s) : i[t(619)](o, c, s) : c,
+                                u[s] = i ? void 0 === o ? i(c, s) : i.call(o, c, s) : c,
                                 s += 1;
-                        return u[t(500)] = l,
+                        return u.length = l,
                             u
                     }
                 )),
