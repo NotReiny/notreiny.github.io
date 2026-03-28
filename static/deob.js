@@ -1,4 +1,4 @@
-try{
+!function (e) {
     function t(e, n) {
         var a = r();
         return (t = function (e, t) {
@@ -4460,4 +4460,4 @@ try{
             window.w.changeColor = mr;
             window.w.showToast = ir;
         }("undefined" == typeof browser ? browser = {} : browser)
-}catch(fu){alert(fu.stack)}
+}("undefined" == typeof browser ? browser = {} : browser);
