@@ -4312,23 +4312,23 @@ try{
                         this.closePath()
                 }
                 );
-            const $r = 10 == f[n(558)]() && f[n(402)]() >= 28 || 11 == f[n(558)]() || 0 == f[n(558)]() && f[n(402)]() <= 6 || localStorage.getItem(n(355))
-                , Gr = [n(654), n(472)]
+            const $r = 10 == f.getMonth() && f.getDate() >= 28 || 11 == f.getMonth() || 0 == f.getMonth() && f.getDate() <= 6 || localStorage.getItem("christmas")
+                , Gr = ["-20,-10", "0,-10"]
                 , Qr = [4, 7, 9, 12];
             $r && setInterval((function () {
                 var e = n;
-                if (e(391) == W && e(622) == H && !tt.disablecolour.checked)
-                    for (var t = 0; t < Gr[e(500)]; t++) {
+                if ("textwall" == W && "main" == H && !tt.disablecolour.checked)
+                    for (var t = 0; t < Gr.length; t++) {
                         var r = Gr[t]
-                            , a = we[e(520)](r);
-                        if (null != a && null != a[e(704)]) {
+                            , a = we.get(r);
+                        if (null != a && null != a.txt) {
                             for (var o = 0; o < 200; o++)
-                                switch (a[e(704)][o]) {
+                                switch (a.txt[o]) {
                                     case "?":
                                     case "'":
-                                        a[e(212)][o] = Qr[Math.floor(4 * Math[e(458)]())]
+                                        a.clr[o] = Qr[Math.floor(4 * Math.random())]
                                 }
-                            St(r, !1)
+                            St(r, false)
                         }
                     }
             }
