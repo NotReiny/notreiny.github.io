@@ -4210,18 +4210,18 @@ try{
                             u
                     }
                 )),
-                Math[n(636)] || (Math[n(636)] = function (e) {
+                Math.sign || (Math.sign = function (e) {
                     return (e > 0) - (e < 0) || +e
                 }
                 ),
-                String.prototype.startsWith || Object.defineProperty(String[n(246)], n(482), {
+                String.prototype.startsWith || Object.defineProperty(String.prototype, "startsWith", {
                     value: function (e, t) {
                         var r = n
                             , a = t > 0 ? 0 | t : 0;
-                        return this.substring(a, a + e[r(500)]) === e
+                        return this.substring(a, a + e.length) === e
                     }
                 }),
-                String[n(246)][n(546)] || function () {
+                String.prototype.codePointAt || function () {
                     "use strict";
                     var e = n
                         , r = function () {
