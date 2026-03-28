@@ -4228,7 +4228,7 @@ try{
                             var e = t;
                             try {
                                 var n = {}
-                                    , r = Object[e(360)]
+                                    , r = Object.defineProperty
                                     , a = r(n, n, n) && r
                             } catch (e) { }
                             return a
@@ -4242,40 +4242,40 @@ try{
                                 , o = e ? Number(e) : 0;
                             if (o != o && (o = 0),
                                 !(o < 0 || o >= a)) {
-                                var i, c = r[n(656)](o);
-                                return c >= 55296 && c <= 56319 && a > o + 1 && (i = r[n(656)](o + 1)) >= 56320 && i <= 57343 ? 1024 * (c - 55296) + i - 56320 + 65536 : c
+                                var i, c = r.charCodeAt(o);
+                                return c >= 55296 && c <= 56319 && a > o + 1 && (i = r.charCodeAt(o + 1)) >= 56320 && i <= 57343 ? 1024 * (c - 55296) + i - 56320 + 65536 : c
                             }
                         };
-                    r ? r(String.prototype, e(546), {
+                    r ? r(String.prototype, "codePointAt", {
                         value: a,
-                        configurable: !0,
-                        writable: !0
-                    }) : String[e(246)][e(546)] = a
+                        configurable: true,
+                        writable: true
+                    }) : String.prototype.codePointAt = a
                 }(),
-                String[n(438)] || function (e) {
+                String.fromCodePoint || function (e) {
                     var r = n
                         , a = function (n) {
                             for (var r = t, a = [], o = 0, i = "", c = 0, l = arguments.length; c !== l; ++c) {
                                 var u = +arguments[c];
                                 if (!(u < 1114111 && u >>> 0 === u))
-                                    throw RangeError(r(575) + u);
-                                u <= 65535 ? o = a[r(398)](u) : (u -= 65536,
+                                    throw RangeError("Invalid code point: " + u);
+                                u <= 65535 ? o = a.push(u) : (u -= 65536,
                                     o = a.push(55296 + (u >> 10), u % 1024 + 56320)),
-                                    o >= 16383 && (i += e[r(411)](null, a),
-                                        a[r(500)] = 0)
+                                    o >= 16383 && (i += e.apply(null, a),
+                                        a.length = 0)
                             }
-                            return i + e[r(411)](null, a)
+                            return i + e.apply(null, a)
                         };
                     try {
-                        Object[r(360)](String, "fromCodePoint", {
+                        Object.defineProperty(String, "fromCodePoint", {
                             value: a,
-                            configurable: !0,
-                            writable: !0
+                            configurable: true,
+                            writable: true
                         })
                     } catch (e) {
                         String.fromCodePoint = a
                     }
-                }(String[n(354)]),
+                }(String.fromCharCode),
                 CanvasRenderingContext2D[n(246)][n(339)] || (CanvasRenderingContext2D.prototype[n(339)] = function (e, t, r, a, o) {
                     var i = n
                         , c = new Array(4);
