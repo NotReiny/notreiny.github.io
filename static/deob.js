@@ -3939,14 +3939,14 @@
                     var a = n;
                     let o, i = 0;
                     if (e instanceof ArrayBuffer && (e = new Uint8Array(e)),
-                        "object" != typeof e || void 0 === e[a(500)])
+                        "object" != typeof e || void 0 === e.length)
                         throw new Error;
                     if (!e.length)
                         throw new Error;
                     if (e instanceof Uint8Array || (e = new Uint8Array(e)),
                         r && r.bdtiple)
                         for (o = []; i < e.length;)
-                            o[a(398)](c());
+                            o.push(c());
                     else
                         o = c();
                     return o;
