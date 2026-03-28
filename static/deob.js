@@ -408,7 +408,7 @@
                     localStorage.removeItem("token")),
                     je = "",
                     j = 0,
-                    X.style.display = none,
+                    X.style.display = "none",
                     a.readyState != a.OPEN || t || (nt.private.checked && Cn("textwall", "main"),
                         a.send(Or({
                             logout: 0
