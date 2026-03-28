@@ -4276,16 +4276,16 @@ try{
                         String.fromCodePoint = a
                     }
                 }(String.fromCharCode),
-                CanvasRenderingContext2D[n(246)][n(339)] || (CanvasRenderingContext2D.prototype[n(339)] = function (e, t, r, a, o) {
+                CanvasRenderingContext2D.prototype.roundRect || (CanvasRenderingContext2D.prototype.roundRect = function (e, t, r, a, o) {
                     var i = n
                         , c = new Array(4);
-                    if (i(279) == typeof o)
-                        switch (o[i(500)]) {
+                    if ("object" == typeof o)
+                        switch (o.length) {
                             case 1:
-                                c[i(616)](o[0], 0, 4);
+                                c.fill(o[0], 0, 4);
                                 break;
                             case 2:
-                                c[i(616)](o[0], 0, 4),
+                                c.fill(o[0], 0, 4),
                                     c[1] = c[3] = o[1];
                                 break;
                             case 3:
@@ -4299,16 +4299,16 @@ try{
                             default:
                                 c.fill(0, 0, 4)
                         }
-                    this[i(410)](),
-                        this[i(409)](e + c[0], t),
-                        this[i(349)](e + r - c[1], t),
-                        this[i(453)](e + r, t, e + r, t + c[1]),
-                        this[i(349)](e + r, t + a - c[2]),
+                    this.beginPath(),
+                        this.moveTo(e + c[0], t),
+                        this.lineTo(e + r - c[1], t),
+                        this.quadraticCurveTo(e + r, t, e + r, t + c[1]),
+                        this.lineTo(e + r, t + a - c[2]),
                         this.quadraticCurveTo(e + r, t + a, e + r - c[2], t + a),
-                        this[i(349)](e + c[3], t + a),
+                        this.lineTo(e + c[3], t + a),
                         this.quadraticCurveTo(e, t + a, e, t + a - c[3]),
-                        this[i(349)](e, t + c[0]),
-                        this[i(453)](e, t, e + c[0], t),
+                        this.lineTo(e, t + c[0]),
+                        this.quadraticCurveTo(e, t, e + c[0], t),
                         this.closePath()
                 }
                 );
@@ -4453,8 +4453,8 @@ try{
                 var r = n;
                 rt = e < 0 ? 0 : e > 10000 ? 10000 : e,
                     at = Math.round(100 * rt) / 100,
-                    ot[r(356)] = 10 * at,
-                    t && ir(Math[r(433)](100 * at) + "% ", 1e3),
+                    ot.value = 10 * at,
+                    t && ir(Math.round(100 * at) + "% ", 1e3),
                     kn()
             }
             window.w.changeColor = mr;
