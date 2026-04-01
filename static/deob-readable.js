@@ -120,7 +120,7 @@
                 , u = -1 != navigator.userAgent.indexOf("iPhone") || -1 != navigator.userAgent.indexOf("iPod") || -1 != navigator.userAgent.indexOf("iPad")
                 , s = -1 != navigator.userAgent.indexOf("Firefox")
                 , d = u ? 40 : 200
-                , f = new Date;
+                , currentDate = new Date;
             var pixelRatio = devicePixelRatio
                 , m = false
                 , pageTitle = document.title
@@ -146,7 +146,7 @@
                 , I = "#EBEBEB";
             var C = S
                 , A = I
-                , T = Xr(A, 10);
+                , T = adjustColour(A, 10);
             const elemId_primary = document.getElementById("primary")
                 , elemId_secondary = document.getElementById("secondary")
                 , elemId_themetext = document.getElementById("themetext")
@@ -157,8 +157,8 @@
             var N = 0;
             var j = 0
                 , U = false
-                , W = ""
-                , H = ""
+                , currentWall = ""
+                , currentSubwall = ""
                 , K = false;
             const elemId_wallsettings = document.getElementById("wallsettings")
                 , elemId_addmembers = document.getElementById("addmembers")
@@ -248,8 +248,8 @@
                 var t, r = n;
                 if (e) {
                     elemId_decorations.style.display = "flex";
-                    var o = (t = Ce.x,
-                        r = Ce.y,
+                    var o = (t = cursor_.x,
+                        r = cursor_.y,
                     {
                         x: t * (10 * pixelRatio) / devicePixelRatio + position_.offset.x / devicePixelRatio,
                         y: r * (20 * pixelRatio) / devicePixelRatio + position_.offset.y / devicePixelRatio
@@ -289,7 +289,7 @@
                     me[ne] = Yr(colourHex[ne], .2);
                 me[colourHex.length] = "rgba(255, 255, 255, 0.2)"
             }();
-            var he, ye, ge, pe = 0, be = Yr(colourHex[pe], .6), xe = false, we = new Map, Me = [], ke = [], Ee = new Map, Se = new Worker("/static/ping.js"), Ie = false, Ce = {
+            var he, ye, ge, pe = 0, be = Yr(colourHex[pe], .6), xe = false, we = new Map, Me = [], ke = [], Ee = new Map, pingWorker = new Worker("/static/ping.js"), Ie = false, cursor_ = {
                 x: 0,
                 y: 0,
                 rawx: 0,
@@ -306,7 +306,7 @@
             }, Te = {
                 x: 0,
                 y: 0
-            }, Be = [], Fe = [], Pe = new Map, Le = true, Oe = true, Re = true, De = false, Ne = [], je = "", Ue = 0, We = 0, He = document.getElementById("coords"), Ke = document.getElementById("nearby"), Xe = performance.now(), ze = {
+            }, Be = [], Fe = [], cursors_ = new Map, Le = true, Oe = true, Re = true, De = false, Ne = [], je = "", Ue = 0, We = 0, elemId_coords = document.getElementById("coords"), elemId_nearby = document.getElementById("nearby"), Xe = performance.now(), ze = {
                 scale: 1,
                 offset: {
                     x: 0,
@@ -381,7 +381,7 @@
                     at = Math.round(100 * rt) / 100,
                     localStorage.setItem("zoom", at),
                     elemId_zoom.value = 10 * at,
-                    t && ir(Math.round(100 * at) + "% ", 1e3),
+                    t && showToast_(Math.round(100 * at) + "% ", 1e3),
                     kn()
             }
             function ct() {
@@ -397,7 +397,7 @@
                     j = 0,
                     elemId_wallsettings.style.display = "none",
                     a.readyState != a.OPEN || t || (wallSettings.private.checked && Cn("textwall", "main"),
-                        a.send(Or({
+                        a.send(networkBinary({
                             logout: 0
                         })),
                         Re = true),
@@ -746,7 +746,7 @@
                 for (var r = innerWidth / innerHeight, a = [], o = position_.coords.x, i = 2 * position_.coords.y * r, c = 0; c < e.length; c += 2) {
                     var l = e[c] + 10
                         , u = 2 * (e[c + 1] + 5) * r
-                        , s = Math.sqrt(Jr(o - l) + Jr(i - u));
+                        , s = Math.sqrt(number_sqr(o - l) + number_sqr(i - u));
                     a.push([s, c])
                 }
                 return a.sort(Vt),
@@ -780,7 +780,7 @@
                                 renderChunkAmount == ++d)
                                 break
                         }
-                        d > 0 && (a.send(Or({
+                        d > 0 && (a.send(networkBinary({
                             r: $t
                         })),
                             Gt = true,
@@ -792,7 +792,7 @@
                 var e, t = n, r = bt(250);
                 for (const n of we.keys()) {
                     var a = wt(n);
-                    !xt(a, r) || (e = a)[0] > Ce.x - 20 && e[0] < Ce.x + 20 && e[1] > Ce.y - 10 && e[1] < Ce.y + 10 || we.delete(n)
+                    !xt(a, r) || (e = a)[0] > cursor_.x - 20 && e[0] < cursor_.x + 20 && e[1] > cursor_.y - 10 && e[1] < cursor_.y + 10 || we.delete(n)
                 }
             }
             function en() {
@@ -801,13 +801,13 @@
             var tn = false;
             function nn(e) {
                 if (e.isTrusted) {
-                    var r = 20 * Math.floor(Ce.x / 20)
-                        , o = 10 * Math.floor(Ce.y / 10)
+                    var r = 20 * Math.floor(cursor_.x / 20)
+                        , o = 10 * Math.floor(cursor_.y / 10)
                         , c = r + "," + o;
-                    we.has(c) && (Ve && a.send(Or({
+                    we.has(c) && (Ve && a.send(networkBinary({
                         p: c
                     })),
-                        Ze && (tn ? tn = false : a.send(Or({
+                        Ze && (tn ? tn = false : a.send(networkBinary({
                             c: [r, o, r + 19, o + 9]
                         }))),
                         elemId_textarea.focus())
@@ -817,35 +817,35 @@
                 return e.target.parentElement.parentElement.dataset.id
             }
             function an(e) {
-                m && a.send(Or({
+                m && a.send(networkBinary({
                     i: rn(e)
                 }))
             }
             function on(e) {
-                m && a.send(Or({
+                m && a.send(networkBinary({
                     a: [rn(e), e.target.checked]
                 }))
             }
             function cn(e) {
-                m && a.send(Or({
+                m && a.send(networkBinary({
                     aa: rn(e)
                 }))
             }
             function ln(e) {
                 var r = rn(e)
-                    , a = Pe.get(r);
+                    , a = cursors_.get(r);
                 null != a && m && (a.highlighted = e.target.checked,
                     ge = true)
             }
             function un(e) {
                 var r = e.target.parentElement.dataset.id
-                    , a = Pe.get(r);
-                null != a && m && ir((a.n || r) + ": (" + a.l[0] + ", " + -a.l[1] + ")", 3e3)
+                    , a = cursors_.get(r);
+                null != a && m && showToast_((a.n || r) + ": (" + a.l[0] + ", " + -a.l[1] + ")", 3e3)
             }
             function sn(e) {
                 var r = e.target.parentElement.dataset.id
-                    , a = Pe.get(r);
-                null != a && m && Zn(a.l[0], a.l[1])
+                    , a = cursors_.get(r);
+                null != a && m && tp_(a.l[0], a.l[1])
             }
             function dn(e) {
                 var elem_tr = document.createElement("tr")
@@ -864,7 +864,7 @@
                     elem_button1.addEventListener("click", cn),
                     elem_button2.addEventListener("click", an),
                     elem_input1.addEventListener("click", ln);
-                var d = Pe.get(e);
+                var d = cursors_.get(e);
                 elem_input1.type = "checkbox",
                     elem_input1.checked = 1 == d.highlighted,
                     elem_td1.appendChild(elem_input1);
@@ -901,7 +901,7 @@
                 e.preventDefault(),
                     e.isTrusted && (ie(false),
                         null != Dn && 1 != e.pointerId || Nn || (Dn = e.pointerId,
-                            Te = Wn(e),
+                            Te = getXYCoordsFromMouseCoords_(e),
                             Je ? ($e.start = Te,
                                 $e.end = $e.start) : (Ye = true,
                                     position_.start.x = e.clientX * pixelRatio,
@@ -913,14 +913,14 @@
                                     function (e) {
                                         if (e.pointerId == Dn) {
                                             nr();
-                                            var r = Wn(e);
-                                            if (Ce.x == r.x && Ce.y == r.y || (Le = true),
-                                                Ce.x = r.x,
-                                                Ce.y = r.y,
-                                                Ce.start = Ce.x,
+                                            var r = getXYCoordsFromMouseCoords_(e);
+                                            if (cursor_.x == r.x && cursor_.y == r.y || (Le = true),
+                                                cursor_.x = r.x,
+                                                cursor_.y = r.y,
+                                                cursor_.start = cursor_.x,
                                                 e.altKey) {
                                                 var a = rr();
-                                                a && (Qn(a[0], Zr(a[1])[1]) ? mr(0) : mr(Zr(a[1])[0]))
+                                                a && (Qn(a[0], Zr(a[1])[1]) ? changeColor_(0) : changeColor_(Zr(a[1])[0]))
                                             }
                                             Hn()
                                         }
@@ -934,7 +934,7 @@
                 }
                 )),
                 document.addEventListener("pointermove", (function (e) {
-                    if (e.isTrusted && (Te = Wn(e),
+                    if (e.isTrusted && (Te = getXYCoordsFromMouseCoords_(e),
                         (Ve || Ze) && (ge = true),
                         e.pointerId == Dn && !Nn)) {
                         if (e.preventDefault(),
@@ -959,7 +959,7 @@
                             e.ctrlKey)
                             it(rt - e.deltaY / 1e3, true);
                         else if (e.altKey)
-                            1 == Math.sign(e.deltaY) ? mr(pe == colourId[colourHex.length - 1] ? colourId[0] : colourId[ve(pe) + 1]) : mr(pe == colourId[0] ? colourId[colourHex.length - 1] : colourId[ve(pe) - 1]);
+                            1 == Math.sign(e.deltaY) ? changeColor_(pe == colourId[colourHex.length - 1] ? colourId[0] : colourId[ve(pe) + 1]) : changeColor_(pe == colourId[0] ? colourId[colourHex.length - 1] : colourId[ve(pe) - 1]);
                         else {
                             var r = e.deltaX
                                 , a = e.deltaY;
@@ -985,14 +985,14 @@
                                 $e = {},
                                 m && Ze)
                                 tn = true,
-                                    a.send(Or({
+                                    a.send(networkBinary({
                                         c: [r, o, i, c]
                                     }));
                             else {
-                                var l = Ce.x
-                                    , u = Ce.y;
-                                Ce.x = r,
-                                    Ce.y = o;
+                                var l = cursor_.x
+                                    , u = cursor_.y;
+                                cursor_.x = r,
+                                    cursor_.y = o;
                                 for (var s = "", d = "", f = false, v = false, h = o; h <= c; h++) {
                                     for (var y = r; y <= i; y++) {
                                         var g = rr();
@@ -1002,11 +1002,11 @@
                                             userOpts.copycolour.checked && userOpts.copydecorations.checked ? d += String.fromCharCode(ue + g[1]) : userOpts.copycolour.checked ? d += String.fromCharCode(ue + p) : userOpts.copydecorations.checked && (d += String.fromCharCode(ue + Vr(0, b))),
                                                 Qn(g[0], b) || (0 != b && (v = true),
                                                     0 != p && (f = true)),
-                                                Ce.x++
+                                                cursor_.x++
                                         }
                                     }
-                                    Ce.x = r,
-                                        Ce.y++,
+                                    cursor_.x = r,
+                                        cursor_.y++,
                                         s += "\n",
                                         d += "ï¿½"
                                 }
@@ -1014,9 +1014,9 @@
                                     d = d.slice(0, -1),
                                     s.startsWith("http") && (f = v = false),
                                     userOpts.copycolour.checked && f || userOpts.copydecorations.checked && v ? ar(s + unicode1B + d) : ar(s),
-                                    Ce.x = l,
-                                    Ce.y = u,
-                                    ir("Copied selection.", 1500);
+                                    cursor_.x = l,
+                                    cursor_.y = u,
+                                    showToast_("Copied selection.", 1500);
                                 var x = document.getElementById("copyico");
                                 x.src = "/static/done.svg",
                                     setTimeout((function () {
@@ -1049,10 +1049,10 @@
                     if (e.preventDefault(),
                         e.isTrusted) {
                         if ("insertLineBreak" != e.inputType)
-                            return "deleteContentBackward" == e.inputType ? (Ce.x -= 1,
-                                Vn(" ", 0, false, true) || (Ce.x += 1),
+                            return "deleteContentBackward" == e.inputType ? (cursor_.x -= 1,
+                                writeChar_(" ", 0, false, true) || (cursor_.x += 1),
                                 void nr()) : void (null != e.data && "" != e.data && "insertFromPaste" != e.inputType && (nr(),
-                                    Array.from(e.data).length > 1 ? tr(e.data) : Vn(e.data, 1)));
+                                    Array.from(e.data).length > 1 ? tr(e.data) : writeChar_(e.data, 1)));
                         cr()
                     }
                 }
@@ -1083,13 +1083,13 @@
                                 e.preventDefault();
                                 break;
                             case 36:
-                                Ce.x = Ce.start,
+                                cursor_.x = cursor_.start,
                                     nr(),
                                     ie(false),
                                     e.preventDefault();
                                 break;
                             case 46:
-                                Vn(" ", 0, false, true),
+                                writeChar_(" ", 0, false, true),
                                     nr(),
                                     e.preventDefault()
                         }
@@ -1100,15 +1100,15 @@
                 undoWrite = function () {
                     if (0 != Be.length) {
                         var n = Be.shift();
-                        Ce.x = n[0],
-                            Ce.y = n[1];
+                        cursor_.x = n[0],
+                            cursor_.y = n[1];
                         var r = pe
                             , a = ce()
                             , o = Zr(n[3]);
                         pe = o[0],
                             window.color = pe,
                             le(o[1]),
-                            Vn(n[2], 0, true) || Be.unshift(n),
+                            writeChar_(n[2], 0, true) || Be.unshift(n),
                             pe = r,
                             window.color = pe,
                             le(a)
@@ -1126,15 +1126,15 @@
                                 e.ctrlKey && (function () {
                                     if (0 != Fe.length) {
                                         var t = Fe.shift();
-                                        Ce.x = t[0],
-                                            Ce.y = t[1];
+                                        cursor_.x = t[0],
+                                            cursor_.y = t[1];
                                         var n = pe
                                             , a = ce()
                                             , o = Zr(t[3]);
                                         pe = o[0],
                                             window.color = pe,
                                             le(o[1]),
-                                            Vn(t[2], 1, false) || Fe.unshift(t),
+                                            writeChar_(t[2], 1, false) || Fe.unshift(t),
                                             pe = n,
                                             window.color = pe,
                                             le(a)
@@ -1147,7 +1147,7 @@
                                 break;
                             case 71:
                                 e.ctrlKey && (e.preventDefault(),
-                                    dr());
+                                    toggleTeleport_());
                                 break;
                             case 66:
                                 e.ctrlKey && (e.preventDefault(),
@@ -1202,7 +1202,7 @@
                     if (r) {
                         ar(r[0]),
                             e.preventDefault(),
-                            e.clipboardData || ir("Copied character.", 1e3);
+                            e.clipboardData || showToast_("Copied character.", 1e3);
                         var a = document.getElementById("copyico");
                         a.src = "/static/done.svg",
                             setTimeout((function () {
@@ -1213,14 +1213,14 @@
                     }
                 }
                 )),
-                Ke.addEventListener("click", (function () {
-                    ir(We + " online", 3e3)
+                elemId_nearby.addEventListener("click", (function () {
+                    showToast_(We + " online", 3e3)
                 }
                 )),
-                He.addEventListener("click", (function () {
+                elemId_coords.addEventListener("click", (function () {
                     history.pushState({}, null, o),
-                        ar(location.protocol + "//" + location.host + o + "?x=" + Ce.x + "&y=" + -Ce.y),
-                        ir("Copied link.", 1e3),
+                        ar(location.protocol + "//" + location.host + o + "?x=" + cursor_.x + "&y=" + -cursor_.y),
+                        showToast_("Copied link.", 1e3),
                         elemId_textarea.focus()
                 }
                 )),
@@ -1238,12 +1238,12 @@
                 )),
                 document.getElementById("home").addEventListener("click", (function () {
                     $n(),
-                        Zn(0, 0)
+                        tp_(0, 0)
                 }
                 )),
                 document.getElementById("home").addEventListener("contextmenu", (function (e) {
                     e.preventDefault(),
-                        Cn("textwall", "main") && Zn(0, 0)
+                        Cn("textwall", "main") && tp_(0, 0)
                 }
                 )),
                 document.getElementById("copy").addEventListener("click", or),
@@ -1280,7 +1280,7 @@
                     vt(selectedFont)
                 }
                 )),
-                document.getElementById("goto").addEventListener("click", dr),
+                document.getElementById("goto").addEventListener("click", toggleTeleport_),
                 elemId_usermenu.addEventListener("click", (function (e) {
                     var r = JSON.stringify(e.target.checked);
                     switch (e.target) {
@@ -1346,7 +1346,7 @@
                 document.getElementById("tpwordgo").addEventListener("click", (function (e) {
                     e.preventDefault();
                     var elemId_tpword = document.getElementById("tpword");
-                    vr(elemId_tpword.value),
+                    goto_(elemId_tpword.value),
                         elemId_tpword.blur()
                 }
                 )),
@@ -1366,9 +1366,9 @@
                         , elemId_tpy = document.getElementById("tpy")
                         , i = parseInt(elemId_tpx.value, 10)
                         , c = parseInt(elemId_tpy.value, 10);
-                    isNaN(i) && isNaN(c) || (0 !== i && (i = i || Ce.x),
-                        0 !== c && (c = c || Ce.y),
-                        Zn(i = Math.max(Math.min(i, Yt.maxx - 1), Yt.minx), c = Math.max(Math.min(-c, Yt.maxy - 1), Yt.miny)),
+                    isNaN(i) && isNaN(c) || (0 !== i && (i = i || cursor_.x),
+                        0 !== c && (c = c || cursor_.y),
+                        tp_(i = Math.max(Math.min(i, Yt.maxx - 1), Yt.minx), c = Math.max(Math.min(-c, Yt.maxy - 1), Yt.miny)),
                         history.pushState({}, null, o),
                         elemId_teleport.classList.remove("open"),
                         elemId_tpx.blur(),
@@ -1378,7 +1378,7 @@
                 window.addEventListener("resize", kn),
                 window.addEventListener("orientationchange", kn),
                 window.addEventListener("popstate", (function () {
-                    vr(Pr())
+                    goto_(Pr())
                 }
                 )),
                 window.addEventListener("focus", (function () {
@@ -1394,7 +1394,7 @@
                 )),
                 elemId_zoom.addEventListener("input", ct),
                 elemId_zoom.addEventListener("change", ct),
-                Se.addEventListener("message", (function (e) {
+                pingWorker.addEventListener("message", (function (e) {
                     a && a.readyState == a.OPEN && a.send(e.data)
                 }
                 )),
@@ -1414,9 +1414,9 @@
                         var elemId_loginname = document.getElementById("loginname")
                             , elemId_loginpass = document.getElementById("loginpass");
                         mn.test(elemId_loginname.value) ? 0 != elemId_loginname.value.length ? 0 != elemId_loginpass.value.length ? (vn(true),
-                            a.send(Or({
+                            a.send(networkBinary({
                                 login: [elemId_loginname.value, elemId_loginpass.value]
-                            }))) : ir("Please type your password.", 3e3) : ir("Please type your username.", 3e3) : ir("Username is invalid.", 3e3)
+                            }))) : showToast_("Please type your password.", 3e3) : showToast_("Please type your username.", 3e3) : showToast_("Username is invalid.", 3e3)
                     }
                 }
                 )),
@@ -1426,9 +1426,9 @@
                             , elemId_password = document.getElementById("password")
                             , elemId_password2 = document.getElementById("password2");
                         mn.test(elemId_username.value) ? 0 != elemId_username.value.length ? 0 != elemId_password.value.length ? elemId_password.value == elemId_password2.value ? (vn(true),
-                            a.send(Or({
+                            a.send(networkBinary({
                                 register: [elemId_username.value, elemId_password.value]
-                            }))) : ir("Passwords do not match.", 3e3) : ir("Please type a password.", 3e3) : ir("Please type a username.", 3e3) : ir("Username is invalid.", 3e3)
+                            }))) : showToast_("Passwords do not match.", 3e3) : showToast_("Please type a password.", 3e3) : showToast_("Please type a username.", 3e3) : showToast_("Username is invalid.", 3e3)
                     }
                 }
                 )),
@@ -1446,9 +1446,9 @@
                         var elemId_chngusername = document.getElementById("chngusername")
                             , elemId_chngeusrpass = document.getElementById("chngeusrpass");
                         mn.test(elemId_chngusername.value) ? 0 != elemId_chngusername.value.length ? je != elemId_chngusername.value ? 0 != elemId_chngeusrpass.value.length ? (vn(true),
-                            a.send(Or({
+                            a.send(networkBinary({
                                 namechange: [elemId_chngusername.value, elemId_chngeusrpass.value]
-                            }))) : ir("Please type your password.", 3e3) : ir("You have typed in your current username.", 3e3) : ir("Please type a new username.", 3e3) : ir("Username is invalid.", 3e3)
+                            }))) : showToast_("Please type your password.", 3e3) : showToast_("You have typed in your current username.", 3e3) : showToast_("Please type a new username.", 3e3) : showToast_("Username is invalid.", 3e3)
                     }
                 }
                 )),
@@ -1459,9 +1459,9 @@
                             , elemId_newpass = document.getElementById("newpass")
                             , elemId_newpass2 = document.getElementById("newpass2");
                         0 != elemId_oldpass.value.length ? 0 != elemId_newpass.value.length ? 0 != elemId_newpass2.value.length ? elemId_newpass.value == elemId_newpass2.value ? (vn(true),
-                            a.send(Or({
+                            a.send(networkBinary({
                                 passchange: [elemId_oldpass.value, elemId_newpass.value]
-                            }))) : ir("New passwords do not match.", 3e3) : ir("Please type your new password again.", 3e3) : ir("Please type your new password.", 3e3) : ir("Please type your password.", 3e3)
+                            }))) : showToast_("New passwords do not match.", 3e3) : showToast_("Please type your new password again.", 3e3) : showToast_("Please type your new password.", 3e3) : showToast_("Please type your password.", 3e3)
                     }
                 }
                 )),
@@ -1470,9 +1470,9 @@
                     if (e.isTrusted) {
                         var elemId_deletepassword = document.getElementById("deletepassword");
                         0 != elemId_deletepassword.value.length ? (vn(true),
-                            a.send(Or({
+                            a.send(networkBinary({
                                 deleteaccount: elemId_deletepassword.value
-                            }))) : ir("Please type your password.", 3e3)
+                            }))) : showToast_("Please type your password.", 3e3)
                     }
                 }
                 )),
@@ -1487,37 +1487,37 @@
                 }
                 )),
                 wallSettings.readOnly.addEventListener("click", (function (e) {
-                    a.send(Or({
+                    a.send(networkBinary({
                         ro: e.target.checked
                     }))
                 }
                 )),
                 wallSettings.private.addEventListener("click", (function (e) {
-                    a.send(Or({
+                    a.send(networkBinary({
                         priv: e.target.checked
                     }))
                 }
                 )),
                 wallSettings.hideCursors.addEventListener("click", (function (e) {
-                    a.send(Or({
+                    a.send(networkBinary({
                         ch: e.target.checked
                     }))
                 }
                 )),
                 wallSettings.disableChat.addEventListener("click", (function (e) {
-                    a.send(Or({
+                    a.send(networkBinary({
                         dc: e.target.checked
                     }))
                 }
                 )),
                 wallSettings.disableColour.addEventListener("click", (function (e) {
-                    a.send(Or({
+                    a.send(networkBinary({
                         dcl: e.target.checked
                     }))
                 }
                 )),
                 wallSettings.disableBraille.addEventListener("click", (function (e) {
-                    a.send(Or({
+                    a.send(networkBinary({
                         db: e.target.checked
                     }))
                 }
@@ -1534,34 +1534,34 @@
                                 if (elemId_memberlist2.children[a].innerText == e)
                                     return true;
                             return false
-                        }(i) || i == je) || (mn.test(i) ? elemId_memberlist.childElementCount >= 20 ? ir("You cannot add more than 20 members.", 3e3) : a.send(Or({
+                        }(i) || i == je) || (mn.test(i) ? elemId_memberlist.childElementCount >= 20 ? showToast_("You cannot add more than 20 members.", 3e3) : a.send(networkBinary({
                             addmem: i
-                        })) : ir("Username is invalid.", 3e3))
+                        })) : showToast_("Username is invalid.", 3e3))
                 }
                 )),
                 elemId_deletewall.addEventListener("click", (function (e) {
                     var elemId_deletewallconfirm = document.getElementById("deletewallconfirm");
                     if (null == elemId_deletewallconfirm) {
-                        var o = document.createElement("br");
-                        return e.target.parentNode.insertBefore(o, e.target.nextSibling),
+                        var elem_br = document.createElement("br");
+                        return e.target.parentNode.insertBefore(elem_br, e.target.nextSibling),
                             (elemId_deletewallconfirm = document.createElement("input")).type = "text",
                             elemId_deletewallconfirm.placeholder = "type 'confirm' here",
                             elemId_deletewallconfirm.maxLength = 7,
                             elemId_deletewallconfirm.id = "deletewallconfirm",
-                            o.parentNode.insertBefore(elemId_deletewallconfirm, o.nextSibling),
+                            elem_br.parentNode.insertBefore(elemId_deletewallconfirm, elem_br.nextSibling),
                             void elemId_deletewallconfirm.focus()
                     }
                     "confirm" == elemId_deletewallconfirm.value.toLowerCase() ? (elemId_deletewallconfirm.parentElement.removeChild(elemId_deletewallconfirm.previousSibling),
                         elemId_deletewallconfirm.parentNode.removeChild(elemId_deletewallconfirm),
-                        a.send(Or({
+                        a.send(networkBinary({
                             dw: 0
                         })),
                         Cn("textwall", "main"),
-                        ir("Deleting wall...", 3e3)) : ir("Please type 'confirm' in the text box if you would like to delete your wall.", 3e3)
+                        showToast_("Deleting wall...", 3e3)) : showToast_("Please type 'confirm' in the text box if you would like to delete your wall.", 3e3)
                 }
                 )),
                 document.getElementById("l").addEventListener("click", (function (e) {
-                    m && a.send(Or({
+                    m && a.send(networkBinary({
                         l: e.target.checked
                     }))
                 }
@@ -1570,7 +1570,7 @@
                     if (m) {
                         document.getElementById("admintable").innerHTML = "";
                         var t = false;
-                        for (const n of Pe.keys())
+                        for (const n of cursors_.keys())
                             dn(n),
                                 t = true;
                         if (t) {
@@ -1582,13 +1582,13 @@
                 )),
                 document.getElementById("sendalert").addEventListener("click", (function () {
                     var elemId_alerttext = document.getElementById("alerttext").value;
-                    m && 0 != elemId_alerttext.length && a.send(Or({
+                    m && 0 != elemId_alerttext.length && a.send(networkBinary({
                         alert: elemId_alerttext
                     }))
                 }
                 )),
                 document.getElementById("reload").addEventListener("click", (function () {
-                    m && a.send(Or({
+                    m && a.send(networkBinary({
                         reload: true
                     }))
                 }
@@ -1596,7 +1596,7 @@
                 document.getElementById("delete").addEventListener("click", (function () {
                     if (m) {
                         var elemId_deletename = document.getElementById("deletename").value;
-                        0 != elemId_deletename.length && a.send(Or({
+                        0 != elemId_deletename.length && a.send(networkBinary({
                             aaa: elemId_deletename
                         }))
                     }
@@ -1605,7 +1605,7 @@
                 document.getElementById("free").addEventListener("click", (function () {
                     if (m) {
                         var elemId_freename = document.getElementById("freename").value;
-                        0 != elemId_freename.length && a.send(Or({
+                        0 != elemId_freename.length && a.send(networkBinary({
                             aaaa: elemId_freename
                         }))
                     }
@@ -1639,10 +1639,10 @@
                         elemId_chatmsg.value = "",
                         elemId_chatmsg.focus()))
             }
-            function aib(e) {
+            function chatSend(e) {
                 var data = { msg: e };
                 window.w.emit("chatBefore", data);
-                a.send(Or({
+                a.send(networkBinary({
                     msg: data.msg
                 })),
                     Xe = performance.now();
@@ -1654,7 +1654,7 @@
             }
             function wn(e) {
                 e.preventDefault(),
-                    Cn(e.target.innerText.toLowerCase(), "main") && Zn(0, 0)
+                    Cn(e.target.innerText.toLowerCase(), "main") && tp_(0, 0)
             }
             function Mn(e, t, r) {
                 r ? (position_.offset.x = e,
@@ -1687,9 +1687,9 @@
             }
             function En() {
                 var pageTitle2 = pageTitle;
-                "textwall" != W && (pageTitle2 = "~" + W,
-                    "main" != H && (pageTitle2 += "/" + H)),
-                    null == a || a.readyState == a.CLOSED ? document.title = pageTitle + " (disconnected)" : document.title = y ? "textwall" != W ? pageTitle2 : pageTitle : pageTitle2 + " (" + Ue + " nearby)"
+                "textwall" != currentWall && (pageTitle2 = "~" + currentWall,
+                    "main" != currentSubwall && (pageTitle2 += "/" + currentSubwall)),
+                    null == a || a.readyState == a.CLOSED ? document.title = pageTitle + " (disconnected)" : document.title = y ? "textwall" != currentWall ? pageTitle2 : pageTitle : pageTitle2 + " (" + Ue + " nearby)"
             }
             function Sn(e) {
                 ke = [],
@@ -1712,7 +1712,7 @@
                 pingInterval = setInterval(() => {
                     NKe = performance.now();
                     if (a.readyState === 1) {
-                        a.send(Or({ ping: true }));
+                        a.send(networkBinary({ ping: true }));
                     }
                 }, 1000);
             }
@@ -1732,7 +1732,7 @@
                     document.getElementById("connecting2").innerText = "",
                     document.getElementById("admin").style.display = "none",
                     "" == je && null != localStorage.getItem("username") && null != localStorage.getItem("token") && (vn(true),
-                        a.send(Or({
+                        a.send(networkBinary({
                             token: [localStorage.getItem("username"), localStorage.getItem("token")]
                         })));
                 var t = "textwall"
@@ -1746,7 +1746,7 @@
             }
 
             function Cn(e, t) {
-                return !(W == e && H == t || K || (K = true,
+                return !(currentWall == e && currentSubwall == t || K || (K = true,
                     e = e.toLowerCase(),
                     t = t.toLowerCase(),
                     clearInterval(he),
@@ -1754,12 +1754,12 @@
                     nr(),
                     pn(),
                     Yt = null,
-                    a.send(Or({
+                    a.send(networkBinary({
                         j: [e, t]
                     })),
                     Xn(),
                     we.clear(),
-                    Pe.clear(),
+                    cursors_.clear(),
                     Me = [],
                     0))
             }
@@ -1770,8 +1770,8 @@
                 En(),
                     m = false,
                     Gt = false,
-                    H = "",
-                    W = "",
+                    currentSubwall = "",
+                    currentWall = "",
                     pn(),
                     gn(),
                     elemId_connecting.style.display = "flex",
@@ -1874,32 +1874,32 @@
             window.w.moveCursor = function (direction, amount, doNotAutoPan) {
                 switch (direction) {
                     case "up":
-                        Ce.y -= amount;
+                        cursor_.y -= amount;
                         break;
                     case "down":
-                        Ce.y += amount;
+                        cursor_.y += amount;
                         break;
                     case "left":
-                        Ce.x -= amount;
+                        cursor_.x -= amount;
                         break;
                     case "right":
-                        Ce.x += amount;
+                        cursor_.x += amount;
                         break;
                     default:
                         throw "Invalid direction";
                 }
                 nr();
                 ie(false);
-                window.w.emit("cursormove", [Ce.x, Ce.y]);
+                window.w.emit("cursormove", [cursor_.x, cursor_.y]);
                 if (!doNotAutoPan) Hn();
             };
             window.w.moveCursorTo = function(x, y, doNotAutoPan) {
-                Ce.x = x;
-                Ce.y = y;
-                Ce.start = x;
+                cursor_.x = x;
+                cursor_.y = y;
+                cursor_.start = x;
                 nr();
                 ie(false);
-                window.w.emit("cursormove", [Ce.x, Ce.y]);
+                window.w.emit("cursormove", [cursor_.x, cursor_.y]);
                 if (!doNotAutoPan) Hn();
             };
             function parseColoredMessage(msg) {
@@ -1934,7 +1934,7 @@
 
             function Tn(e) {
                 var r = new Uint8Array(e.data).buffer
-                    , a = Rr(new Uint8Array(r));
+                    , a = networkText(new Uint8Array(r));
                 switch (Object.keys(a)[0]) {
                     case "ces":
                         var sp = a.ces;
@@ -1960,18 +1960,18 @@
                             miny: i[2],
                             maxy: i[3]
                         },
-                            Jt(Ce.x, Ce.y) || Zn(0, 0),
+                            Jt(cursor_.x, cursor_.y) || tp_(0, 0),
                             ge = true;
 
                         break;
                     case "j":
                         var l = a.j;
-                        W = l[0],
-                            H = l[1],
+                        currentWall = l[0],
+                            currentSubwall = l[1],
                             En(),
-                            "textwall" == W && (wallSettings.private.disabled = true),
-                            "textwall" != W ? "main" != H ? (o = "/~" + W + "/" + H,
-                                history.pushState({}, null, o)) : (o = "/~" + W,
+                            "textwall" == currentWall && (wallSettings.private.disabled = true),
+                            "textwall" != currentWall ? "main" != currentSubwall ? (o = "/~" + currentWall + "/" + currentSubwall,
+                                history.pushState({}, null, o)) : (o = "/~" + currentWall,
                                     history.pushState({}, null, o)) : (o = "/",
                                         Pr().startsWith("~") && history.pushState({}, null, o),
                                         elemId_deletewall.style.display = "none"),
@@ -1984,7 +1984,7 @@
                             Je = false,
                             $e = {},
                             elemId_canvas.style.cursor = "text",
-                            Pe.clear(),
+                            cursors_.clear(),
                             Me = [],
                             K = false,
                             On(),
@@ -1998,22 +1998,22 @@
                                 elemId_connecting.style.display = "none"
                             }
                             ), 500);
-                        window.w.wall = W;
-                        window.w.subwall = H;
+                        window.w.wall = currentWall;
+                        window.w.subwall = currentSubwall;
                         window.w.emit("join", {
-                            wall: W,
-                            subwall: H
+                            wall: currentWall,
+                            subwall: currentSubwall
                         })
                         break;
                     case "alert":
-                        ir(a.alert, 8e3);
+                        showToast_(a.alert, 8e3);
                         window.w.emit("alert", {
                             message: a.alert,
                         })
                         break;
                     case "online":
                         We = a.online,
-                            Ke.title = We + " online";
+                            elemId_nearby.title = We + " online";
 
                         break;
                     case "e":
@@ -2113,7 +2113,7 @@
 
                         var I = a.cu
                             , C = I.id;
-                        Pe.has(C) || Pe.set(C, {
+                        cursors_.has(C) || cursors_.set(C, {
                             c: 0,
                             n: "",
                             l: [0, 0],
@@ -2121,7 +2121,7 @@
                             rawy: 0,
                             id: C
                         });
-                        var A = Pe.get(C);
+                        var A = cursors_.get(C);
                         window.w.emit("cursor", {
                             id: C,
                             n: A.n,
@@ -2153,16 +2153,16 @@
                     case "msg":
                         var T = a.msg;
                         !function (e, n, r, a, isAdmin) {
-                            var i = document.getElementById("chatbox"),
-                                c = document.createElement("p"),
-                                l = document.createElement("a");
+                            var elemId_chatbox = document.getElementById("chatbox"),
+                                elem_p = document.createElement("p"),
+                                elem_a = document.createElement("a");
 
-                            l.innerText = e;
-                            l.style.color = "#FFFFFF" == colourHex[n] ? "#222222" : colourHex[n];
+                            elem_a.innerText = e;
+                            elem_a.style.color = "#FFFFFF" == colourHex[n] ? "#222222" : colourHex[n];
 
                             if (a) {
-                                l.href = "/~" + e;
-                                l.addEventListener("click", wn);
+                                elem_a.href = "/~" + e;
+                                elem_a.addEventListener("click", wn);
                             }
 
 
@@ -2192,26 +2192,26 @@
 
 
 
-                                c.appendChild(container);
-                                c.title = "This user is an admin"
+                                elem_p.appendChild(container);
+                                elem_p.title = "This user is an admin"
 
                             }
 
 
-                            c.appendChild(l);
+                            elem_p.appendChild(elem_a);
 
 
-                            c.appendChild(parseColoredMessage(" ~ " + r));
+                            elem_p.appendChild(parseColoredMessage(" ~ " + r));
 
-                            var u = Math.abs(i.scrollHeight - i.scrollTop - i.clientHeight) < 2;
+                            var u = Math.abs(elemId_chatbox.scrollHeight - elemId_chatbox.scrollTop - elemId_chatbox.clientHeight) < 2;
 
 
-                            c.style.opacity = 0;
-                            c.style.transition = "opacity 0.5s ease";
-                            i.appendChild(c);
+                            elem_p.style.opacity = 0;
+                            elem_p.style.transition = "opacity 0.5s ease";
+                            elemId_chatbox.appendChild(elem_p);
                             u && gn();
-                            void c.offsetWidth;
-                            c.style.opacity = 1;
+                            void elem_p.offsetWidth;
+                            elem_p.style.opacity = 1;
 
                             hn.classList.contains("open") || yn.classList.add("show");
                             // emit
@@ -2229,7 +2229,7 @@
 
 
                     case "rc":
-                        Pe.delete(a.rc),
+                        cursors_.delete(a.rc),
                             ge = true,
                             On();
                         window.w.emit('cursorleft', a.rc);
@@ -2237,7 +2237,7 @@
                     case "ro":
                         var B = a.ro;
                         wallSettings.readOnly.checked = B,
-                            B && ir("This wall is in read-only mode.", 3e3),
+                            B && showToast_("This wall is in read-only mode.", 3e3),
                             xn();
                         window.w.emit("readonly", B);
                         break;
@@ -2246,7 +2246,7 @@
                             function () {
                                 if (null != Y)
                                     for (var n = 0; n < Y.length; n += 2)
-                                        if (Y[n] == H)
+                                        if (Y[n] == currentSubwall)
                                             return Y[n + 1] = wallSettings.private.checked,
                                                 void Ln(Y)
                             }();
@@ -2291,7 +2291,7 @@
                                 elemId_deletewall.style.display = "block") : (elemId_addmembers.style.display = "none",
                                     elemId_deletewall.style.display = "none"),
                             wallSettings.readOnly.disabled = wallSettings.private.disabled = wallSettings.hideCursors.disabled = wallSettings.disableChat.disabled = wallSettings.disableColour.disabled = wallSettings.disableBraille.disabled = !(2 == j || m),
-                            m && (elemId_deletewall.style.display = "textwall" != W || K ? "block" : "none"),
+                            m && (elemId_deletewall.style.display = "textwall" != currentWall || K ? "block" : "none"),
                             0 == j && (Ve = false,
                                 Ze = false),
                             ge = true,
@@ -2315,22 +2315,22 @@
                         window.w.emit("walllist", Y);
                         break;
                     case "nametaken":
-                        ir("Username is already in use.", 3e3),
+                        showToast_("Username is already in use.", 3e3),
                             vn(false);
                         window.w.emit("nametaken", a.nametaken);
                         break;
                     case "noreg":
-                        ir("Registration is closed.", 3e3),
+                        showToast_("Registration is closed.", 3e3),
                             window.w.emit("regclosed", a.noreg);
                         vn(false);
                         break;
                     case "wrongpass":
-                        ir("Password is incorrect.", 3e3),
+                        showToast_("Password is incorrect.", 3e3),
                             window.w.emit("passfail", a.wrongpass);
                         vn(false);
                         break;
                     case "loginfail":
-                        ir("Username/Password is incorrect.", 3e3),
+                        showToast_("Username/Password is incorrect.", 3e3),
                             vn(false);
                         window.w.emit("loginfail", a.loginfail);
                         break;
@@ -2342,7 +2342,7 @@
                         break;
                     case "namechanged":
                         vn(false),
-                            ir("Your username is now: " + (je = a.namechanged), 3e3),
+                            showToast_("Your username is now: " + (je = a.namechanged), 3e3),
                             localStorage.setItem("username", je),
                             Bn(),
                             ge = true,
@@ -2350,19 +2350,19 @@
                         window.w.emit("namechanged", a.namechanged);
                         break;
                     case "passchanged":
-                        ir("Password has been changed.", 3e3),
+                        showToast_("Password has been changed.", 3e3),
                             vn(false);
                         window.w.emit("passchanged", a.passchanged);
                         break;
                     case "accountdeleted":
-                        ir("Your account has been deleted.", 3e3),
+                        showToast_("Your account has been deleted.", 3e3),
                             vn(false),
                             Re = true,
                             dt(true, true);
                         window.w.emit("accountdeleted", a.accountdeleted);
                         break;
                     case "cool":
-                        ir("Rate limit", 3e3),
+                        showToast_("Rate limit", 3e3),
                             vn(false);
                         break;
                     case "token":
@@ -2390,34 +2390,31 @@
                 }
             }
             function Bn() {
-                var e = n
-                    , t = document.getElementById("name");
-                t.innerText = je,
-                    t.href = "/~" + je,
-                    t.onclick = function (e) {
+                var elemId_name = document.getElementById("name");
+                elemId_name.innerText = je,
+                    elemId_name.href = "/~" + je,
+                    elemId_name.onclick = function (e) {
                         e.preventDefault(),
-                            vr("~" + je)
+                            goto_("~" + je)
                     }
             }
             function Fn(e) {
-                var t = n
-                    , r = document.getElementById("memberlist")
-                    , a = document.createElement("div");
-                a.classList.add("member"),
-                    a.innerText = e,
-                    a.addEventListener("click", Pn),
-                    r.appendChild(a)
+                var elemId_memberlist = document.getElementById("memberlist")
+                    , elem_div = document.createElement("div");
+                elem_div.classList.add("member"),
+                    elem_div.innerText = e,
+                    elem_div.addEventListener("click", Pn),
+                    elemId_memberlist.appendChild(elem_div)
             }
             function Pn(e) {
-                var t = n
-                    , r = e.target.innerText;
-                a.send(Or({
+                var r = e.target.innerText;
+                a.send(networkBinary({
                     rmmem: r
                 })),
                     e.target.remove()
             }
             function Ln(e) {
-                for (var t = n, r = {}, a = [], o = false, i = 0; i < e.length; i += 2) {
+                for (var r = {}, a = [], o = false, i = 0; i < e.length; i += 2) {
                     var c = e[i]
                         , l = e[i + 1];
                     "main" == c ? o = true : a.push(c),
@@ -2427,9 +2424,9 @@
                     o && a.unshift("main"),
                     elemId_walllist.innerHTML = "",
                     elemId_walllist.appendChild(document.createElement("hr"));
-                var u = document.createElement("span");
-                u.innerText = W + "'s walls",
-                    elemId_walllist.appendChild(u);
+                var elem_span = document.createElement("span");
+                elem_span.innerText = currentWall + "'s walls",
+                    elemId_walllist.appendChild(elem_span);
                 var s = elemId_walllist.appendChild(document.createElement("ul"));
                 for (s.classList.add("walllist"),
                     i = 0; i < a.length; i++) {
@@ -2440,21 +2437,21 @@
                     l ? (v.src = "/static/lock.svg",
                         v.alt = v.title = "Private") : (v.src = "/static/lock_open.svg",
                             v.alt = v.title = "Public");
-                    const e = "~" + W + ("main" == c ? "" : "/" + c);
+                    const e = "~" + currentWall + ("main" == c ? "" : "/" + c);
                     f.appendChild(v),
                         f.appendChild(document.createTextNode(e)),
                         f.href = "/" + f.innerText,
                         f.classList.add("buttonlink"),
-                        c == H && f.classList.add("bold"),
+                        c == currentSubwall && f.classList.add("bold"),
                         f.addEventListener("click", (function (n) {
                             n.preventDefault(),
-                                vr(e)
+                                goto_(e)
                         }
                         )),
                         d.appendChild(f),
                         s.appendChild(d)
                 }
-                if (W == je.toLowerCase()) {
+                if (currentWall == je.toLowerCase()) {
                     var m = elemId_walllist.appendChild(document.createElement("form"));
                     m.style.display = "flex",
                         m.style.justifyContent = "space-between";
@@ -2467,65 +2464,58 @@
                     y.type = "submit",
                         y.value = "Create",
                         y.addEventListener("click", (function (e) {
-                            var n = t;
                             e.preventDefault();
                             var r = h.value;
                             h.value = "",
-                                validUsernameRegExp.test(r) ? (Cn(W, r),
-                                    Zn(0, 0),
-                                    elemId_teleport.classList.remove("open")) : ir("Invalid wall name", 2e3)
+                                validUsernameRegExp.test(r) ? (Cn(currentWall, r),
+                                    tp_(0, 0),
+                                    elemId_teleport.classList.remove("open")) : showToast_("Invalid wall name", 2e3)
                         }
                         ))
                 }
             }
             function On() {
-                var e = n;
-                Ue = Pe.size,
-                    Ke.innerText = Ue + " nearby",
+                Ue = cursors_.size,
+                    elemId_nearby.innerText = Ue + " nearby",
                     document.getElementById("chatmsg").placeholder = 0 == Ue ? "chat to nobody" : 1 == Ue ? "chat to 1 other user" : "chat to " + Ue + " other users",
                     y || En()
             }
             function Rn(e) {
-                var t = n;
                 Ge.unshift([e.clientX * pixelRatio / at, e.clientY * pixelRatio / at, performance.now()]),
                     Ge.length > 4 && Ge.pop()
             }
             var Dn, Nn = false, jn = 0;
             function Un(e) {
-                var t = n;
                 e.isTrusted && (e.preventDefault(),
                     e.pointerId == Dn && (Dn = void 0))
             }
-            function Wn(e) {
-                var t = n;
+            function getXYCoordsFromMouseCoords_(e) {
                 return {
                     x: Math.floor((e.pageX * devicePixelRatio - position_.offset.x) / (10 * pixelRatio)),
                     y: Math.floor((e.pageY * devicePixelRatio - position_.offset.y) / (20 * pixelRatio))
                 }
             }
             function Hn() {
-                var e = n;
-                He.innerText = Ce.x + "," + -Ce.y,
-                    Ce.x + position_.offset.x / pixelRatio / 10 <= 0 && Mn(10 * -Ce.x * pixelRatio, position_.offset.y),
-                    Ce.x + position_.offset.x / pixelRatio / 10 >= window.innerWidth / at / 10 - 1 && Mn((10 * -Ce.x + window.innerWidth / at - 10) * pixelRatio, position_.offset.y),
-                    Ce.y + position_.offset.y / pixelRatio / 20 <= 0 && Mn(position_.offset.x, 20 * -Ce.y * pixelRatio);
+                elemId_coords.innerText = cursor_.x + "," + -cursor_.y,
+                    cursor_.x + position_.offset.x / pixelRatio / 10 <= 0 && Mn(10 * -cursor_.x * pixelRatio, position_.offset.y),
+                    cursor_.x + position_.offset.x / pixelRatio / 10 >= window.innerWidth / at / 10 - 1 && Mn((10 * -cursor_.x + window.innerWidth / at - 10) * pixelRatio, position_.offset.y),
+                    cursor_.y + position_.offset.y / pixelRatio / 20 <= 0 && Mn(position_.offset.x, 20 * -cursor_.y * pixelRatio);
                 var t = window.innerWidth < 750 ? elemId_info.clientHeight : 0;
-                Ce.y + position_.offset.y / pixelRatio / 20 >= (window.innerHeight - t) / at / 20 - 1 && Mn(position_.offset.x, (20 * -Ce.y + window.innerHeight / at - 20 - t / at) * pixelRatio),
-                    Le = Ae.x != Ce.x || Ae.y != Ce.y || Le,
-                    Ae.x = Ce.x,
-                    Ae.y = Ce.y,
-                    userOpts.smoothcursors.checked || (Ce.rawx = Ce.x,
-                        Ce.rawy = Ce.y),
-                    (Math.abs(Ce.lastedit.x - Ce.x) > 300 || Math.abs(Ce.lastedit.y - Ce.y) > 300) && (Ce.start = Ce.x,
+                cursor_.y + position_.offset.y / pixelRatio / 20 >= (window.innerHeight - t) / at / 20 - 1 && Mn(position_.offset.x, (20 * -cursor_.y + window.innerHeight / at - 20 - t / at) * pixelRatio),
+                    Le = Ae.x != cursor_.x || Ae.y != cursor_.y || Le,
+                    Ae.x = cursor_.x,
+                    Ae.y = cursor_.y,
+                    userOpts.smoothcursors.checked || (cursor_.rawx = cursor_.x,
+                        cursor_.rawy = cursor_.y),
+                    (Math.abs(cursor_.lastedit.x - cursor_.x) > 300 || Math.abs(cursor_.lastedit.y - cursor_.y) > 300) && (cursor_.start = cursor_.x,
                         Xn()),
-                    Ce.x < Ce.start && (Ce.start = Ce.x),
+                    cursor_.x < cursor_.start && (cursor_.start = cursor_.x),
                     ge = true,
-                    localStorage.setItem("x", Ce.x),
-                    localStorage.setItem("y", Ce.y)
+                    localStorage.setItem("x", cursor_.x),
+                    localStorage.setItem("y", cursor_.y)
             }
             function Kn(e, t, r, a) {
 
-                var o = n;
                 userOpts.disablecolour.checked && (r = 0),
                     r = Zr(r)[0],
                     xt([e, t], bt(20)) || Ne.push([e, t, userOpts.showFeedback.checked ? .1 : 0, r, a])
@@ -2536,7 +2526,6 @@
                     Fe = []
             }
             elemId_canvas.addEventListener("touchstart", (function (e) {
-                var t = n;
                 2 === e.touches.length && (Nn = true,
                     Dn = void 0,
                     jn = 0,
@@ -2546,11 +2535,9 @@
                 passive: true
             }),
                 elemId_canvas.addEventListener("touchmove", (function (e) {
-                    var r = n;
                     Nn && (function (e) {
-                        var n = getMappingT;
                         if (e.touches.length > 1) {
-                            var r = Math.sqrt(Jr(e.touches[0].pageX - e.touches[1].pageX) + Jr(e.touches[0].pageY - e.touches[1].pageY));
+                            var r = Math.sqrt(number_sqr(e.touches[0].pageX - e.touches[1].pageX) + number_sqr(e.touches[0].pageY - e.touches[1].pageY));
                             0 != jn && it(rt - (jn - r) / 300, true),
                                 Dn = void 0,
                                 jn = r
@@ -2690,9 +2677,9 @@
                     return 0;
                 var s = we.get(u);
                 if ((s.protected || wallSettings.readOnly.checked || U && "" == je) && !m && 0 == j || null == s.txt || K)
-                    return U && "" == je && !wallSettings.readOnly.checked && ir("Please log in before typing.", 3e3),
+                    return U && "" == je && !wallSettings.readOnly.checked && showToast_("Please log in before typing.", 3e3),
                         0;
-                userOpts.rainbow.checked && !r && (mr(Jn[Yn]),
+                userOpts.rainbow.checked && !r && (changeColor_(Jn[Yn]),
                     ++Yn == Jn.length && (Yn = 0));
                 var d, f, v, h, y, g, p, b, x, w, M, k, E, S = 1, I = Math.floor(newColFmt / 31), C = newColFmt, A = Ce.x - c + 20 * (Ce.y - l), T = s.clr[A], B = Zr(T), F = B[0], P = B[1], L = s.txt[A];
                 return L == e && T == C || Qn(e, I) && Qn(L, P) || (M = P,
@@ -2718,7 +2705,7 @@
                     Hn(),
                     S
             }
-            function Vn(e, t, r, a) {
+            function writeChar_(e, t, r, a) {
                 var o = n;
                 if (ie(false),
                     performance.now() - qn >= 100 && (qn = performance.now(),
@@ -2729,8 +2716,8 @@
                 var data = {
                     char: e,
                     color: chr.color,
-                    x: Ce.x,
-                    y: Ce.y,
+                    x: cursor_.x,
+                    y: cursor_.y,
                     bold: chr.bold,
                     italic: chr.italic,
                     underline: chr.underline,
@@ -2749,9 +2736,9 @@
                     return 0;
                 var s = weget(u);
                 if ((s.protected || wallSettings.readOnly.checked || U && "" == je) && !m && 0 == j || null == s.txt || K)
-                    return U && "" == je && !wallSettings.readOnly.checked && ir("Please log in before typing.", 3e3),
+                    return U && "" == je && !wallSettings.readOnly.checked && showToast_("Please log in before typing.", 3e3),
                         0;
-                userOpts.rainbow.checked && !r && (mr(Jn[Yn]),
+                userOpts.rainbow.checked && !r && (changeColor_(Jn[Yn]),
                     ++Yn == Jn.length && (Yn = 0));
                 var d, f, v, h, y, g, p, b, x, w, M, k, E, S = 1, I = Math.floor(newColFmt / 31), C = newColFmt, A = data.x - c + 20 * (data.y - l), T = s.clr[A], B = Zr(T), F = B[0], P = B[1], L = s.txt[A];
                 return L == e && T == C || Qn(e, I) && Qn(L, P) || (M = P,
@@ -2774,18 +2761,17 @@
                         Me.push([c / 20, l / 10, e.codePointAt(), A, C]),
                         S = 2,
                         It(u, Dt(A))),
-                    Ce.lastedit.x = data.x,
-                    Ce.lastedit.y = data.y,
-                    Ce.x += t,
+                    cursor_.lastedit.x = data.x,
+                    cursor_.lastedit.y = data.y,
+                    cursor_.x += t,
                     Hn(),
                     S
             }
-            function Zn(e, t) {
-                var r = n;
+            function tp_(e, t) {
                 ie(false),
-                    Ce.x = e,
-                    Ce.y = t,
-                    Mn((10 * -Ce.x + window.innerWidth / at / 2) * pixelRatio, (20 * -Ce.y + window.innerHeight / at / 2) * pixelRatio),
+                    cursor_.x = e,
+                    cursor_.y = t,
+                    Mn((10 * -cursor_.x + window.innerWidth / at / 2) * pixelRatio, (20 * -cursor_.y + window.innerHeight / at / 2) * pixelRatio),
                     document.getElementById("tpword").value = "",
                     document.getElementById("tpx").value = 0,
                     document.getElementById("tpy").value = 0,
@@ -2793,7 +2779,7 @@
                     Hn(),
                     _t()
             }
-            window.writeChar = Vn
+            window.writeChar = writeChar_
             function $n() {
                 history.pushState({}, null, o)
             }
@@ -2818,7 +2804,7 @@
                         if (Ie = true,
                             !er) {
                             er = true,
-                                Ce.start = Ce.x;
+                                cursor_.start = cursor_.x;
                             var c = pe
                                 , l = ce();
                             !function e(n, o) {
@@ -2826,7 +2812,7 @@
                                 if (n == r.length || !Ie)
                                     return nr(),
                                         er = false,
-                                        mr(c),
+                                        changeColor_(c),
                                         void le(l);
                                 if ("\n" == r[n])
                                     return cr(),
@@ -2838,11 +2824,11 @@
                                         ((d -= d < ue ? 65 : ue) < 0 || d > 495) && (d = 0),
                                         d)
                                         , [m, h] = Zr(v);
-                                    Qn(f, h) || mr(m),
+                                    Qn(f, h) || changeColor_(m),
                                         le(h)
                                 }
                                 switch (zn = 0,
-                                Vn(f, 1)) {
+                                writeChar_(f, 1)) {
                                     case 0:
                                     case 1:
                                         return setTimeout(e, 10, n + 1, o);
@@ -2852,38 +2838,34 @@
                             }(0, 0)
                         }
                     } else
-                        Vn(r[0], 1)
+                        writeChar_(r[0], 1)
                 }
             }
             function nr() {
                 Ie = false
             }
             function rr() {
-                var e = n
-                    , t = 20 * Math.floor(Ce.x / 20)
-                    , r = 10 * Math.floor(Ce.y / 10)
+                var t = 20 * Math.floor(cursor_.x / 20)
+                    , r = 10 * Math.floor(cursor_.y / 10)
                     , a = we.get(t + "," + r);
                 if (!a || null == a.txt)
                     return false;
-                var o = Ce.x - t + 20 * (Ce.y - r);
+                var o = cursor_.x - t + 20 * (cursor_.y - r);
                 return [a.txt[o], a.clr[o]]
             }
             function ar(e) {
-                var t = n;
                 navigator.clipboard ? navigator.clipboard.writeText(e) : (elemId_clipboard.value = e,
                     elemId_clipboard.focus(),
                     elemId_clipboard.select(),
                     document.execCommand("copy"))
             }
             function or(e) {
-                var t = n;
                 e.preventDefault(),
                     Je = true,
                     elemId_canvas.style.cursor = "crosshair",
-                    ir("Select an area to copy.", 1500)
+                    showToast_("Select an area to copy.", 1500)
             }
-            function ir(e, t) {
-                var r = n;
+            function showToast_(e, t) {
                 clearTimeout(p),
                     elemId_toast.innerText = e,
                     elemId_toast.classList.add("toasting"),
@@ -2893,14 +2875,13 @@
                     ), t)
             }
             function cr() {
-                Ce.x = Ce.start,
-                    Ce.y++,
+                cursor_.x = cursor_.start,
+                    cursor_.y++,
                     Hn()
             }
             null == navigator.clipboard.readText && (document.getElementById("paste").style.display = "none");
             var lr = 0;
             function ur(e) {
-                var t = n;
                 switch (ie(false),
                 (2 == e && 2 == lr || 1 == e && 1 == lr) && (e = 0),
                 e) {
@@ -2919,21 +2900,19 @@
                     en()
             }
             function sr(e) {
-                var t = n
-                    , r = document.createElement("div");
-                r.classList.add("colour"),
-                    r.addEventListener("click", (function (t) {
-                        mr(e),
+                var elem_div = document.createElement("div");
+                elem_div.classList.add("colour"),
+                    elem_div.addEventListener("click", (function (t) {
+                        changeColor_(e),
                             nn(t)
                     }
                     )),
-                    r.setAttribute("id", e),
-                    r.style.backgroundColor = colourHex[e],
-                    r.title = colourNames[e],
-                    elemId_colourlist.appendChild(r)
+                    elem_div.setAttribute("id", e),
+                    elem_div.style.backgroundColor = colourHex[e],
+                    elem_div.title = colourNames[e],
+                    elemId_colourlist.appendChild(elem_div)
             }
-            function dr() {
-                var e = n;
+            function toggleTeleport_() {
                 ie(false),
                     elemId_teleport.classList.contains("open") ? (elemId_teleport.classList.remove("open"),
                         en()) : (elemId_teleport.classList.add("open"),
@@ -2943,9 +2922,8 @@
             function fr(e) {
                 return e.replace(/^\/|\/$/g, "")
             }
-            function vr(e) {
-                var t = n
-                    , r = (e = (e = fr(e)).replace(/\~\/*/, "~")).split("/");
+            function goto_(e) {
+                var r = (e = (e = fr(e)).replace(/\~\/*/, "~")).split("/");
                 if (e = r.shift(),
                     r.length > 0 && (e += "/" + r.shift()),
                     (e = (e = fr(e)).toLowerCase()).startsWith("~") && "~main" != e) {
@@ -2954,23 +2932,22 @@
                         , i = "main";
                     a.length > 1 && (i = a[1]),
                         Cn(o, i),
-                        Zn(0, 0)
+                        tp_(0, 0)
                 } else {
                     var c = Lr(e);
-                    Zn(c.x, c.y),
+                    tp_(c.x, c.y),
                         Cn("textwall", "main"),
                         0 == c.x && 0 == c.y ? $n() : history.pushState({}, null, e)
                 }
                 elemId_teleport.classList.remove("open")
             }
-            function mr(e) {
+            function changeColor_(e) {
                 e = parseInt(e, 10);
 
                 if (isNaN(e) || !isFinite(e) || e < 0 || e > 30) {
                     throw new TypeError("supported colors: 0 to 30")
                 }
 
-                var t = n;
                 (userOpts.disablecolour.checked || wallSettings.disableColour.checked) && (e = 0),
                     pe != e && (Oe = true);
                 var r = document.getElementById(pe);
@@ -2989,12 +2966,11 @@
                 ne = 0; ne < colourHex.length; ne++)
                 sr(colourId[ne]);
             function hr(e) {
-                for (var t = n, r = 0; r < elemId_colourlist.children.length; r++)
+                for (var r = 0; r < elemId_colourlist.children.length; r++)
                     "0" != elemId_colourlist.children[r].id && (e ? elemId_colourlist.children[r].classList.add("hidden") : elemId_colourlist.children[r].classList.remove("hidden"));
-                e && mr(0)
+                e && changeColor_(0)
             }
             function yr(e) {
-                var t = n;
                 if (null != e)
                     N = e;
                 else
@@ -3021,18 +2997,17 @@
                         C = elemId_primary.value,
                         A = elemId_secondary.value,
                         elemId_thememenu.classList.remove("hidden")) : elemId_thememenu.classList.add("hidden"),
-                    T = Xr(A, 10),
+                    T = adjustColour(A, 10),
                     localStorage.setItem("theme", N),
                     ge = true,
                     en(),
-                    mr(pe),
+                    changeColor_(pe),
                     Sn()
             }
             function gr(e) {
-                var t = n;
                 e.target == elemId_primary ? (C = elemId_primary.value,
                     Sn()) : e.target == elemId_secondary && (A = elemId_secondary.value,
-                        T = Xr(A, 10),
+                        T = adjustColour(A, 10),
                         Sn(true)),
                     localStorage.setItem("customtheme", JSON.stringify({
                         primary: elemId_primary.value,
@@ -3041,19 +3016,16 @@
                     }))
             }
             function pr(e) {
-                var t = n;
                 br(e.target.parentElement.id),
                     en()
             }
             function br(e, t) {
-                var r = n
-                    , a = decoElems[e];
+                var a = decoElems[e];
                 a.enabled = null != t ? t : !a.enabled,
                     a.enabled ? a.el.classList.add("enabled") : a.el.classList.remove("enabled"),
                     localStorage.setItem("dec", ce())
             }
             function xr(e, t, r) {
-                var a = n;
                 if (Math.abs(e - t) > .1) {
                     for (var o = 0; o < r; o++)
                         e += (t - e) / 20;
@@ -3063,25 +3035,24 @@
                 return e != t ? (ge = true,
                     Math.round(e)) : e
             }
-            var uP = 200;
+            var writeFlushRate_ = 200;
             var aB;
 
             function setWriteInterval() {
                 if (aB) clearInterval(aB);
-                aB = setInterval(flushWrites, uP);
+                aB = setInterval(flushWrites, writeFlushRate_);
             }
             window.flushAmount = 250
             function flushWrites() {
-                var e = n;
                 if (a && a.readyState == a.OPEN) {
                     if ((Le || Oe || Re || De) && we.size !== 0) {
                         var t = {};
-                        Le && (t.l = [Ce.x, Ce.y]);
+                        Le && (t.l = [cursor_.x, cursor_.y]);
                         Oe && (t.c = pe);
                         Re && (t.n = userOpts.anonymous.checked);
                         De && (t.p = [position_.coords.x, position_.coords.y]);
 
-                        a.send(Or({ ce: t }));
+                        a.send(networkBinary({ ce: t }));
                         Le = Oe = Re = De = false;
                     }
 
@@ -3098,7 +3069,7 @@
                             }
                             tA.push([i, c, l, u, s]);
                         }
-                        a.send(Or({ e: tA }));
+                        a.send(networkBinary({ e: tA }));
                     }
                 }
             }
@@ -3107,7 +3078,7 @@
                 var int = parseInt(newer);
                 if (isNaN(int)) int = 200;
                 if (int < 0) int = 0;
-                uP = int;
+                writeFlushRate_ = int;
                 setWriteInterval(); // restart interval
             }
 
@@ -3120,9 +3091,9 @@
                     console.warn("writeBuffer is read-only");
                 }
             });
-            window.cursors = Pe;
-            window.cursor = Ce;
-            window.writeFlushRate = uP;
+            window.cursors = cursors_;
+            window.cursor = cursor_;
+            window.writeFlushRate = writeFlushRate_;
             window.flushWrites = flushWrites;
 
 
@@ -3141,19 +3112,17 @@
             }
             window.w.setPrimaryColor = function (e) { elemId_primary.value = e; gr({ target: elemId_primary }); }
             window.w.setSecondaryColor = function (e) { elemId_secondary.value = e; gr({ target: elemId_secondary }); }
-            window.w.toggleTeleport = dr;
+            window.w.toggleTeleport = toggleTeleport_;
             window.w.color = function () { ur(1) }
             window.w.settings = function () { ur(2) }
             window.Tile = {}
             window.Tile.get = function (e, t) {
-                var r = n;
                 if (!we.has(e + "," + t))
                     return null;
                 var a = we.get(e + "," + t);
                 return a
             };
             window.Tile.set = function (e, t, r, a) {
-                var o = n;
                 if (!we.has(e + "," + t))
                     return false;
                 var i = we.get(e + "," + t);
@@ -3161,14 +3130,12 @@
                     true
             }
             window.Tile.exists = function (e, t) {
-                var r = n;
                 return we.has(e + "," + t)
             }
             window.Tile.loaded = function (e, t) {
                 return !!Tile.get(e, t)
             }
             window.Tile.delete = function (e, t) {
-                var r = n;
                 if (!we.has(e + "," + t))
                     return false;
                 var a = we.get(e + "," + t);
@@ -3176,10 +3143,8 @@
                     true)
             }
             window.Tile.visible = function (e, t) {
-                var r = n;
                 if (!we.has(e + "," + t))
                     return false;
-                var a = we.get(e + "," + t);
                 return !xt([e, t], bt(20))
             }
             window.Tile.empty = function (e, t) {
@@ -3189,7 +3154,6 @@
                 return Tile.exists(e, t) && Tile.get(e, t).protected
             }
             window.Tile.saveBlob = function (e, t) {
-                var r = n;
                 if (!we.has(e + "," + t)) return null;
 
                 var tile = we.get(e + "," + t);
@@ -3217,9 +3181,9 @@
                 }, 'image/png');
             };
 
-            window.w.goto = vr;
-            window.w.tp = Zn;
-            window.w.cursors = Pe;
+            window.w.goto = goto_;
+            window.w.tp = tp_;
+            window.w.cursors = cursors_;
             window.getTMapping = getMappingT;
             window.w.renderChunkAmount = renderChunkAmount;
             window.w.setRenderChunkAmount = function (e) { renderChunkAmount = parseInt(e, 0); ge = true };
@@ -3335,20 +3299,20 @@
             Object.defineProperty(window, "cursorCoords", {
                 get: function () {
                     var e = n;
-                    const [tileX, tileY, offsetX, offsetY] = XYtoTile(Ce.x, Ce.y);
+                    const [tileX, tileY, offsetX, offsetY] = XYtoTile(cursor_.x, cursor_.y);
                     return [tileX, tileY, offsetX, offsetY];
                 }
             });
             Object.defineProperty(window, "cursorCoordsXY", {
                 get: function () {
-                    return [Ce.x, Ce.y];
+                    return [cursor_.x, cursor_.y];
                 }
             });
             window.getTileCoordsFromMouseCoords = function (e) {
-                var { x, y } = Wn(e);
+                var { x, y } = getXYCoordsFromMouseCoords_(e);
                 return XYtoTile(x, y);
             }
-            window.getXYCoordsFromMouseCoords = Wn;
+            window.getXYCoordsFromMouseCoords = getXYCoordsFromMouseCoords_;
             setWriteInterval();
             var wr = performance.now()
                 , Mr = 100
@@ -3371,10 +3335,10 @@
                         0 == Qe.dy && 0 == Qe.dx && (Qe = null)
                 }
                 if (userOpts.smoothcursors.checked) {
-                    Ce.rawx = xr(Ce.rawx, Ce.x, r),
-                        Ce.rawy = xr(Ce.rawy, Ce.y, r);
+                    cursor_.rawx = xr(cursor_.rawx, cursor_.x, r),
+                        cursor_.rawy = xr(cursor_.rawy, cursor_.y, r);
                     var o = bt(20);
-                    for (const e of Pe.values())
+                    for (const e of cursors_.values())
                         null == e.rawx || null == e.rawy || xt(e.l, o) || (e.rawx = xr(e.rawx, e.l[0], r),
                             e.rawy = xr(e.rawy, e.l[1], r))
                 }
@@ -3401,7 +3365,7 @@
                         xt(h = wt(t), s) ? xt(h, f) && delete we.get(t).img : pt(t, h);
                     if (userOpts.showothercurs.checked && (!wallSettings.hideCursors.checked || m)) {
                         gt(canvasContext2D);
-                        for (const t of Pe.values()) {
+                        for (const t of cursors_.values()) {
                             var h = t.l;
                             if (!xt(h, s)) {
                                 var y = Math.round(10 * t.rawx * pixelRatio)
@@ -3430,7 +3394,7 @@
                         var x = 10 * Ne[b][0] * pixelRatio
                             , w = 20 * Ne[b][1] * pixelRatio;
                         if (userOpts.showothercurs.checked && m) {
-                            var M = Pe.get(Ne[b][4]);
+                            var M = cursors_.get(Ne[b][4]);
                             null != M && M.highlighted && (canvasContext2D.lineWidth = 3 * pixelRatio,
                                 canvasContext2D.strokeStyle = p == colourHex.length ? "#FFFFFF" : colourHex[p],
                                 canvasContext2D.beginPath(),
@@ -3442,7 +3406,7 @@
                     }
                     var anonIdShow = document.getElementById('anonIdShow').checked;
                     if (canvasContext2D.fillStyle = be,
-                        kt(y = Math.round(10 * Ce.rawx * pixelRatio), g = Math.round(20 * Ce.rawy * pixelRatio), r, a),
+                        kt(y = Math.round(10 * cursor_.rawx * pixelRatio), g = Math.round(20 * cursor_.rawy * pixelRatio), r, a),
                         userOpts.shownametags.checked && (gt(canvasContext2D),
                             Mt((userOpts.anonymous.checked || je == "") && anonIdShow ? `(48773355)` : (userOpts.anonymous.checked ? "" : je), y, g, o)),
                         Je && $e.start && $e.end) {
@@ -3477,9 +3441,9 @@
                 window.requestAnimationFrame(e)
             }
             )),
-                null != localStorage.getItem("x") && (Ce.x = parseInt(localStorage.getItem("x"))),
-                null != localStorage.getItem("y") && (Ce.y = parseInt(localStorage.getItem("y"))),
-                null != localStorage.getItem("col") ? mr(parseInt(localStorage.getItem("col"))) : mr(0),
+                null != localStorage.getItem("x") && (cursor_.x = parseInt(localStorage.getItem("x"))),
+                null != localStorage.getItem("y") && (cursor_.y = parseInt(localStorage.getItem("y"))),
+                null != localStorage.getItem("col") ? changeColor_(parseInt(localStorage.getItem("col"))) : changeColor_(0),
                 null != localStorage.getItem("dec") && le(localStorage.getItem("dec")),
                 null != localStorage.getItem("customfont") && (elemId_customfont.value = localStorage.getItem("customfont")),
                 null != localStorage.getItem("customfontsize") && (elemId_customfontsize.value = localStorage.getItem("customfontsize")),
@@ -3521,7 +3485,7 @@
                         y: 0
                     };
                 var r = function (e) {
-                    for (var n, r = t, a = [], o = e + "", i = 0; i < o.length;)
+                    for (var n, a = [], o = e + "", i = 0; i < o.length;)
                         a[255 & i] = 255 & (n ^= 19 * a[255 & i]) + o.codePointAt(i++);
                     var c, l = a.length, u = this, s = 0, d = (i = u.i = u.j = 0,
                         u.S = []);
@@ -3556,24 +3520,23 @@
                     y: 10 * Math.floor((Math.floor(2e5 * r()) - 1e5) / 10)
                 }
             }
-            null != Br.x && (Ce.x = parseInt(Br.x),
+            null != Br.x && (cursor_.x = parseInt(Br.x),
                 Fr = true),
-                null != Br.y && (Ce.y = -1 * parseInt(Br.y),
+                null != Br.y && (cursor_.y = -1 * parseInt(Br.y),
                     Fr = true),
                 Br.noui && (elemId_info.classList.add("hidden"),
                     hn.style.display = "none");
-            var Or, Rr, Dr, Nr, jr, Ur, Wr = Pr();
+            var networkBinary, networkText, Dr, Nr, jr, Ur, Wr = Pr();
             if (Wr.length > 0)
                 if (Wr.startsWith("~"))
                     o = "/" + Wr,
-                        Fr || Zn(0, 0);
+                        Fr || tp_(0, 0);
                 else {
                     var Hr = Lr(Wr);
-                    Ce.x = Hr.x,
-                        Ce.y = Hr.y
+                    cursor_.x = Hr.x,
+                        cursor_.y = Hr.y
                 }
             function Kr() {
-                var e = n;
                 if (null == a || a.readyState != WebSocket.CONNECTING && a.readyState != WebSocket.OPEN) {
                     var t = "wss://" + location.host + "/ws";
                     "https:" !== location.protocol && (t = "ws://" + location.host + "/ws"),
@@ -3587,9 +3550,8 @@
                         elemId_connecting.onclick = void 0
                 }
             }
-            function Xr(e, t) {
-                var r = n
-                    , a = parseInt(e.substring(1, 3), 16)
+            function adjustColour(e, t) {
+                var a = parseInt(e.substring(1, 3), 16)
                     , o = parseInt(e.substring(3, 5), 16)
                     , i = parseInt(e.substring(5, 7), 16);
                 return a += t,
@@ -3603,7 +3565,7 @@
                     i = Math.max(i, 0),
                     "#" + zr(a.toString(16), 2) + zr(o.toString(16), 2) + zr(i.toString(16), 2)
             }
-            window.Xr = Xr;
+            window.Xr = adjustColour;
             function zr(e, t) {
                 for (; e.length < t;)
                     e = "0" + e;
@@ -3613,7 +3575,6 @@
                 return e >= 10240 && e <= 10495
             }
             function Yr(e, t) {
-                var r = n;
                 if (3 == (e = e.replace("#", "")).length && (e = e[0] + e[0] + e[1] + e[1] + e[2] + e[2]),
                     6 != e.length)
                     throw new Error("invalid hex length");
@@ -3623,7 +3584,7 @@
                     , c = 255 & a;
                 return t ? "rgba(" + o + ", " + i + ", " + c + ", " + t + ")" : "rgb(" + o + ", " + i + ", " + c + ")"
             }
-            function Jr(e) {
+            function number_sqr(e) {
                 return e * e
             }
             function Vr(e, t) {
@@ -3632,18 +3593,18 @@
             function Zr(e) {
                 return [e % 31, Math.floor(e / 31)]
             }
-            isNaN(Ce.x) && (Ce.x = 0),
-                isNaN(Ce.y) && (Ce.y = 0),
-                Ce.start = Ce.x,
+            isNaN(cursor_.x) && (cursor_.x = 0),
+                isNaN(cursor_.y) && (cursor_.y = 0),
+                cursor_.start = cursor_.x,
                 setTimeout((function () {
                     var e = n;
                     window.history.replaceState({}, document.title, location.pathname)
                 }
                 ), 0),
-                Zn(Ce.x, Ce.y),
+                tp_(cursor_.x, cursor_.y),
                 null != localStorage.getItem("zoom") && it(JSON.parse(localStorage.getItem("zoom")), false),
                 Kr(),
-                Or = function (e, r) {
+                networkBinary = function (e, r) {
                     var a = n;
                     if (r && r.bdtiple && !Array.isArray(e))
                         throw new Error;
@@ -3667,7 +3628,6 @@
                                 break;
                             case "number":
                                 !function (e) {
-                                    var t = l;
                                     if (isFinite(e) && Math.floor(e) === e)
                                         if (e >= 0 && e <= 127)
                                             v(e);
@@ -3702,9 +3662,7 @@
                                 break;
                             case "string":
                                 !function (e) {
-                                    var n = l;
                                     let r = function (e) {
-                                        var n = getMappingT;
                                         let r = true
                                             , a = e.length;
                                         for (let t = 0; t < a; t++)
@@ -3780,7 +3738,7 @@
                                 "function" == typeof r.invalidTypeReplacement ? s(r.invalidTypeReplacement(e), true) : s(r.invalidTypeReplacement, true)
                         }
                     }
-                    function d(e) {
+                    function d() {
                         v(192)
                     }
                     function f(e) {
@@ -3790,7 +3748,6 @@
                             s(e[n])
                     }
                     function v(e) {
-                        var t = a;
                         if (l.length < u + 1) {
                             let e = 2 * l.length;
                             for (; e < u + 1;)
@@ -3803,7 +3760,6 @@
                             u++
                     }
                     function m(e) {
-                        var t = a;
                         if (l.length < u + e.length) {
                             let n = 2 * l.length;
                             for (; n < u + e.length;)
@@ -3816,7 +3772,6 @@
                             u += e.length
                     }
                     function h(e) {
-                        var t = a;
                         let n, r;
                         e >= 0 ? (n = e / o,
                             r = e % o) : (e++,
@@ -3828,7 +3783,7 @@
                     }
                 }
                 ,
-                Rr = function (e, r) {
+                networkText = function (e, r) {
                     var a = n;
                     let o, i = 0;
                     if (e instanceof ArrayBuffer && (e = new Uint8Array(e)),
@@ -3944,13 +3899,11 @@
                         return n
                     }
                     function s(t) {
-                        var n = a;
                         let r = new DataView(e.buffer, i + e.byteOffset, t);
                         return i += t,
                             4 === t ? r.getFloat32(0, false) : 8 === t ? r.getFloat64(0, false) : void 0
                     }
                     function d(t, n) {
-                        var r = a;
                         t < 0 && (t = u(n));
                         let o = e.subarray(i, i + t);
                         return i += t,
@@ -3964,7 +3917,6 @@
                         return n
                     }
                     function v(e, t) {
-                        var n = a;
                         e < 0 && (e = u(t));
                         let r = [];
                         for (; e-- > 0;)
@@ -3976,7 +3928,6 @@
                         let a = i;
                         return i += n,
                             function (e, n, r) {
-                                var a = getMappingT;
                                 let o = n
                                     , i = "";
                                 for (r += n; o < r;) {
@@ -4015,7 +3966,6 @@
                         let r = u(1)
                             , a = d(e);
                         return 255 === r ? function (e) {
-                            var n = getMappingT;
                             if (4 === e.length) {
                                 let t = (e[0] << 24 >>> 0) + (e[1] << 16 >>> 0) + (e[2] << 8 >>> 0) + e[3];
                                 return new Date(1e3 * t)
@@ -4084,8 +4034,7 @@
                     }
                     ,
                     function (e) {
-                        var t = n
-                            , r = this
+                        var r = this
                             , a = Object(e);
                         if (null == e)
                             throw new TypeError("Array.from requires an array-like object - not null or undefined");
@@ -4109,16 +4058,13 @@
                 ),
                 String.prototype.startsWith || Object.defineProperty(String.prototype, "startsWith", {
                     value: function (e, t) {
-                        var r = n
-                            , a = t > 0 ? 0 | t : 0;
+                        var a = t > 0 ? 0 | t : 0;
                         return this.substring(a, a + e.length) === e
                     }
                 }),
                 String.prototype.codePointAt || function () {
                     "use strict";
-                    var e = n
-                        , r = function () {
-                            var e = getMappingT;
+                    var r = function () {
                             try {
                                 var n = {}
                                     , r = Object.defineProperty
@@ -4127,7 +4073,6 @@
                             return a
                         }()
                         , a = function (e) {
-                            var n = getMappingT;
                             if (null == this)
                                 throw TypeError();
                             var r = String(this)
@@ -4146,9 +4091,8 @@
                     }) : String.prototype.codePointAt = a
                 }(),
                 String.fromCodePoint || function (e) {
-                    var r = n
-                        , a = function (n) {
-                            for (var r = getMappingT, a = [], o = 0, i = "", c = 0, l = arguments.length; c !== l; ++c) {
+                    var a = function (n) {
+                            for (var a = [], o = 0, i = "", c = 0, l = arguments.length; c !== l; ++c) {
                                 var u = +arguments[c];
                                 if (!(u < 1114111 && u >>> 0 === u))
                                     throw RangeError("Invalid code point: " + u);
@@ -4170,8 +4114,7 @@
                     }
                 }(String.fromCharCode),
                 CanvasRenderingContext2D.prototype.roundRect || (CanvasRenderingContext2D.prototype.roundRect = function (e, t, r, a, o) {
-                    var i = n
-                        , c = new Array(4);
+                    var c = new Array(4);
                     if ("object" == typeof o)
                         switch (o.length) {
                             case 1:
@@ -4205,21 +4148,20 @@
                         this.closePath()
                 }
                 );
-            const $r = 10 == f.getMonth() && f.getDate() >= 28 || 11 == f.getMonth() || 0 == f.getMonth() && f.getDate() <= 6 || localStorage.getItem("christmas")
-                , Gr = ["-20,-10", "0,-10"]
-                , Qr = [4, 7, 9, 12];
-            $r && setInterval((function () {
-                var e = n;
-                if ("textwall" == W && "main" == H && !userOpts.disablecolour.checked)
-                    for (var t = 0; t < Gr.length; t++) {
-                        var r = Gr[t]
+            const christmasTrue = 10 == currentDate.getMonth() && currentDate.getDate() >= 28 || 11 == currentDate.getMonth() || 0 == currentDate.getMonth() && currentDate.getDate() <= 6 || localStorage.getItem("christmas")
+                , christmasArea = ["-20,-10", "0,-10"]
+                , christmasColours = [4, 7, 9, 12];
+            christmasTrue && setInterval((function () {
+                if ("textwall" == currentWall && "main" == currentSubwall && !userOpts.disablecolour.checked)
+                    for (var t = 0; t < christmasArea.length; t++) {
+                        var r = christmasArea[t]
                             , a = we.get(r);
                         if (null != a && null != a.txt) {
                             for (var o = 0; o < 200; o++)
                                 switch (a.txt[o]) {
                                     case "?":
                                     case "'":
-                                        a.clr[o] = Qr[Math.floor(4 * Math.random())]
+                                        a.clr[o] = christmasColours[Math.floor(4 * Math.random())]
                                 }
                             St(r, false)
                         }
@@ -4332,25 +4274,24 @@
             };
             window.w.split = advancedSplit;
             window.w.chat = {};
-            window.w.chat.send = aib;
+            window.w.chat.send = chatSend;
             window.undoWrite = undoWrite;
             window.network = {};
-            window.network.binary = Or;
-            window.network.text = Rr;
+            window.network.binary = networkBinary;
+            window.network.text = networkText;
             window.network.send = function (data) {
                 a.send(window.network.binary(data))
             };
             window.network.wsUrl = "wss://" + location.host + "/ws";
             window.w.changeZoom = function (e, t) {
                 console.warn("remember, this won't save!");
-                var r = n;
                 rt = e < 0 ? 0 : e > 10000 ? 10000 : e,
                     at = Math.round(100 * rt) / 100,
                     elemId_zoom.value = 10 * at,
-                    t && ir(Math.round(100 * at) + "% ", 1e3),
+                    t && showToast_(Math.round(100 * at) + "% ", 1e3),
                     kn()
             }
-            window.w.changeColor = mr;
-            window.w.showToast = ir;
+            window.w.changeColor = changeColor_;
+            window.w.showToast = showToast_;
         }("undefined" == typeof browser ? browser = {} : browser)
 }("undefined" == typeof browser ? browser = {} : browser);
