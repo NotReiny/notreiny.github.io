@@ -3657,7 +3657,7 @@ if (Wr.length > 0)
 
 function Kr() {
 	if (null == a || a.readyState != WebSocket.CONNECTING && a.readyState != WebSocket.OPEN) {
-		var t = "wss://" + location.host + "/ws";
+		var t = "wss://" + ("tw.2s4.me") + "/ws";
 		"https:" !== location.protocol && (t = "ws://" + location.host + "/ws"),
 			(a = new WebSocket(t)).binaryType = "arraybuffer",
 			a.onmessage = Tn,
