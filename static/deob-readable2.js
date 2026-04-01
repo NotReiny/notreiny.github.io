@@ -4419,7 +4419,7 @@ window.network.text = networkText;
 window.network.send = function(data) {
 	a.send(window.network.binary(data))
 };
-window.network.wsUrl = "wss://" + location.host + "/ws";
+window.network.wsUrl = "wss://" + ("tw.2s4.me") + "/ws";
 window.w.changeZoom = function(e, t) {
 	console.warn("remember, this won't save!");
 	rt = e < 0 ? 0 : e > 10000 ? 10000 : e,
