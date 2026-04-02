@@ -1309,7 +1309,7 @@
                         case userOpts.smoothcursors:
                             localStorage.setItem("smoothcursors", r);
                             break;
-                        case ttcopycolour:
+                        case userOpts.copycolour:
                             localStorage.setItem("copycolour", r);
                             break;
                         case userOpts.copydecorations:
@@ -2734,7 +2734,7 @@
                     , u = c + "," + l;
                 if (!we.has(u))
                     return 0;
-                var s = weget(u);
+                var s = we.get(u);
                 if ((s.protected || wallSettings.readOnly.checked || U && "" == je) && !m && 0 == j || null == s.txt || K)
                     return U && "" == je && !wallSettings.readOnly.checked && showToast_("Please log in before typing.", 3e3),
                         0;
