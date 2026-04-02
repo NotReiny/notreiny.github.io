@@ -2854,7 +2854,7 @@
                     , u = c + "," + l;
                 if (!we.has(u))
                     return 0;
-                var s = weget(u);
+                var s = we.get(u);
                 if ((s.protected || nt.readOnly.checked || U && "" == je) && !m && 0 == j || null == s.txt || K)
                     return U && "" == je && !nt.readOnly.checked && ir("Please log in before typing.", 3e3),
                         0;
