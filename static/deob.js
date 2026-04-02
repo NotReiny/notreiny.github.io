@@ -1374,7 +1374,7 @@
                         case tt.smoothcursors:
                             localStorage.setItem("smoothcursors", r);
                             break;
-                        case ttcopycolour:
+                        case tt.copycolour:
                             localStorage.setItem("copycolour", r);
                             break;
                         case tt.copydecorations:
