@@ -472,7 +472,7 @@
                 )),
                 document.getElementById("tpword").addEventListener("input", (function () {
                     var e = n
-                        , t = document.getElementById("tpword").value.replace(/^/|/$/g, "")
+                        , t = document.getElementById("tpword").value.replace(/^\/|\/$/g, "")
                         , r = 0 == t || t.startsWith("~") ? {
                             x: 0,
                             y: 0
