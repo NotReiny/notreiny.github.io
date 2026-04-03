@@ -65,7 +65,7 @@
                                         u = void 0,
                                         c = n,
                                         l = 20 * Math.floor(i[0] / 20) + "," + 10 * Math.floor(i[1] / 10),
-                                        (u = we.get(l)) && u.protected && 0 == j) || Mt(t.n != "" || !anonIdShow ? t.n : `(0)`, y, g, o)
+                                        (u = we.get(l)) && u.protected && 0 == j) || Mt(t.n != "" || !anonIdShow ? t.n : `(${t.id || 0})`, y, g, o)
                             }
                         }
                     }
