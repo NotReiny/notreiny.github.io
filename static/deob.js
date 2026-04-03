@@ -3551,7 +3551,7 @@
                     if (E.fillStyle = be,
                         kt(y = Math.round(10 * Ce.rawx * v), g = Math.round(20 * Ce.rawy * v), r, a),
                         tt.shownametags.checked && (gt(E),
-                            Mt((tt.anonymous.checked || je == "") && anonIdShow ? `(48773355)` : (tt.anonymous.checked ? "" : je), y, g, o)),
+                            Mt((tt.anonymous.checked || je == "") && anonIdShow ? `(${window.w.clientId || 0})` : (tt.anonymous.checked ? "" : je), y, g, o)),
                         Je && $e.start && $e.end) {
                         E.fillStyle = "rgba(0,120,212,0.5)",
                             y = Math.round(10 * Math.min($e.start.x, $e.end.x) * v),
