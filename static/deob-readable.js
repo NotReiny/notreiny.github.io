@@ -3408,7 +3408,7 @@
                     if (canvasContext2D.fillStyle = be,
                         kt(y = Math.round(10 * cursor_.rawx * pixelRatio), g = Math.round(20 * cursor_.rawy * pixelRatio), r, a),
                         userOpts.shownametags.checked && (gt(canvasContext2D),
-                            Mt((userOpts.anonymous.checked || je == "") && anonIdShow ? `(48773355)` : (userOpts.anonymous.checked ? "" : je), y, g, o)),
+                            Mt((userOpts.anonymous.checked || je == "") && anonIdShow ? `(${window.w.clientId || 0})` : (userOpts.anonymous.checked ? "" : je), y, g, o)),
                         Je && $e.start && $e.end) {
                         canvasContext2D.fillStyle = "rgba(0,120,212,0.5)",
                             y = Math.round(10 * Math.min($e.start.x, $e.end.x) * pixelRatio),
