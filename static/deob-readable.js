@@ -1008,7 +1008,7 @@
                                     cursor_.x = r,
                                         cursor_.y++,
                                         s += "\n",
-                                        d += "ï¿½"
+                                        d += "�"
                                 }
                                 s = s.slice(0, -1),
                                     d = d.slice(0, -1),
