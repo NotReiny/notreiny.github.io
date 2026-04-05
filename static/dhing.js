@@ -1,6 +1,6 @@
 function rawLiteral(e, seen = new WeakSet()) {
     if (typeof e === 'object' && e !== null) {
-        if (seen.has(e)) return 'self-referencing';
+        if (seen.has(e)) return '...';
         seen.add(e);
 
         try {
