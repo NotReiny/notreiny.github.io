@@ -206,7 +206,7 @@
                 };
 
             var selectedFont = "Inconsolata"
-                , Q = Math.floor(fontNames[selectedFont] * pixelRatio) + "px" + selectedFont + ", monospace, Special";
+                , Q = Math.floor(fontNames[selectedFont] * pixelRatio) + "px " + selectedFont + ", monospace, Special";
             const specialFonts = new Map;
             specialFonts.set("Unifont", void 0),
                 specialFonts.set("Terminus", void 0),
