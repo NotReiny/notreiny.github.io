@@ -466,7 +466,7 @@ function vt(e) {
 			localStorage.setItem("customfont", defaultFontSelect2),
 			localStorage.setItem("customfontsize", fontSizeDefault),
 			defaultFontSelect2 = '"' + (defaultFontSelect2 || "monospace") + '"') : elemId_fontmenu.classList.add("hidden"),
-		Q = Math.floor(fontSizeDefault * pixelRatio) + "px" + defaultFontSelect2 + ", monospace, Special",
+		Q = Math.floor(fontSizeDefault * pixelRatio) + "px " + defaultFontSelect2 + ", monospace, Special",
 		localStorage.setItem("font", selectedFont),
 		document.getElementById("fontselect").value = selectedFont,
 		ge = true
