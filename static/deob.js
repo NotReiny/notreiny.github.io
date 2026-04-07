@@ -455,7 +455,7 @@
                     localStorage.setItem("customfont", o),
                     localStorage.setItem("customfontsize", i),
                     o = '"' + (o || "monospace") + '"') : D.classList.add("hidden"),
-                    Q = Math.floor(i * v) + "px" + o + ", monospace, Special",
+                    Q = Math.floor(i * v) + "px " + o + ", monospace, Special",
                     localStorage.setItem("font", G),
                     document.getElementById("fontselect").value = G,
                     ge = true
