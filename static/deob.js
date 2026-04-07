@@ -212,7 +212,7 @@
                 };
 
             var G = "Inconsolata"
-                , Q = Math.floor($[G] * v) + "px" + G + ", monospace, Special";
+                , Q = Math.floor($[G] * v) + "px " + G + ", monospace, Special";
             const _ = new Map;
             _.set("Unifont", void 0),
                 _.set("Terminus", void 0),
