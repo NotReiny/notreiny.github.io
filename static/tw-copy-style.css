@@ -598,12 +598,12 @@ td {
 
 @font-face {
     font-family: inconsolata;
-    src: url(./fonts/Inconsolata-Regular.ttf)
+    src: url(/tw-copy/fonts/Inconsolata-Regular.ttf)
 }
 
 @font-face {
     font-family: inconsolata;
-    src: url(https://tw.2s4.me/static/fonts/Inconsolata-Bold.ttf);
+    src: url(/tw-copy/fonts/Inconsolata-Bold.ttf);
     font-weight: 700
 }
 
