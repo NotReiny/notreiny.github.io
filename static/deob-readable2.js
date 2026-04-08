@@ -125,7 +125,7 @@ const elemId_clipboard = document.getElementById("clipboard"),
     elemId_usermenu = document.getElementById("usermenu"),
     elemId_colourlist = document.getElementById("colourlist"),
     elemId_teleport = document.getElementById("teleport");
-var elemId_canvas = document.getElementsById("canvas");
+var elemId_canvas = document.getElementById("canvas");
 elemId_canvas.removeAttribute("id");
 var canvasContext2D = elemId_canvas.getContext("2d", {
     alpha: false
