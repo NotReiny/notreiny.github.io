@@ -1900,57 +1900,57 @@
                 window.w.emit("cursormove", [cursor_.x, cursor_.y]);
                 if (!doNotAutoPan) Hn();
             };
-function parseColoredMessage(msg) {
-    const regex = /<start\s+(#[0-9a-fA-F]{3,6})>([\s\S]*?)<end>/g;
-    const container = document.createElement("span");
+            function parseColoredMessage(msg) {
+                const regex = /<start\s+(#[0-9a-fA-F]{3,6})>([\s\S]*?)<end>/g;
+                const container = document.createElement("span");
 
-    let lastIndex = 0;
-    let match;
+                let lastIndex = 0;
+                let match;
 
-    // Helper to unescape backslashes
-    function unescapeText(text) {
-        return text.replace(/\\(.)/g, "$1");
-    }
+                // Helper to unescape backslashes
+                function unescapeText(text) {
+                    return text.replace(/\\(.)/g, "$1");
+                }
 
-    while ((match = regex.exec(msg)) !== null) {
-        // Check if this match is escaped
-        let isEscaped = false;
-        let escapeCount = 0;
-        let i = match.index - 1;
+                while ((match = regex.exec(msg)) !== null) {
+                    // Check if this match is escaped
+                    let isEscaped = false;
+                    let escapeCount = 0;
+                    let i = match.index - 1;
 
-        while (i >= 0 && msg[i] === "\\") {
-            escapeCount++;
-            i--;
-        }
+                    while (i >= 0 && msg[i] === "\\") {
+                        escapeCount++;
+                        i--;
+                    }
 
-        if (escapeCount % 2 === 1) {
-            // It's escaped, skip it
-            continue;
-        }
+                    if (escapeCount % 2 === 1) {
+                        // It's escaped, skip it
+                        continue;
+                    }
 
-        // Add normal text before match
-        if (match.index > lastIndex) {
-            const rawText = msg.slice(lastIndex, match.index);
-            container.appendChild(document.createTextNode(unescapeText(rawText)));
-        }
+                    // Add normal text before match
+                    if (match.index > lastIndex) {
+                        const rawText = msg.slice(lastIndex, match.index);
+                        container.appendChild(document.createTextNode(unescapeText(rawText)));
+                    }
 
-        // Add colored span
-        const colorSpan = document.createElement("span");
-        colorSpan.style.color = match[1];
-        colorSpan.textContent = unescapeText(match[2]);
-        container.appendChild(colorSpan);
+                    // Add colored span
+                    const colorSpan = document.createElement("span");
+                    colorSpan.style.color = match[1];
+                    colorSpan.textContent = unescapeText(match[2]);
+                    container.appendChild(colorSpan);
 
-        lastIndex = regex.lastIndex;
-    }
+                    lastIndex = regex.lastIndex;
+                }
 
-    // Add remaining text
-    if (lastIndex < msg.length) {
-        const rawText = msg.slice(lastIndex);
-        container.appendChild(document.createTextNode(unescapeText(rawText)));
-    }
+                // Add remaining text
+                if (lastIndex < msg.length) {
+                    const rawText = msg.slice(lastIndex);
+                    container.appendChild(document.createTextNode(unescapeText(rawText)));
+                }
 
-    return container;
-}
+                return container;
+            }
 
             function Tn(e) {
                 var r = new Uint8Array(e.data).buffer
