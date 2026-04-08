@@ -23,7 +23,6 @@ window.getMapping = fullMapping;
             a.push(a.shift())
         }
 })(fullMapping),
-var n = getMappingT;
 class renderFontHex {
     constructor(e, n) {
         this.charMap = new Map,
