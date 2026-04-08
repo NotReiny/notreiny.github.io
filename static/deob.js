@@ -1017,7 +1017,7 @@
                                 , a = e.deltaY;
                             e.shiftKey && (r ^= a,
                                 r ^= a ^= r),
-                                Mn(qeoffset.x - r, qe.offset.y - a)
+                                Mn(qe.offset.x - r, qe.offset.y - a)
                         }
                         ge = true
                     }
