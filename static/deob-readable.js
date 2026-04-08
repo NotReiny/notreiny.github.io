@@ -333,7 +333,6 @@
             for (ne = 0; ne < 200; ne++)
                 et[ne] = 0;
             document.getElementById("fontselect").onchange = function (e) {
-                var t = n;
                 vt(e.target.value)
             }
                 ;
@@ -897,7 +896,6 @@
                 }
             }
             elemId_canvas.addEventListener("pointerdown", (function (e) {
-                var t = n;
                 e.preventDefault(),
                     e.isTrusted && (ie(false),
                         null != Dn && 1 != e.pointerId || Nn || (Dn = e.pointerId,
@@ -1764,7 +1762,6 @@
             function disconnect() {
                 stopPing();
                 pingDetector(true);
-                var e = n;
                 En(),
                     m = false,
                     Gt = false,
@@ -1774,7 +1771,6 @@
                     gn(),
                     elemId_connecting.style.display = "flex",
                     setTimeout((function () {
-                        var t = e;
                         elemId_connecting.style.opacity = "100%"
                     }
                     ), 50),
@@ -3316,7 +3312,6 @@
             }
             Object.defineProperty(window, "cursorCoords", {
                 get: function () {
-                    var e = n;
                     const [tileX, tileY, offsetX, offsetY] = XYtoTile(cursor_.x, cursor_.y);
                     return [tileX, tileY, offsetX, offsetY];
                 }
@@ -3378,7 +3373,7 @@
                     const r = 10 * pixelRatio
                         , a = 20 * pixelRatio
                         , o = Math.round(5 * pixelRatio);
-                    var i, c, l, u, s = bt(20), f = bt(d);
+                    var i, l, u, s = bt(20), f = bt(d);
                     for (const t of we.keys())
                         xt(h = wt(t), s) ? xt(h, f) && delete we.get(t).img : pt(t, h);
                     if (userOpts.showothercurs.checked && (!wallSettings.hideCursors.checked || m)) {
@@ -3496,7 +3491,6 @@
                 return fr(location.pathname)
             }
             function Lr(e) {
-                var t = n;
                 if ("" == (e = decodeURI(e.toLowerCase())) || "~main" == e)
                     return {
                         x: 0,
@@ -3615,7 +3609,6 @@
                 isNaN(cursor_.y) && (cursor_.y = 0),
                 cursor_.start = cursor_.x,
                 setTimeout((function () {
-                    var e = n;
                     window.history.replaceState({}, document.title, location.pathname)
                 }
                 ), 0),
@@ -3623,7 +3616,6 @@
                 null != localStorage.getItem("zoom") && it(JSON.parse(localStorage.getItem("zoom")), false),
                 Kr(),
                 networkBinary = function (e, r) {
-                    var a = n;
                     if (r && r.bdtiple && !Array.isArray(e))
                         throw new Error;
                     const o = 4294967296;
@@ -3636,7 +3628,6 @@
                     return v(129),
                         l.subarray(0, u);
                     function s(e, n) {
-                        var l = a;
                         switch (typeof e) {
                             case "undefined":
                                 d();
@@ -3802,7 +3793,6 @@
                 }
                 ,
                 networkText = function (e, r) {
-                    var a = n;
                     let o, i = 0;
                     if (e instanceof ArrayBuffer && (e = new Uint8Array(e)),
                         "object" != typeof e || void 0 === e.length)
