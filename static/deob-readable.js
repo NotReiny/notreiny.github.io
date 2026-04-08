@@ -1217,7 +1217,7 @@
                 )),
                 elemId_coords.addEventListener("click", (function () {
                     history.pushState({}, null, o),
-                        ar(location.protocol + "//" + "https://tw.2s4.me" + o + "?x=" + cursor_.x + "&y=" + -cursor_.y),
+                        ar(location.protocol + "//" + "tw.2s4.me" + o + "?x=" + cursor_.x + "&y=" + -cursor_.y),
                         showToast_("Copied link.", 1e3),
                         elemId_textarea.focus()
                 }
@@ -3556,8 +3556,8 @@
                 }
             function Kr() {
                 if (null == server || server.readyState != server.CONNECTING && server.readyState != server.OPEN) {
-                    var t = "wss://" + "https://tw.2s4.me" + "/ws";
-                    "https:" !== location.protocol && (t = "ws://" + "https://tw.2s4.me" + "/ws"),
+                    var t = "wss://" + "tw.2s4.me" + "/ws";
+                    "https:" !== location.protocol && (t = "ws://" + "tw.2s4.me" + "/ws"),
                         (server = new WebSocket(t)).binaryType = "arraybuffer",
                         server.onmessage = Tn,
                         server.onclose = disconnect,
@@ -4300,7 +4300,7 @@
             window.network.send = function (data) {
                 server.send(window.network.binary(data))
             };
-            window.network.wsUrl = "wss://" + "https://tw.2s4.me" + "/ws";
+            window.network.wsUrl = "wss://" + "tw.2s4.me" + "/ws";
             window.w.changeZoom = function (e, t) {
                 console.warn("remember, this won't save!");
                 rt = e < 0 ? 0 : e > 10000 ? 10000 : e,
