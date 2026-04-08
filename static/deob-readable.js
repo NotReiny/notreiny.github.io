@@ -113,7 +113,7 @@
                     }
                 }
             }
-            var a, o = "/";
+            var WebSocket, o = "/";
             const elemId_textarea = document.getElementById("textarea")
                 , elemId_connecting = document.getElementById("connecting")
                 , elemId_info = document.getElementById("info")
@@ -154,7 +154,7 @@
                 , elemId_customfont = document.getElementById("customfont")
                 , elemId_customfontsize = document.getElementById("customfontsize")
                 , elemId_fontmenu = document.getElementById("fontmenu");
-            var N = 0;
+            var themeType = 0;
             var j = 0
                 , U = false
                 , currentWall = ""
@@ -396,8 +396,8 @@
                     je = "",
                     j = 0,
                     elemId_wallsettings.style.display = "none",
-                    a.readyState != a.OPEN || t || (wallSettings.private.checked && Cn("textwall", "main"),
-                        a.send(networkBinary({
+                    WebSocket.readyState != WebSocket.OPEN || t || (wallSettings.private.checked && Cn("textwall", "main"),
+                        WebSocket.send(networkBinary({
                             logout: 0
                         })),
                         Re = true),
@@ -716,7 +716,7 @@
                 }
             }
             function zt(e) {
-                for (var t = n, r = we.get(e), a = true, o = 0; o < 200; o++)
+                for (var r = we.get(e), a = true, o = 0; o < 200; o++)
                     if (!Qn(r.txt[o], Zr(r.clr[o])[1])) {
                         a = false;
                         break
@@ -780,7 +780,7 @@
                                 renderChunkAmount == ++d)
                                 break
                         }
-                        d > 0 && (a.send(networkBinary({
+                        d > 0 && (WebSocket.send(networkBinary({
                             r: $t
                         })),
                             Gt = true,
@@ -789,7 +789,7 @@
                 }
             }
             function _t() {
-                var e, t = n, r = bt(250);
+                var e, r = bt(250);
                 for (const n of we.keys()) {
                     var a = wt(n);
                     !xt(a, r) || (e = a)[0] > cursor_.x - 20 && e[0] < cursor_.x + 20 && e[1] > cursor_.y - 10 && e[1] < cursor_.y + 10 || we.delete(n)
@@ -804,10 +804,10 @@
                     var r = 20 * Math.floor(cursor_.x / 20)
                         , o = 10 * Math.floor(cursor_.y / 10)
                         , c = r + "," + o;
-                    we.has(c) && (Ve && a.send(networkBinary({
+                    we.has(c) && (Ve && WebSocket.send(networkBinary({
                         p: c
                     })),
-                        Ze && (tn ? tn = false : a.send(networkBinary({
+                        Ze && (tn ? tn = false : WebSocket.send(networkBinary({
                             c: [r, o, r + 19, o + 9]
                         }))),
                         elemId_textarea.focus())
@@ -817,17 +817,17 @@
                 return e.target.parentElement.parentElement.dataset.id
             }
             function an(e) {
-                m && a.send(networkBinary({
+                m && WebSocket.send(networkBinary({
                     i: rn(e)
                 }))
             }
             function on(e) {
-                m && a.send(networkBinary({
+                m && WebSocket.send(networkBinary({
                     a: [rn(e), e.target.checked]
                 }))
             }
             function cn(e) {
-                m && a.send(networkBinary({
+                m && WebSocket.send(networkBinary({
                     aa: rn(e)
                 }))
             }
@@ -965,7 +965,7 @@
                                 , a = e.deltaY;
                             e.shiftKey && (r ^= a,
                                 r ^= a ^= r),
-                                Mn(qe.offset.x - r, position_.offset.y - a)
+                                Mn(position_.offset.x - r, position_.offset.y - a)
                         }
                         ge = true
                     }
@@ -985,7 +985,7 @@
                                 $e = {},
                                 m && Ze)
                                 tn = true,
-                                    a.send(networkBinary({
+                                    WebSocket.send(networkBinary({
                                         c: [r, o, i, c]
                                     }));
                             else {
@@ -1052,14 +1052,13 @@
                             return "deleteContentBackward" == e.inputType ? (cursor_.x -= 1,
                                 writeChar_(" ", 0, false, true) || (cursor_.x += 1),
                                 void nr()) : void (null != e.data && "" != e.data && "insertFromPaste" != e.inputType && (nr(),
-                                    Array.from(e.data).length > 1 ? tr(e.data) : writeChar_(e.data, 1)));
+                                    Array.from(e.data).length > 1 ? pasteToCanvas(e.data) : writeChar_(e.data, 1)));
                         cr()
                     }
                 }
                 )),
                 
                 elemId_textarea.addEventListener("keydown", (function (e) {
-                    var t = n;
                     if (e.isTrusted) {
                         switch (e.keyCode) {
                             case 38:
@@ -1115,7 +1114,6 @@
                     }
                 },
                 document.addEventListener("keydown", (function (e) {
-                    var r = n;
                     if (e.isTrusted)
                         switch (e.keyCode) {
                             case 90:
@@ -1194,7 +1192,7 @@
                 }
                 )),
                 elemId_textarea.addEventListener("paste", (function (e) {
-                    e.isTrusted && tr((e.clipboardData || window.clipboardData).getData("text"))
+                    e.isTrusted && pasteToCanvas((e.clipboardData || window.clipboardData).getData("text"))
                 }
                 )),
                 elemId_textarea.addEventListener("copy", (function (e) {
@@ -1225,15 +1223,15 @@
                 }
                 )),
                 document.getElementById("closemenu").addEventListener("click", (function () {
-                    ur(0)
+                    toggleMenu(0)
                 }
                 )),
                 document.getElementById("openmenu").addEventListener("click", (function () {
-                    ur(1)
+                    toggleMenu(1)
                 }
                 )),
                 document.getElementById("options").addEventListener("click", (function () {
-                    ur(2)
+                    toggleMenu(2)
                 }
                 )),
                 document.getElementById("home").addEventListener("click", (function () {
@@ -1249,7 +1247,7 @@
                 document.getElementById("copy").addEventListener("click", or),
                 document.getElementById("paste").addEventListener("click", (function () {
                     navigator.clipboard.readText().then((function (t) {
-                        tr(t);
+                        pasteToCanvas(t);
                         var elemId_pasteico = document.getElementById("pasteico");
                         elemId_pasteico.src = "/static/done.svg",
                             setTimeout((function () {
@@ -1262,14 +1260,14 @@
                 }
                 )),
                 document.getElementById("theme").addEventListener("click", (function () {
-                    yr()
+                    changeTheme()
                 }
                 )),
                 elemId_primary.addEventListener("input", gr),
                 elemId_secondary.addEventListener("input", gr),
                 elemId_themetext.addEventListener("change", (function (e) {
                     gr(e),
-                        yr(2)
+                        changeTheme(2)
                 }
                 )),
                 elemId_customfont.addEventListener("input", (function () {
@@ -1364,11 +1362,11 @@
                     e.preventDefault();
                     var elemId_tpx = document.getElementById("tpx")
                         , elemId_tpy = document.getElementById("tpy")
-                        , i = parseInt(elemId_tpx.value, 10)
-                        , c = parseInt(elemId_tpy.value, 10);
-                    isNaN(i) && isNaN(c) || (0 !== i && (i = i || cursor_.x),
-                        0 !== c && (c = c || cursor_.y),
-                        tp_(i = Math.max(Math.min(i, Yt.maxx - 1), Yt.minx), c = Math.max(Math.min(-c, Yt.maxy - 1), Yt.miny)),
+                        , xValue = parseInt(elemId_tpx.value, 10)
+                        , yValue = parseInt(elemId_tpy.value, 10);
+                    isNaN(xValue) && isNaN(yValue) || (0 !== xValue && (xValue = xValue || cursor_.x),
+                        0 !== yValue && (yValue = yValue || cursor_.y),
+                        tp_(xValue = Math.max(Math.min(xValue, Yt.maxx - 1), Yt.minx), yValue = Math.max(Math.min(-yValue, Yt.maxy - 1), Yt.miny)),
                         history.pushState({}, null, o),
                         elemId_teleport.classList.remove("open"),
                         elemId_tpx.blur(),
@@ -1395,7 +1393,7 @@
                 elemId_zoom.addEventListener("input", ct),
                 elemId_zoom.addEventListener("change", ct),
                 pingWorker.addEventListener("message", (function (e) {
-                    a && a.readyState == a.OPEN && a.send(e.data)
+                    WebSocket && WebSocket.readyState == WebSocket.OPEN && WebSocket.send(e.data)
                 }
                 )),
                 document.getElementById("chatbutton").addEventListener("click", (function () {
@@ -1414,7 +1412,7 @@
                         var elemId_loginname = document.getElementById("loginname")
                             , elemId_loginpass = document.getElementById("loginpass");
                         mn.test(elemId_loginname.value) ? 0 != elemId_loginname.value.length ? 0 != elemId_loginpass.value.length ? (vn(true),
-                            a.send(networkBinary({
+                            WebSocket.send(networkBinary({
                                 login: [elemId_loginname.value, elemId_loginpass.value]
                             }))) : showToast_("Please type your password.", 3e3) : showToast_("Please type your username.", 3e3) : showToast_("Username is invalid.", 3e3)
                     }
@@ -1426,7 +1424,7 @@
                             , elemId_password = document.getElementById("password")
                             , elemId_password2 = document.getElementById("password2");
                         mn.test(elemId_username.value) ? 0 != elemId_username.value.length ? 0 != elemId_password.value.length ? elemId_password.value == elemId_password2.value ? (vn(true),
-                            a.send(networkBinary({
+                            WebSocket.send(networkBinary({
                                 register: [elemId_username.value, elemId_password.value]
                             }))) : showToast_("Passwords do not match.", 3e3) : showToast_("Please type a password.", 3e3) : showToast_("Please type a username.", 3e3) : showToast_("Username is invalid.", 3e3)
                     }
@@ -1446,7 +1444,7 @@
                         var elemId_chngusername = document.getElementById("chngusername")
                             , elemId_chngeusrpass = document.getElementById("chngeusrpass");
                         mn.test(elemId_chngusername.value) ? 0 != elemId_chngusername.value.length ? je != elemId_chngusername.value ? 0 != elemId_chngeusrpass.value.length ? (vn(true),
-                            a.send(networkBinary({
+                            WebSocket.send(networkBinary({
                                 namechange: [elemId_chngusername.value, elemId_chngeusrpass.value]
                             }))) : showToast_("Please type your password.", 3e3) : showToast_("You have typed in your current username.", 3e3) : showToast_("Please type a new username.", 3e3) : showToast_("Username is invalid.", 3e3)
                     }
@@ -1459,7 +1457,7 @@
                             , elemId_newpass = document.getElementById("newpass")
                             , elemId_newpass2 = document.getElementById("newpass2");
                         0 != elemId_oldpass.value.length ? 0 != elemId_newpass.value.length ? 0 != elemId_newpass2.value.length ? elemId_newpass.value == elemId_newpass2.value ? (vn(true),
-                            a.send(networkBinary({
+                            WebSocket.send(networkBinary({
                                 passchange: [elemId_oldpass.value, elemId_newpass.value]
                             }))) : showToast_("New passwords do not match.", 3e3) : showToast_("Please type your new password again.", 3e3) : showToast_("Please type your new password.", 3e3) : showToast_("Please type your password.", 3e3)
                     }
@@ -1470,7 +1468,7 @@
                     if (e.isTrusted) {
                         var elemId_deletepassword = document.getElementById("deletepassword");
                         0 != elemId_deletepassword.value.length ? (vn(true),
-                            a.send(networkBinary({
+                            WebSocket.send(networkBinary({
                                 deleteaccount: elemId_deletepassword.value
                             }))) : showToast_("Please type your password.", 3e3)
                     }
@@ -1487,37 +1485,37 @@
                 }
                 )),
                 wallSettings.readOnly.addEventListener("click", (function (e) {
-                    a.send(networkBinary({
+                    WebSocket.send(networkBinary({
                         ro: e.target.checked
                     }))
                 }
                 )),
                 wallSettings.private.addEventListener("click", (function (e) {
-                    a.send(networkBinary({
+                    WebSocket.send(networkBinary({
                         priv: e.target.checked
                     }))
                 }
                 )),
                 wallSettings.hideCursors.addEventListener("click", (function (e) {
-                    a.send(networkBinary({
+                    WebSocket.send(networkBinary({
                         ch: e.target.checked
                     }))
                 }
                 )),
                 wallSettings.disableChat.addEventListener("click", (function (e) {
-                    a.send(networkBinary({
+                    WebSocket.send(networkBinary({
                         dc: e.target.checked
                     }))
                 }
                 )),
                 wallSettings.disableColour.addEventListener("click", (function (e) {
-                    a.send(networkBinary({
+                    WebSocket.send(networkBinary({
                         dcl: e.target.checked
                     }))
                 }
                 )),
                 wallSettings.disableBraille.addEventListener("click", (function (e) {
-                    a.send(networkBinary({
+                    WebSocket.send(networkBinary({
                         db: e.target.checked
                     }))
                 }
@@ -1534,7 +1532,7 @@
                                 if (elemId_memberlist2.children[a].innerText == e)
                                     return true;
                             return false
-                        }(i) || i == je) || (mn.test(i) ? elemId_memberlist.childElementCount >= 20 ? showToast_("You cannot add more than 20 members.", 3e3) : a.send(networkBinary({
+                        }(i) || i == je) || (mn.test(i) ? elemId_memberlist.childElementCount >= 20 ? showToast_("You cannot add more than 20 members.", 3e3) : WebSocket.send(networkBinary({
                             addmem: i
                         })) : showToast_("Username is invalid.", 3e3))
                 }
@@ -1553,7 +1551,7 @@
                     }
                     "confirm" == elemId_deletewallconfirm.value.toLowerCase() ? (elemId_deletewallconfirm.parentElement.removeChild(elemId_deletewallconfirm.previousSibling),
                         elemId_deletewallconfirm.parentNode.removeChild(elemId_deletewallconfirm),
-                        a.send(networkBinary({
+                        WebSocket.send(networkBinary({
                             dw: 0
                         })),
                         Cn("textwall", "main"),
@@ -1561,7 +1559,7 @@
                 }
                 )),
                 document.getElementById("l").addEventListener("click", (function (e) {
-                    m && a.send(networkBinary({
+                    m && WebSocket.send(networkBinary({
                         l: e.target.checked
                     }))
                 }
@@ -1582,13 +1580,13 @@
                 )),
                 document.getElementById("sendalert").addEventListener("click", (function () {
                     var elemId_alerttext = document.getElementById("alerttext").value;
-                    m && 0 != elemId_alerttext.length && a.send(networkBinary({
+                    m && 0 != elemId_alerttext.length && WebSocket.send(networkBinary({
                         alert: elemId_alerttext
                     }))
                 }
                 )),
                 document.getElementById("reload").addEventListener("click", (function () {
-                    m && a.send(networkBinary({
+                    m && WebSocket.send(networkBinary({
                         reload: true
                     }))
                 }
@@ -1596,7 +1594,7 @@
                 document.getElementById("delete").addEventListener("click", (function () {
                     if (m) {
                         var elemId_deletename = document.getElementById("deletename").value;
-                        0 != elemId_deletename.length && a.send(networkBinary({
+                        0 != elemId_deletename.length && WebSocket.send(networkBinary({
                             aaa: elemId_deletename
                         }))
                     }
@@ -1605,7 +1603,7 @@
                 document.getElementById("free").addEventListener("click", (function () {
                     if (m) {
                         var elemId_freename = document.getElementById("freename").value;
-                        0 != elemId_freename.length && a.send(networkBinary({
+                        0 != elemId_freename.length && WebSocket.send(networkBinary({
                             aaaa: elemId_freename
                         }))
                     }
@@ -1626,7 +1624,7 @@
                 null != elemId_chatbox.lastElementChild && "HR" != elemId_chatbox.lastElementChild.tagName && (elemId_chatbox.appendChild(document.createElement("hr")),
                     gn())
             }
-            function bn(e) {
+            function bn() {
                 var elemId_chatmsg = document.getElementById("chatmsg");
                 // /^[s?]*$/ <- blocks question marks
                 // fixed to
@@ -1642,7 +1640,7 @@
             function chatSend(e) {
                 var data = { msg: e };
                 window.w.emit("chatBefore", data);
-                a.send(networkBinary({
+                WebSocket.send(networkBinary({
                     msg: data.msg
                 })),
                     Xe = performance.now();
@@ -1689,7 +1687,7 @@
                 var pageTitle2 = pageTitle;
                 "textwall" != currentWall && (pageTitle2 = "~" + currentWall,
                     "main" != currentSubwall && (pageTitle2 += "/" + currentSubwall)),
-                    null == a || a.readyState == a.CLOSED ? document.title = pageTitle + " (disconnected)" : document.title = y ? "textwall" != currentWall ? pageTitle2 : pageTitle : pageTitle2 + " (" + Ue + " nearby)"
+                    null == WebSocket || WebSocket.readyState == WebSocket.CLOSED ? document.title = pageTitle + " (disconnected)" : document.title = y ? "textwall" != currentWall ? pageTitle2 : pageTitle : pageTitle2 + " (" + Ue + " nearby)"
             }
             function Sn(e) {
                 ke = [],
@@ -1711,8 +1709,8 @@
                 if (pingInterval) return; // already running
                 pingInterval = setInterval(() => {
                     NKe = performance.now();
-                    if (a.readyState === 1) {
-                        a.send(networkBinary({ ping: true }));
+                    if (WebSocket.readyState === 1) {
+                        WebSocket.send(networkBinary({ ping: true }));
                     }
                 }, 1000);
             }
@@ -1732,7 +1730,7 @@
                     document.getElementById("connecting2").innerText = "",
                     document.getElementById("admin").style.display = "none",
                     "" == je && null != localStorage.getItem("username") && null != localStorage.getItem("token") && (vn(true),
-                        a.send(networkBinary({
+                        WebSocket.send(networkBinary({
                             token: [localStorage.getItem("username"), localStorage.getItem("token")]
                         })));
                 var t = "textwall"
@@ -1754,7 +1752,7 @@
                     nr(),
                     pn(),
                     Yt = null,
-                    a.send(networkBinary({
+                    WebSocket.send(networkBinary({
                         j: [e, t]
                     })),
                     Xn(),
@@ -1763,9 +1761,9 @@
                     Me = [],
                     0))
             }
-            function An() {
+            function disconnect() {
                 stopPing();
-                Acn(true);
+                pingDetector(true);
                 var e = n;
                 En(),
                     m = false,
@@ -1788,7 +1786,7 @@
                     document.getElementById("connecting2").innerText = "Click here to reconnect.",
                     elemId_connecting.onclick = Kr
             }
-            function Acn(isDisconnected = false) {
+            function pingDetector(isDisconnected = false) {
                 var lims = {
                     5: "#00ffff",
                     20: "#00ff00",
@@ -1902,35 +1900,57 @@
                 window.w.emit("cursormove", [cursor_.x, cursor_.y]);
                 if (!doNotAutoPan) Hn();
             };
-            function parseColoredMessage(msg) {
-                const regex = /<start\s+(#[0-9a-fA-F]{3,6})>([\s\S]*?)<end>/g;
-                const container = document.createElement("span");
+function parseColoredMessage(msg) {
+    const regex = /<start\s+(#[0-9a-fA-F]{3,6})>([\s\S]*?)<end>/g;
+    const container = document.createElement("span");
 
-                let lastIndex = 0;
-                let match;
+    let lastIndex = 0;
+    let match;
 
-                while ((match = regex.exec(msg)) !== null) {
+    // Helper to unescape backslashes
+    function unescapeText(text) {
+        return text.replace(/\\(.)/g, "$1");
+    }
 
-                    if (match.index > lastIndex) {
-                        container.appendChild(document.createTextNode(msg.slice(lastIndex, match.index)));
-                    }
+    while ((match = regex.exec(msg)) !== null) {
+        // Check if this match is escaped
+        let isEscaped = false;
+        let escapeCount = 0;
+        let i = match.index - 1;
 
+        while (i >= 0 && msg[i] === "\\") {
+            escapeCount++;
+            i--;
+        }
 
-                    const colorSpan = document.createElement("span");
-                    colorSpan.style.color = match[1];
-                    colorSpan.textContent = match[2];
-                    container.appendChild(colorSpan);
+        if (escapeCount % 2 === 1) {
+            // It's escaped, skip it
+            continue;
+        }
 
-                    lastIndex = regex.lastIndex;
-                }
+        // Add normal text before match
+        if (match.index > lastIndex) {
+            const rawText = msg.slice(lastIndex, match.index);
+            container.appendChild(document.createTextNode(unescapeText(rawText)));
+        }
 
+        // Add colored span
+        const colorSpan = document.createElement("span");
+        colorSpan.style.color = match[1];
+        colorSpan.textContent = unescapeText(match[2]);
+        container.appendChild(colorSpan);
 
-                if (lastIndex < msg.length) {
-                    container.appendChild(document.createTextNode(msg.slice(lastIndex)));
-                }
+        lastIndex = regex.lastIndex;
+    }
 
-                return container;
-            }
+    // Add remaining text
+    if (lastIndex < msg.length) {
+        const rawText = msg.slice(lastIndex);
+        container.appendChild(document.createTextNode(unescapeText(rawText)));
+    }
+
+    return container;
+}
 
             function Tn(e) {
                 var r = new Uint8Array(e.data).buffer
@@ -2147,7 +2167,7 @@
                         // edit latency
                         // and update lastPing
                         lastPing = OKe - NKe;
-                        Acn();
+                        pingDetector();
                         window.w.emit('pong', lastPing);
                         break;
                     case "msg":
@@ -2408,7 +2428,7 @@
             }
             function Pn(e) {
                 var r = e.target.innerText;
-                a.send(networkBinary({
+                WebSocket.send(networkBinary({
                     rmmem: r
                 })),
                     e.target.remove()
@@ -2791,8 +2811,7 @@
             }
             const _n = Math.log(5 / 3) / 1e3;
             var er = false;
-            function tr(e) {
-                var t = n;
+            function pasteToCanvas(e) {
                 if (!Ie) {
                     var r, a, o = (e = e.replace(Tt, "")).split(unicode1B), i = false;
                     if (2 == o.length ? (i = true,
@@ -2808,7 +2827,6 @@
                             var c = pe
                                 , l = ce();
                             !function e(n, o) {
-                                var u = t;
                                 if (n == r.length || !Ie)
                                     return nr(),
                                         er = false,
@@ -2881,7 +2899,7 @@
             }
             null == navigator.clipboard.readText && (document.getElementById("paste").style.display = "none");
             var lr = 0;
-            function ur(e) {
+            function toggleMenu(e) {
                 switch (ie(false),
                 (2 == e && 2 == lr || 1 == e && 1 == lr) && (e = 0),
                 e) {
@@ -2916,7 +2934,7 @@
                 ie(false),
                     elemId_teleport.classList.contains("open") ? (elemId_teleport.classList.remove("open"),
                         en()) : (elemId_teleport.classList.add("open"),
-                            2 == lr && ur(0),
+                            2 == lr && toggleMenu(0),
                             document.getElementById("tpword").focus())
             }
             function fr(e) {
@@ -2962,7 +2980,7 @@
                     localStorage.setItem("col", e),
                     ge = true
             }
-            for (elemId_colourlist.children.length > 0 && (a = true),
+            for (elemId_colourlist.children.length > 0 && (WebSocket = true),
                 ne = 0; ne < colourHex.length; ne++)
                 sr(colourId[ne]);
             function hr(e) {
@@ -2970,35 +2988,35 @@
                     "0" != elemId_colourlist.children[r].id && (e ? elemId_colourlist.children[r].classList.add("hidden") : elemId_colourlist.children[r].classList.remove("hidden"));
                 e && changeColor_(0)
             }
-            function yr(e) {
+            function changeTheme(e) {
                 if (null != e)
-                    N = e;
+                    themeType = e;
                 else
-                    switch (N) {
+                    switch (themeType) {
                         case 0:
-                            N = 1;
+                            themeType = 1;
                             break;
                         case 1:
-                            N = 2;
+                            themeType = 2;
                             break;
                         case 2:
-                            N = 0
+                            themeType = 0
                     }
-                0 == N && (xe = false,
+                0 == themeType && (xe = false,
                     document.getElementById("themeico").src = "/static/sun.svg",
                     C = S,
                     A = I),
-                    1 == N && (xe = true,
+                    1 == themeType && (xe = true,
                         document.getElementById("themeico").src = "/static/moon.svg",
                         C = "#000000",
                         A = "#141414"),
-                    2 == N ? (xe = elemId_themetext.checked,
+                    2 == themeType ? (xe = elemId_themetext.checked,
                         document.getElementById("themeico").src = "/static/star.svg",
                         C = elemId_primary.value,
                         A = elemId_secondary.value,
                         elemId_thememenu.classList.remove("hidden")) : elemId_thememenu.classList.add("hidden"),
                     T = adjustColour(A, 10),
-                    localStorage.setItem("theme", N),
+                    localStorage.setItem("theme", themeType),
                     ge = true,
                     en(),
                     changeColor_(pe),
@@ -3044,7 +3062,7 @@
             }
             window.flushAmount = 250
             function flushWrites() {
-                if (a && a.readyState == a.OPEN) {
+                if (WebSocket && WebSocket.readyState == WebSocket.OPEN) {
                     if ((Le || Oe || Re || De) && we.size !== 0) {
                         var t = {};
                         Le && (t.l = [cursor_.x, cursor_.y]);
@@ -3052,7 +3070,7 @@
                         Re && (t.n = userOpts.anonymous.checked);
                         De && (t.p = [position_.coords.x, position_.coords.y]);
 
-                        a.send(networkBinary({ ce: t }));
+                        WebSocket.send(networkBinary({ ce: t }));
                         Le = Oe = Re = De = false;
                     }
 
@@ -3069,7 +3087,7 @@
                             }
                             tA.push([i, c, l, u, s]);
                         }
-                        a.send(networkBinary({ e: tA }));
+                        WebSocket.send(networkBinary({ e: tA }));
                     }
                 }
             }
@@ -3100,21 +3118,21 @@
             window.w.setFlushInterval = setFlushInterval;
             window.w.changeTheme = function (e) {
                 if (e === undefined) {
-                    yr(0)
+                    changeTheme(0)
                     return;
                 }
-                if (e == "light") yr(0);
-                else if (e == "dark") yr(1);
-                else if (e == "custom") yr(2);
-                else yr(e);
+                if (e == "light") changeTheme(0);
+                else if (e == "dark") changeTheme(1);
+                else if (e == "custom") changeTheme(2);
+                else changeTheme(e);
 
 
             }
             window.w.setPrimaryColor = function (e) { elemId_primary.value = e; gr({ target: elemId_primary }); }
             window.w.setSecondaryColor = function (e) { elemId_secondary.value = e; gr({ target: elemId_secondary }); }
             window.w.toggleTeleport = toggleTeleport_;
-            window.w.color = function () { ur(1) }
-            window.w.settings = function () { ur(2) }
+            window.w.color = function () { toggleMenu(1) }
+            window.w.settings = function () { toggleMenu(2) }
             window.Tile = {}
             window.Tile.get = function (e, t) {
                 if (!we.has(e + "," + t))
@@ -3187,7 +3205,7 @@
             window.getTMapping = getMappingT;
             window.w.renderChunkAmount = renderChunkAmount;
             window.w.setRenderChunkAmount = function (e) { renderChunkAmount = parseInt(e, 0); ge = true };
-            window.w.getTheme = function () { return { mode: N, primary: C, secondary: A, texttheme: elemId_themetext.checked }; };
+            window.w.getTheme = function () { return { mode: themeType, primary: C, secondary: A, texttheme: elemId_themetext.checked }; };
             window.getChar = function (e, t, r = 0, a = 0) {
                 if (e === undefined || t === undefined || r === undefined || a === undefined) {
                     [e, t, r, a] = window.cursorCoords;
@@ -3466,7 +3484,7 @@
             }
             if (null != localStorage.getItem("theme")) {
                 var Ar = localStorage.getItem("theme");
-                yr(0 == Ar || 1 == Ar || 2 == Ar ? Number(Ar) : N)
+                changeTheme(0 == Ar || 1 == Ar || 2 == Ar ? Number(Ar) : themeType)
             }
             var Tr, Br = (Tr = {},
                 window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, (function (e, t, n) {
@@ -3537,14 +3555,14 @@
                         cursor_.y = Hr.y
                 }
             function Kr() {
-                if (null == a || a.readyState != WebSocket.CONNECTING && a.readyState != WebSocket.OPEN) {
+                if (null == WebSocket || WebSocket.readyState != WebSocket.CONNECTING && WebSocket.readyState != WebSocket.OPEN) {
                     var t = "wss://" + location.host + "/ws";
                     "https:" !== location.protocol && (t = "ws://" + location.host + "/ws"),
-                        (a = new WebSocket(t)).binaryType = "arraybuffer",
-                        a.onmessage = Tn,
-                        a.onclose = An,
-                        a.onerror = An,
-                        a.onopen = In,
+                        (WebSocket = new WebSocket(t)).binaryType = "arraybuffer",
+                        WebSocket.onmessage = Tn,
+                        WebSocket.onclose = disconnect,
+                        WebSocket.onerror = disconnect,
+                        WebSocket.onopen = In,
                         document.getElementById("connecting1").innerText = "Connecting...",
                         document.getElementById("connecting2").innerText = "",
                         elemId_connecting.onclick = void 0
@@ -4230,7 +4248,7 @@
             window.w.typeChar = writeChar;
             window.w.socket = {}
             Object.defineProperty(window.w, "socket", {
-                get: function () { return a }
+                get: function () { return WebSocket }
             });
             window.w.clipboard = {
                 textarea: null,
@@ -4280,7 +4298,7 @@
             window.network.binary = networkBinary;
             window.network.text = networkText;
             window.network.send = function (data) {
-                a.send(window.network.binary(data))
+                WebSocket.send(window.network.binary(data))
             };
             window.network.wsUrl = "wss://" + location.host + "/ws";
             window.w.changeZoom = function (e, t) {
