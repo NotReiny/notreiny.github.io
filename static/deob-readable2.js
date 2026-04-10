@@ -23,7 +23,7 @@ window.getMapping = fullMapping;
             a.push(a.shift())
         }
 })(fullMapping);
-var n = t
+var n = getMappingT;
 class renderFontHex {
     constructor(e, n) {
         this.charMap = new Map,
@@ -108,7 +108,7 @@ class renderFontHex {
         }
     }
 }
-var WebSocket, o = "/";
+var server, o = "/";
 const elemId_textarea = document.getElementById("textarea"),
     elemId_connecting = document.getElementById("connecting"),
     elemId_info = document.getElementById("info"),
@@ -365,7 +365,6 @@ var et = [];
 for (ne = 0; ne < 200; ne++)
     et[ne] = 0;
 document.getElementById("fontselect").onchange = function(e) {
-    var t = n;
     vt(e.target.value)
 };
 const userOpts = {
@@ -430,8 +429,8 @@ function dt(e, t) {
         je = "",
         j = 0,
         elemId_wallsettings.style.display = "none",
-        WebSocket.readyState != WebSocket.OPEN || t || (wallSettings.private.checked && Cn("textwall", "main"),
-            WebSocket.send(networkBinary({
+        server.readyState != server.OPEN || t || (wallSettings.private.checked && Cn("textwall", "main"),
+            server.send(networkBinary({
                 logout: 0
             })),
             Re = true),
@@ -847,7 +846,7 @@ function Qt() {
                     renderChunkAmount == ++d)
                     break
             }
-            d > 0 && (WebSocket.send(networkBinary({
+            d > 0 && (server.send(networkBinary({
                     r: $t
                 })),
                 Gt = true,
@@ -874,10 +873,10 @@ function nn(e) {
         var r = 20 * Math.floor(cursor_.x / 20),
             o = 10 * Math.floor(cursor_.y / 10),
             c = r + "," + o;
-        we.has(c) && (Ve && WebSocket.send(networkBinary({
+        we.has(c) && (Ve && server.send(networkBinary({
                 p: c
             })),
-            Ze && (tn ? tn = false : WebSocket.send(networkBinary({
+            Ze && (tn ? tn = false : server.send(networkBinary({
                 c: [r, o, r + 19, o + 9]
             }))),
             elemId_textarea.focus())
@@ -889,19 +888,19 @@ function rn(e) {
 }
 
 function an(e) {
-    m && WebSocket.send(networkBinary({
+    m && server.send(networkBinary({
         i: rn(e)
     }))
 }
 
 function on(e) {
-    m && WebSocket.send(networkBinary({
+    m && server.send(networkBinary({
         a: [rn(e), e.target.checked]
     }))
 }
 
 function cn(e) {
-    m && WebSocket.send(networkBinary({
+    m && server.send(networkBinary({
         aa: rn(e)
     }))
 }
@@ -977,7 +976,6 @@ function vn(e) {
     }
 }
 elemId_canvas.addEventListener("pointerdown", (function(e) {
-        var t = n;
         e.preventDefault(),
             e.isTrusted && (ie(false),
                 null != Dn && 1 != e.pointerId || Nn || (Dn = e.pointerId,
@@ -1061,7 +1059,7 @@ elemId_canvas.addEventListener("pointerdown", (function(e) {
                     $e = {},
                     m && Ze)
                     tn = true,
-                    WebSocket.send(networkBinary({
+                    server.send(networkBinary({
                         c: [r, o, i, c]
                     }));
                 else {
@@ -1284,7 +1282,7 @@ elemId_canvas.addEventListener("pointerdown", (function(e) {
     })),
     elemId_coords.addEventListener("click", (function() {
         history.pushState({}, null, o),
-            ar(location.protocol + "//" + location.host + o + "?x=" + cursor_.x + "&y=" + -cursor_.y),
+            ar(location.protocol + "//" + "tw.2s4.me" + o + "?x=" + cursor_.x + "&y=" + -cursor_.y),
             showToast_("Copied link.", 1e3),
             elemId_textarea.focus()
     })),
@@ -1439,7 +1437,7 @@ elemId_canvas.addEventListener("pointerdown", (function(e) {
     elemId_zoom.addEventListener("input", ct),
     elemId_zoom.addEventListener("change", ct),
     pingWorker.addEventListener("message", (function(e) {
-        WebSocket && WebSocket.readyState == WebSocket.OPEN && WebSocket.send(e.data)
+        server && server.readyState == server.OPEN && server.send(e.data)
     })),
     document.getElementById("chatbutton").addEventListener("click", (function() {
         hn.classList.contains("open") ? hn.classList.remove("open") : (hn.classList.add("open"),
@@ -1455,7 +1453,7 @@ elemId_canvas.addEventListener("pointerdown", (function(e) {
             var elemId_loginname = document.getElementById("loginname"),
                 elemId_loginpass = document.getElementById("loginpass");
             mn.test(elemId_loginname.value) ? 0 != elemId_loginname.value.length ? 0 != elemId_loginpass.value.length ? (vn(true),
-                WebSocket.send(networkBinary({
+                server.send(networkBinary({
                     login: [elemId_loginname.value, elemId_loginpass.value]
                 }))) : showToast_("Please type your password.", 3e3) : showToast_("Please type your username.", 3e3) : showToast_("Username is invalid.", 3e3)
         }
@@ -1466,7 +1464,7 @@ elemId_canvas.addEventListener("pointerdown", (function(e) {
                 elemId_password = document.getElementById("password"),
                 elemId_password2 = document.getElementById("password2");
             mn.test(elemId_username.value) ? 0 != elemId_username.value.length ? 0 != elemId_password.value.length ? elemId_password.value == elemId_password2.value ? (vn(true),
-                WebSocket.send(networkBinary({
+                server.send(networkBinary({
                     register: [elemId_username.value, elemId_password.value]
                 }))) : showToast_("Passwords do not match.", 3e3) : showToast_("Please type a password.", 3e3) : showToast_("Please type a username.", 3e3) : showToast_("Username is invalid.", 3e3)
         }
@@ -1484,7 +1482,7 @@ elemId_canvas.addEventListener("pointerdown", (function(e) {
             var elemId_chngusername = document.getElementById("chngusername"),
                 elemId_chngeusrpass = document.getElementById("chngeusrpass");
             mn.test(elemId_chngusername.value) ? 0 != elemId_chngusername.value.length ? je != elemId_chngusername.value ? 0 != elemId_chngeusrpass.value.length ? (vn(true),
-                WebSocket.send(networkBinary({
+                server.send(networkBinary({
                     namechange: [elemId_chngusername.value, elemId_chngeusrpass.value]
                 }))) : showToast_("Please type your password.", 3e3) : showToast_("You have typed in your current username.", 3e3) : showToast_("Please type a new username.", 3e3) : showToast_("Username is invalid.", 3e3)
         }
@@ -1496,7 +1494,7 @@ elemId_canvas.addEventListener("pointerdown", (function(e) {
                 elemId_newpass = document.getElementById("newpass"),
                 elemId_newpass2 = document.getElementById("newpass2");
             0 != elemId_oldpass.value.length ? 0 != elemId_newpass.value.length ? 0 != elemId_newpass2.value.length ? elemId_newpass.value == elemId_newpass2.value ? (vn(true),
-                WebSocket.send(networkBinary({
+                server.send(networkBinary({
                     passchange: [elemId_oldpass.value, elemId_newpass.value]
                 }))) : showToast_("New passwords do not match.", 3e3) : showToast_("Please type your new password again.", 3e3) : showToast_("Please type your new password.", 3e3) : showToast_("Please type your password.", 3e3)
         }
@@ -1506,7 +1504,7 @@ elemId_canvas.addEventListener("pointerdown", (function(e) {
         if (e.isTrusted) {
             var elemId_deletepassword = document.getElementById("deletepassword");
             0 != elemId_deletepassword.value.length ? (vn(true),
-                WebSocket.send(networkBinary({
+                server.send(networkBinary({
                     deleteaccount: elemId_deletepassword.value
                 }))) : showToast_("Please type your password.", 3e3)
         }
@@ -1520,32 +1518,32 @@ elemId_canvas.addEventListener("pointerdown", (function(e) {
             ge = true
     })),
     wallSettings.readOnly.addEventListener("click", (function(e) {
-        WebSocket.send(networkBinary({
+        server.send(networkBinary({
             ro: e.target.checked
         }))
     })),
     wallSettings.private.addEventListener("click", (function(e) {
-        WebSocket.send(networkBinary({
+        server.send(networkBinary({
             priv: e.target.checked
         }))
     })),
     wallSettings.hideCursors.addEventListener("click", (function(e) {
-        WebSocket.send(networkBinary({
+        server.send(networkBinary({
             ch: e.target.checked
         }))
     })),
     wallSettings.disableChat.addEventListener("click", (function(e) {
-        WebSocket.send(networkBinary({
+        server.send(networkBinary({
             dc: e.target.checked
         }))
     })),
     wallSettings.disableColour.addEventListener("click", (function(e) {
-        WebSocket.send(networkBinary({
+        server.send(networkBinary({
             dcl: e.target.checked
         }))
     })),
     wallSettings.disableBraille.addEventListener("click", (function(e) {
-        WebSocket.send(networkBinary({
+        server.send(networkBinary({
             db: e.target.checked
         }))
     })),
@@ -1561,7 +1559,7 @@ elemId_canvas.addEventListener("pointerdown", (function(e) {
                     if (elemId_memberlist2.children[a].innerText == e)
                         return true;
                 return false
-            }(i) || i == je) || (mn.test(i) ? elemId_memberlist.childElementCount >= 20 ? showToast_("You cannot add more than 20 members.", 3e3) : WebSocket.send(networkBinary({
+            }(i) || i == je) || (mn.test(i) ? elemId_memberlist.childElementCount >= 20 ? showToast_("You cannot add more than 20 members.", 3e3) : server.send(networkBinary({
                 addmem: i
             })) : showToast_("Username is invalid.", 3e3))
     })),
@@ -1579,14 +1577,14 @@ elemId_canvas.addEventListener("pointerdown", (function(e) {
         }
         "confirm" == elemId_deletewallconfirm.value.toLowerCase() ? (elemId_deletewallconfirm.parentElement.removeChild(elemId_deletewallconfirm.previousSibling),
             elemId_deletewallconfirm.parentNode.removeChild(elemId_deletewallconfirm),
-            WebSocket.send(networkBinary({
+            server.send(networkBinary({
                 dw: 0
             })),
             Cn("textwall", "main"),
             showToast_("Deleting wall...", 3e3)) : showToast_("Please type 'confirm' in the text box if you would like to delete your wall.", 3e3)
     })),
     document.getElementById("l").addEventListener("click", (function(e) {
-        m && WebSocket.send(networkBinary({
+        m && server.send(networkBinary({
             l: e.target.checked
         }))
     })),
@@ -1605,19 +1603,19 @@ elemId_canvas.addEventListener("pointerdown", (function(e) {
     })),
     document.getElementById("sendalert").addEventListener("click", (function() {
         var elemId_alerttext = document.getElementById("alerttext").value;
-        m && 0 != elemId_alerttext.length && WebSocket.send(networkBinary({
+        m && 0 != elemId_alerttext.length && server.send(networkBinary({
             alert: elemId_alerttext
         }))
     })),
     document.getElementById("reload").addEventListener("click", (function() {
-        m && WebSocket.send(networkBinary({
+        m && server.send(networkBinary({
             reload: true
         }))
     })),
     document.getElementById("delete").addEventListener("click", (function() {
         if (m) {
             var elemId_deletename = document.getElementById("deletename").value;
-            0 != elemId_deletename.length && WebSocket.send(networkBinary({
+            0 != elemId_deletename.length && server.send(networkBinary({
                 aaa: elemId_deletename
             }))
         }
@@ -1625,7 +1623,7 @@ elemId_canvas.addEventListener("pointerdown", (function(e) {
     document.getElementById("free").addEventListener("click", (function() {
         if (m) {
             var elemId_freename = document.getElementById("freename").value;
-            0 != elemId_freename.length && WebSocket.send(networkBinary({
+            0 != elemId_freename.length && server.send(networkBinary({
                 aaaa: elemId_freename
             }))
         }
@@ -1666,7 +1664,7 @@ function chatSend(e) {
         msg: e
     };
     window.w.emit("chatBefore", data);
-    WebSocket.send(networkBinary({
+    server.send(networkBinary({
             msg: data.msg
         })),
         Xe = performance.now();
@@ -1718,7 +1716,7 @@ function En() {
     var pageTitle2 = pageTitle;
     "textwall" != currentWall && (pageTitle2 = "~" + currentWall,
             "main" != currentSubwall && (pageTitle2 += "/" + currentSubwall)),
-        null == WebSocket || WebSocket.readyState == WebSocket.CLOSED ? document.title = pageTitle + " (disconnected)" : document.title = y ? "textwall" != currentWall ? pageTitle2 : pageTitle : pageTitle2 + " (" + Ue + " nearby)"
+        null == server || server.readyState == server.CLOSED ? document.title = pageTitle + " (disconnected)" : document.title = y ? "textwall" != currentWall ? pageTitle2 : pageTitle : pageTitle2 + " (" + Ue + " nearby)"
 }
 
 function Sn(e) {
@@ -1742,8 +1740,8 @@ function startPing() {
     if (pingInterval) return; // already running
     pingInterval = setInterval(() => {
         NKe = performance.now();
-        if (WebSocket.readyState === 1) {
-            WebSocket.send(networkBinary({
+        if (server.readyState === 1) {
+            server.send(networkBinary({
                 ping: true
             }));
         }
@@ -1766,7 +1764,7 @@ function In() {
         document.getElementById("connecting2").innerText = "",
         document.getElementById("admin").style.display = "none",
         "" == je && null != localStorage.getItem("username") && null != localStorage.getItem("token") && (vn(true),
-            WebSocket.send(networkBinary({
+            server.send(networkBinary({
                 token: [localStorage.getItem("username"), localStorage.getItem("token")]
             })));
     var t = "textwall",
@@ -1788,7 +1786,7 @@ function Cn(e, t) {
         nr(),
         pn(),
         Yt = null,
-        WebSocket.send(networkBinary({
+        server.send(networkBinary({
             j: [e, t]
         })),
         Xn(),
@@ -1801,7 +1799,6 @@ function Cn(e, t) {
 function disconnect() {
     stopPing();
     pingDetector(true);
-    var e = n;
     En(),
         m = false,
         Gt = false,
@@ -1811,7 +1808,6 @@ function disconnect() {
         gn(),
         elemId_connecting.style.display = "flex",
         setTimeout((function() {
-            var t = e;
             elemId_connecting.style.opacity = "100%"
         }), 50),
         clearInterval(he),
@@ -1973,8 +1969,8 @@ function parseColoredMessage(msg) {
 // Helper to process escape sequences
 function unescapeText(text) {
     return text
-        .replace(/\\</g, "<")   // \< → <
-        .replace(/\\>/g, ">")   // \> → >
+        .replace(/\\</g, "<") // \< → <
+        .replace(/\\>/g, ">") // \> → >
         .replace(/\\\\/g, "\\"); // \\ → \
 }
 
@@ -2458,7 +2454,7 @@ function Fn(e) {
 
 function Pn(e) {
     var r = e.target.innerText;
-    WebSocket.send(networkBinary({
+    server.send(networkBinary({
             rmmem: r
         })),
         e.target.remove()
@@ -3051,7 +3047,7 @@ function changeColor_(e) {
         localStorage.setItem("col", e),
         ge = true
 }
-for (elemId_colourlist.children.length > 0 && (WebSocket = true),
+for (elemId_colourlist.children.length > 0 && (server = true),
     ne = 0; ne < colourHex.length; ne++)
     sr(colourId[ne]);
 
@@ -3140,7 +3136,7 @@ function setWriteInterval() {
 window.flushAmount = 250
 
 function flushWrites() {
-    if (WebSocket && WebSocket.readyState == WebSocket.OPEN) {
+    if (server && server.readyState == server.OPEN) {
         if ((Le || Oe || Re || De) && we.size !== 0) {
             var t = {};
             Le && (t.l = [cursor_.x, cursor_.y]);
@@ -3148,7 +3144,7 @@ function flushWrites() {
             Re && (t.n = userOpts.anonymous.checked);
             De && (t.p = [position_.coords.x, position_.coords.y]);
 
-            WebSocket.send(networkBinary({
+            server.send(networkBinary({
                 ce: t
             }));
             Le = Oe = Re = De = false;
@@ -3167,7 +3163,7 @@ function flushWrites() {
                 }
                 tA.push([i, c, l, u, s]);
             }
-            WebSocket.send(networkBinary({
+            server.send(networkBinary({
                 e: tA
             }));
         }
@@ -3423,7 +3419,6 @@ window.XYtoTile = function(x, y) {
 }
 Object.defineProperty(window, "cursorCoords", {
     get: function() {
-        var e = n;
         const [tileX, tileY, offsetX, offsetY] = XYtoTile(cursor_.x, cursor_.y);
         return [tileX, tileY, offsetX, offsetY];
     }
@@ -3488,7 +3483,7 @@ window.requestAnimationFrame((function e() {
                     const r = 10 * pixelRatio,
                         a = 20 * pixelRatio,
                         o = Math.round(5 * pixelRatio);
-                    var i, c, l, u, s = bt(20),
+                    var i, l, u, s = bt(20),
                         f = bt(d);
                     for (const t of we.keys())
                         xt(h = wt(t), s) ? xt(h, f) && delete we.get(t).img : pt(t, h);
@@ -3608,7 +3603,6 @@ function Pr() {
 }
 
 function Lr(e) {
-    var t = n;
     if ("" == (e = decodeURI(e.toLowerCase())) || "~main" == e)
         return {
             x: 0,
@@ -3671,14 +3665,14 @@ if (Wr.length > 0)
     }
 
 function Kr() {
-    if (null == WebSocket || WebSocket.readyState != WebSocket.CONNECTING && WebSocket.readyState != WebSocket.OPEN) {
-        var t = "wss://" + location.host + "/ws";
-        "https:" !== location.protocol && (t = "ws://" + location.host + "/ws"),
-            (WebSocket = new WebSocket(t)).binaryType = "arraybuffer",
-            WebSocket.onmessage = Tn,
-            WebSocket.onclose = disconnect,
-            WebSocket.onerror = disconnect,
-            WebSocket.onopen = In,
+    if (null == server || server.readyState != server.CONNECTING && server.readyState != server.OPEN) {
+        var t = "wss://" + "tw.2s4.me" + "/ws";
+        "https:" !== location.protocol && (t = "ws://" + "tw.2s4.me" + "/ws"),
+            (server = new WebSocket(t)).binaryType = "arraybuffer",
+            server.onmessage = Tn,
+            server.onclose = disconnect,
+            server.onerror = disconnect,
+            server.onopen = In,
             document.getElementById("connecting1").innerText = "Connecting...",
             document.getElementById("connecting2").innerText = "",
             elemId_connecting.onclick = void 0
@@ -3738,14 +3732,12 @@ isNaN(cursor_.x) && (cursor_.x = 0),
     isNaN(cursor_.y) && (cursor_.y = 0),
     cursor_.start = cursor_.x,
     setTimeout((function() {
-        var e = n;
         window.history.replaceState({}, document.title, location.pathname)
     }), 0),
     tp_(cursor_.x, cursor_.y),
     null != localStorage.getItem("zoom") && it(JSON.parse(localStorage.getItem("zoom")), false),
     Kr(),
     networkBinary = function(e, r) {
-        var a = n;
         if (r && r.bdtiple && !Array.isArray(e))
             throw new Error;
         const o = 4294967296;
@@ -3760,7 +3752,6 @@ isNaN(cursor_.x) && (cursor_.x = 0),
             l.subarray(0, u);
 
         function s(e, n) {
-            var l = a;
             switch (typeof e) {
                 case "undefined":
                     d();
@@ -3930,7 +3921,6 @@ isNaN(cursor_.x) && (cursor_.x = 0),
         }
     },
     networkText = function(e, r) {
-        var a = n;
         let o, i = 0;
         if (e instanceof ArrayBuffer && (e = new Uint8Array(e)),
             "object" != typeof e || void 0 === e.length)
@@ -4381,7 +4371,7 @@ window.w.typeChar = writeChar;
 window.w.socket = {}
 Object.defineProperty(window.w, "socket", {
     get: function() {
-        return WebSocket
+        return server
     }
 });
 window.w.clipboard = {
@@ -4432,9 +4422,9 @@ window.network = {};
 window.network.binary = networkBinary;
 window.network.text = networkText;
 window.network.send = function(data) {
-    WebSocket.send(window.network.binary(data))
+    server.send(window.network.binary(data))
 };
-window.network.wsUrl = "wss://" + location.host + "/ws";
+window.network.wsUrl = "wss://" + "tw.2s4.me" + "/ws";
 window.w.changeZoom = function(e, t) {
     console.warn("remember, this won't save!");
     rt = e < 0 ? 0 : e > 10000 ? 10000 : e,
