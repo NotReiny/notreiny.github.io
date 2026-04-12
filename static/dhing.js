@@ -1,3 +1,5 @@
+// better than JSON™
+
 function rawLiteral(e, seen = new WeakSet()) {
     if (typeof e === 'object' && e !== null) {
         if (seen.has(e)) return '...';
@@ -26,7 +28,7 @@ function rawLiteral(e, seen = new WeakSet()) {
 
             const keys = Reflect.ownKeys(e);
             const props = keys.map(key =>
-                `${String(key)}: ${rawLiteral(e[key], seen)}`
+                `${/^[a-z$_][0-9a-z$_]*$/i.test(String(key)) ? String(key) : `${rawLiteral(String(key))}`}: ${rawLiteral(e[key], seen)}`
             );
 
             const prefix = e.constructor?.name !== 'Object'
@@ -50,19 +52,15 @@ function rawLiteral(e, seen = new WeakSet()) {
             .replace(/\n/g, '\\n')
             .replace(/\r/g, '\\r')
             .replace(/[\x00-\x1f\x7f-\x9f\ud800-\udfff]/g, ch => {
-                const cp = ch.codePointAt(0);
-                return `\\${cp < 256 ? 'x' : 'u'}${cp
+                const c = ch.codePointAt(0);
+                return `\\${c < 256 ? 'x' : 'u'}${c
                     .toString(16)
-                    .padStart(cp < 256 ? 2 : 4, '0')}`;
+                    .padStart(c < 256 ? 2 : 4, '0')}`;
             })}'`;
     }
 
     if (typeof e === 'symbol') {
         return `Symbol(${e.description ?? ''})`;
-    }
-
-    if (typeof e === 'function') {
-        return e.toString().replace(/(async)\sfunction/, '$1 ƒ');
     }
 
     return String(e);
