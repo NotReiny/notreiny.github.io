@@ -62,7 +62,7 @@ function rawLiteral(e, seen = new WeakSet()) {
     }
 
     if (typeof e === 'function') {
-        return e.toString().replace(/^function/, 'ƒ');
+        return e.toString().replace(/(async)\sfunction/, '$1 ƒ');
     }
 
     return String(e);
