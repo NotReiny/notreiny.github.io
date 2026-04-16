@@ -981,7 +981,7 @@ td {
 }
 @font-face {
     font-family: 'Termuni';
-    src: url('https://files.catbox.moe/fjr8kl.ttf') format('truetype');
+    src: url(/static/termuni.ttf) format('truetype');
     font-weight: 0;
     font-style: normal;
 }
