@@ -574,24 +574,24 @@ td {
 
 @font-face {
     font-family: ubuntu mono;
-    src: url(https://tw.2s4.me/static/fonts/UbuntuMono-Regular.ttf)
+    src: url(https://tw.2s4.me/static/fonts/UbuntuMono-R.ttf)
 }
 
 @font-face {
     font-family: ubuntu mono;
-    src: url(https://tw.2s4.me/static/fonts/UbuntuMono-Bold.ttf);
+    src: url(https://tw.2s4.me/static/fonts/UbuntuMono-B.ttf);
     font-weight: 700
 }
 
 @font-face {
     font-family: ubuntu mono;
-    src: url(https://tw.2s4.me/static/fonts/UbuntuMono-Italic.ttf);
+    src: url(https://tw.2s4.me/static/fonts/UbuntuMono-RI.ttf);
     font-style: italic
 }
 
 @font-face {
     font-family: ubuntu mono;
-    src: url(https://tw.2s4.me/static/fonts/UbuntuMono-BoldItalic.ttf);
+    src: url(https://tw.2s4.me/static/fonts/UbuntuMono-BI.ttf);
     font-weight: 700;
     font-style: oblique
 }
