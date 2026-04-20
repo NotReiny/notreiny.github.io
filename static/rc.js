@@ -22,15 +22,19 @@ r.execute = function(e) {
         if (e.msg.startsWith(`${r.prefix} `)) {
             const args = split2(e.msg.slice(r.prefix.length + 1));
             const args2 = args.slice(1);
-            r.commands[args[0]](e.nick, ...args2)
+            if (args[0] in r.commands) {
+                r.commands[args[0]](e.nick, ...args2)
+            } else {
+                w.chat.send(`<start #ff3f3f>${args[0]} is not a valid command<end>`)
+            }
         }
     } catch (e) {
         w.chat.send(`<start #f00>${e}<end>`)
     }
 }
 
-r.commands.test = function() {
-    w.chat.send('Hello')
+r.commands.test = function(e) {
+    w.chat.send(`Hello, ${e}`)
 }
 
 r.commands.js = function(e, t) {
