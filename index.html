@@ -18,13 +18,13 @@
             <dd>↑ The owner of this site is a fanfiction addict</dd>
             <dt><a href="https://epic-fail.carrd.co/">Sage’s pretty page</a></dt>
             <dd>My second best friend’s site</dd>
-            <p id="tiem">idk wtf time is is</p>
+            <p id="tiem">The current time is</p>
         </dl>
     </body>
     <script>
-        setInterval(function () {
+        requestAnimationFrame(function () {
             let idkWhatTheFuckDoesThisVariableMeanButIThinkItIsForAdjustingTimeOrSomethingAnywayBackToCoding = new Date
             document.getElementById("tiem").innerText = `The current time is ${idkWhatTheFuckDoesThisVariableMeanButIThinkItIsForAdjustingTimeOrSomethingAnywayBackToCoding.getHours()}:${idkWhatTheFuckDoesThisVariableMeanButIThinkItIsForAdjustingTimeOrSomethingAnywayBackToCoding.getMinutes().toString().padStart(2, "0")}:${idkWhatTheFuckDoesThisVariableMeanButIThinkItIsForAdjustingTimeOrSomethingAnywayBackToCoding.getSeconds().toString().padStart(2, "0")}`
-        }, 1000)
+        })
     </script>
 </html>
