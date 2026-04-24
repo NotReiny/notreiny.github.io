@@ -63,5 +63,9 @@ function rawLiteral(e, seen = new WeakSet()) {
         return `Symbol(${e.description ?? ''})`;
     }
 
+    if (typeof e === 'number') {
+        return (1/e === -Infinity && e === 0) ? '-0' : String(e);
+    }
+
     return String(e);
 }
