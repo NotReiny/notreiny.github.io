@@ -19,12 +19,14 @@
             <dt><a href="https://epic-fail.carrd.co/">Sage’s pretty page</a></dt>
             <dd>My second best friend’s site</dd>
             <p id="tiem">The current time is</p>
+            <progress id="idkbro" value="0" max="1000"></progress>
         </dl>
     </body>
     <script>
         function thisFunctionSoFuckingAssWhatTheShitManHmmIThinkThisIsAlsoUselessOrMaybeUsefulIGuess() {
-            let idkWhatTheFuckDoesThisVariableMeanButIThinkItIsForAdjustingTimeOrSomethingAnywayBackToCoding = new Date;
+            const idkWhatTheFuckDoesThisVariableMeanButIThinkItIsForAdjustingTimeOrSomethingAnywayBackToCoding = new Date;
             document.getElementById("tiem").innerText = `The current time is ${idkWhatTheFuckDoesThisVariableMeanButIThinkItIsForAdjustingTimeOrSomethingAnywayBackToCoding.getHours()}:${idkWhatTheFuckDoesThisVariableMeanButIThinkItIsForAdjustingTimeOrSomethingAnywayBackToCoding.getMinutes().toString().padStart(2, "0")}:${idkWhatTheFuckDoesThisVariableMeanButIThinkItIsForAdjustingTimeOrSomethingAnywayBackToCoding.getSeconds().toString().padStart(2, "0")}`;
+            document.getElementById("idkbro").value = idkWhatTheFuckDoesThisVariableMeanButIThinkItIsForAdjustingTimeOrSomethingAnywayBackToCoding.getMilliseconds()
             requestAnimationFrame(thisFunctionSoFuckingAssWhatTheShitManHmmIThinkThisIsAlsoUselessOrMaybeUsefulIGuess)
         }
         requestAnimationFrame(thisFunctionSoFuckingAssWhatTheShitManHmmIThinkThisIsAlsoUselessOrMaybeUsefulIGuess)
