@@ -1935,7 +1935,7 @@ window.w.moveCursorTo = function(x, y, doNotAutoPan) {
 };
 
 function parseColoredMessage(msg) {
-    const regex = /(?<!\\)<(color|clr)\s+(#[0-9a-fA-F]{3,6})>([\s\S]*?)(?<!\\)<end>/g;
+    const regex = /(?<!\\)<(color|start)\s+(#[0-9a-fA-F]{3,6})>([\s\S]*?)(?<!\\)<end>/g;
     const container = document.createElement("span");
 
     let lastIndex = 0;
