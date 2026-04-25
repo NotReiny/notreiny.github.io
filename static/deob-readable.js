@@ -1897,7 +1897,7 @@
                 if (!doNotAutoPan) Hn();
             };
             function parseColoredMessage(msg) {
-                const regex = /(?<!\\)<(color|start)\s+(#[0-9a-fA-F]{3,6})>([\s\S]*?)(?<!\\)<end>/g;
+                const regex = /(?<!\\)<(color|clr)\s+(#[0-9a-fA-F]{3,6})>([\s\S]*?)(?<!\\)<end>/g;
                 const container = document.createElement("span");
 
                 let lastIndex = 0;
@@ -1912,8 +1912,8 @@
                     }
 
                     const colorSpan = document.createElement("span");
-                    colorSpan.style.color = match[1];
-                    colorSpan.textContent = unescapeText(match[2]);
+                    colorSpan.style.color = match[2]; // fixed
+                    colorSpan.textContent = unescapeText(match[3]); // fixed
                     container.appendChild(colorSpan);
 
                     lastIndex = regex.lastIndex;
