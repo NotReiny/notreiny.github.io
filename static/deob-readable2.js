@@ -1,3 +1,5 @@
+var e = "undefined" == typeof browser ? browser = {} : browser
+
 function getMappingT(e, n) {
     var a = fullMapping();
     return (getMappingT = function(e) {
@@ -23,6 +25,7 @@ window.getMapping = fullMapping;
             a.push(a.shift())
         }
 })(fullMapping);
+
 var n = getMappingT;
 class renderFontHex {
     constructor(e, n) {
@@ -248,7 +251,7 @@ function ie(e) {
                 x: t * (10 * pixelRatio) / devicePixelRatio + position_.offset.x / devicePixelRatio,
                 y: r * (20 * pixelRatio) / devicePixelRatio + position_.offset.y / devicePixelRatio
             });
-        o.x + 15 * pixelRatio + elemId_decorations.clientWidth > window.innerWidth ? elemId_decorations.style.left = o.x - elemId_decorations.clientWidth - 5 * at + "px" : elemId_decorations.style.left = o.x + 15 * at + "px",
+        o.x + 15 * pixelRatio + elemId_decorations.clientWidth > window.innerWidth ? elemId_decorations.style.left = o.x - elemId_decorations.clientWidth - 5 * zoomValue + "px" : elemId_decorations.style.left = o.x + 15 * zoomValue + "px",
             elemId_decorations.style.top = Math.max(o.y - elemId_decorations.clientHeight, 0) + "px"
     } else
         elemId_decorations.style.display = "none"
@@ -283,14 +286,14 @@ function ve(e) {
 var me = [];
 ! function() {
     for (ne = 0; ne < colourHex.length; ne++)
-        me[ne] = Yr(colourHex[ne], .2);
+        me[ne] = convertHextoRGBA(colourHex[ne], .2);
     me[colourHex.length] = "rgba(255, 255, 255, 0.2)"
 }();
 var he, ye, ge, pe = 0,
-    be = Yr(colourHex[pe], .6),
+    be = convertHextoRGBA(colourHex[pe], .6),
     xe = false,
     we = new Map,
-    Me = [],
+    writeBuffer_ = [],
     ke = [],
     Ee = new Map,
     pingWorker = new Worker("/static/ping.js"),
@@ -403,16 +406,16 @@ const wallSettings = {
     disableColour: document.getElementById("walldisablecolour"),
     disableBraille: document.getElementById("disablebraille")
 };
-var rt = 1,
-    at = 1,
+var clampedNum = 1,
+    zoomValue = 1,
     elemId_zoom = document.getElementById("zoom");
 
 function it(e, t) {
-    rt = e < .5 ? .5 : e > 3 ? 3 : e,
-        at = Math.round(100 * rt) / 100,
-        localStorage.setItem("zoom", at),
-        elemId_zoom.value = 10 * at,
-        t && showToast_(Math.round(100 * at) + "% ", 1e3),
+    clampedNum = e < .5 ? .5 : e > 3 ? 3 : e,
+        zoomValue = Math.round(100 * clampedNum) / 100,
+        localStorage.setItem("zoom", zoomValue),
+        elemId_zoom.value = 10 * zoomValue,
+        t && showToast_(Math.round(100 * zoomValue) + "% ", 1e3),
         kn()
 }
 
@@ -515,9 +518,9 @@ function pt(e, t) {
 function bt(e) {
     return e = e || 0, {
         minx: -position_.offset.x / pixelRatio / 10 - e,
-        maxx: -position_.offset.x / pixelRatio / 10 + window.innerWidth / at / 10 + e - 20,
+        maxx: -position_.offset.x / pixelRatio / 10 + window.innerWidth / zoomValue / 10 + e - 20,
         miny: -position_.offset.y / pixelRatio / 20 - e,
-        maxy: -position_.offset.y / pixelRatio / 20 + window.innerHeight / at / 20 + e - 10
+        maxy: -position_.offset.y / pixelRatio / 20 + window.innerHeight / zoomValue / 20 + e - 10
     }
 }
 
@@ -570,37 +573,37 @@ function It(e, t) {
         Ee.set(e, t))
 }
 window.It = It;
-var Ct, At, Tt;
+var RegExpExtPicto, RegExpTab, RegExpCarReturn;
 try {
-    Ct = /\p{Extended_Pictographic}/u
+    RegExpExtPicto = /\p{Extended_Pictographic}/u
 } catch (e) {
-    Ct = false
+    RegExpExtPicto = false
 }
 try {
-    At = /\t/gm
+    RegExpTab = /\t/gm
 } catch (e) {
-    At = false
+    RegExpTab = false
 }
 try {
-    Tt = /\r/gm
+    RegExpCarReturn = /\r/gm
 } catch (e) {
-    Tt = false
+    RegExpCarReturn = false
 }
 var validUsernameRegExp = /^[a-zA-Z0-9_-]{1,24}$/
 
-function Ft(e) {
+function randomLetter(e) {
     return 65 + Math.floor(26 * e)
 }
 
-function Pt(e) {
+function randomDigit(e) {
     return 48 + Math.floor(10 * e)
 }
 
-function Lt(e) {
+function randomVowel(e) {
     return "AEIOU" [Math.floor(5 * e)].codePointAt()
 }
 
-function Ot(e) {
+function randomConsonant(e) {
     return "BCDFGHJKLMNPQRSTVWXYZ" [Math.floor(21 * e)].codePointAt()
 }
 
@@ -608,31 +611,31 @@ function Rt(e) {
     const t = Math.random();
     switch (e - 58112) {
         case 0:
-            return t < .41 ? Ft(t) + 32 : t < .83 ? Ft(t) : Pt(t);
+            return t < .41 ? randomLetter(t) + 32 : t < .83 ? randomLetter(t) : randomDigit(t);
         case 1:
-            return t < .72 ? Ft(t) + 32 : Pt(t);
+            return t < .72 ? randomLetter(t) + 32 : randomDigit(t);
         case 2:
-            return t < .72 ? Ft(t) : Pt(t);
+            return t < .72 ? randomLetter(t) : randomDigit(t);
         case 3:
-            return t < .5 ? Ft(t) + 32 : Ft(t);
+            return t < .5 ? randomLetter(t) + 32 : randomLetter(t);
         case 4:
-            return Ft(t) + 32;
+            return randomLetter(t) + 32;
         case 5:
-            return Ft(t);
+            return randomLetter(t);
         case 6:
-            return Pt(t);
+            return randomDigit(t);
         case 7:
-            return t < .5 ? Lt(t) + 32 : Lt(t);
+            return t < .5 ? randomVowel(t) + 32 : randomVowel(t);
         case 8:
-            return Lt(t) + 32;
+            return randomVowel(t) + 32;
         case 9:
-            return Lt(t);
+            return randomVowel(t);
         case 10:
-            return t < .5 ? Ot(t) + 32 : Ot(t);
+            return t < .5 ? randomConsonant(t) + 32 : randomConsonant(t);
         case 11:
-            return Ot(t) + 32;
+            return randomConsonant(t) + 32;
         case 12:
-            return Ot(t)
+            return randomConsonant(t)
     }
     return 97
 }
@@ -740,7 +743,7 @@ function Xt(e, t) {
                                         e.fillText(S, Math.round(w), Math.floor(M + 15 * y));
                                     else {
                                         var O = false;
-                                        Ct && Ct.test(S) && (O = true,
+                                        RegExpExtPicto && RegExpExtPicto.test(S) && (O = true,
                                                 e.font = Nt(y)),
                                             null != g && g.charMap.has(B) ? (g.bold = P,
                                                 g.italic = L,
@@ -823,7 +826,7 @@ var $t, Gt = false;
 
 function Qt() {
     if (!Gt) {
-        for (var t = -120 - 20 * Math.floor(position_.offset.x / (200 * pixelRatio)), r = -60 - 10 * Math.floor(position_.offset.y / (200 * pixelRatio)), o = r, i = Math.floor(window.innerWidth / (10 * at) - position_.offset.x / (10 * pixelRatio) + 120), c = Math.floor(window.innerHeight / (20 * at) - position_.offset.y / (20 * pixelRatio) + 60), l = []; t < i;) {
+        for (var t = -120 - 20 * Math.floor(position_.offset.x / (200 * pixelRatio)), r = -60 - 10 * Math.floor(position_.offset.y / (200 * pixelRatio)), o = r, i = Math.floor(window.innerWidth / (10 * zoomValue) - position_.offset.x / (10 * pixelRatio) + 120), c = Math.floor(window.innerHeight / (20 * zoomValue) - position_.offset.y / (20 * pixelRatio) + 60), l = []; t < i;) {
             for (; r < c;) {
                 var u = t + "," + r;
                 !we.has(u) && Jt(t, r) && l.push(t, r),
@@ -1017,8 +1020,8 @@ elemId_canvas.addEventListener("pointerdown", (function(e) {
                 Je)
                 $e.end = Te;
             else if (Ye) {
-                var r = e.clientX * devicePixelRatio - position_.start.x / at,
-                    a = e.clientY * devicePixelRatio - position_.start.y / at;
+                var r = e.clientX * devicePixelRatio - position_.start.x / zoomValue,
+                    a = e.clientY * devicePixelRatio - position_.start.y / zoomValue;
                 position_.offset.x = Math.round(ze.offset.x + r),
                     position_.offset.y = Math.round(ze.offset.y + a),
                     userOpts.smoothpanning.checked && Rn(e)
@@ -1032,7 +1035,7 @@ elemId_canvas.addEventListener("pointerdown", (function(e) {
                 !Ye)) {
             if (e.preventDefault(),
                 e.ctrlKey)
-                it(rt - e.deltaY / 1e3, true);
+                it(clampedNum - e.deltaY / 1e3, true);
             else if (e.altKey)
                 1 == Math.sign(e.deltaY) ? changeColor_(pe == colourId[colourHex.length - 1] ? colourId[0] : colourId[ve(pe) + 1]) : changeColor_(pe == colourId[0] ? colourId[colourHex.length - 1] : colourId[ve(pe) - 1]);
             else {
@@ -1252,12 +1255,12 @@ elemId_canvas.addEventListener("pointerdown", (function(e) {
                 case 107:
                 case 187:
                     e.ctrlKey && (e.preventDefault(),
-                        it(rt + .1, true));
+                        it(clampedNum + .1, true));
                     break;
                 case 109:
                 case 189:
                     e.ctrlKey && (e.preventDefault(),
-                        it(rt - .1, true))
+                        it(clampedNum - .1, true))
             }
     })),
     elemId_textarea.addEventListener("paste", (function(e) {
@@ -1402,7 +1405,7 @@ elemId_canvas.addEventListener("pointerdown", (function(e) {
             r = 0 == t || t.startsWith("~") ? {
                 x: 0,
                 y: 0
-            } : Lr(t);
+            } : randomSeed(t);
         document.getElementById("tpx").value = r.x,
             document.getElementById("tpy").value = -r.y
     })),
@@ -1689,14 +1692,14 @@ function Mn(e, t, r) {
         ze.offset.y = position_.offset.y;
     var o = position_.coords.x,
         i = position_.coords.y;
-    position_.coords.x = Math.floor(window.innerWidth / at / 20 - position_.offset.x / 10 / pixelRatio),
-        position_.coords.y = Math.floor(window.innerHeight / at / 40 - position_.offset.y / 20 / pixelRatio),
+    position_.coords.x = Math.floor(window.innerWidth / zoomValue / 20 - position_.offset.x / 10 / pixelRatio),
+        position_.coords.y = Math.floor(window.innerHeight / zoomValue / 40 - position_.offset.y / 20 / pixelRatio),
         De = o != position_.coords.x || i != position_.coords.y
 }
 
 function kn() {
     var t = pixelRatio;
-    if (pixelRatio = devicePixelRatio * at,
+    if (pixelRatio = devicePixelRatio * zoomValue,
         elemId_canvas.width = Math.round(window.innerWidth * devicePixelRatio),
         elemId_canvas.height = Math.round(window.innerHeight * devicePixelRatio),
         elemId_canvas.style.width = Math.round(elemId_canvas.width / devicePixelRatio) + "px",
@@ -1707,7 +1710,7 @@ function kn() {
         ie(false);
         var r = Math.floor((position_.offset.x - elemId_canvas.width / 2) / t),
             a = Math.floor((position_.offset.y - elemId_canvas.height / 2) / t);
-        Mn((r + window.innerWidth / at / 2) * pixelRatio, (a + window.innerHeight / at / 2) * pixelRatio),
+        Mn((r + window.innerWidth / zoomValue / 2) * pixelRatio, (a + window.innerHeight / zoomValue / 2) * pixelRatio),
             vt(selectedFont)
     }
 }
@@ -1792,7 +1795,7 @@ function Cn(e, t) {
         Xn(),
         we.clear(),
         cursors_.clear(),
-        Me = [],
+        writeBuffer_ = [],
         0))
 }
 
@@ -2027,7 +2030,7 @@ function Tn(e) {
                 $e = {},
                 elemId_canvas.style.cursor = "text",
                 cursors_.clear(),
-                Me = [],
+                writeBuffer_ = [],
                 K = false,
                 On(),
                 userOpts.showchat.checked && hn.classList.remove("hidden"),
@@ -2528,7 +2531,7 @@ function On() {
 }
 
 function Rn(e) {
-    Ge.unshift([e.clientX * pixelRatio / at, e.clientY * pixelRatio / at, performance.now()]),
+    Ge.unshift([e.clientX * pixelRatio / zoomValue, e.clientY * pixelRatio / zoomValue, performance.now()]),
         Ge.length > 4 && Ge.pop()
 }
 var Dn, Nn = false,
@@ -2549,10 +2552,10 @@ function getXYCoordsFromMouseCoords_(e) {
 function Hn() {
     elemId_coords.innerText = cursor_.x + "," + -cursor_.y,
         cursor_.x + position_.offset.x / pixelRatio / 10 <= 0 && Mn(10 * -cursor_.x * pixelRatio, position_.offset.y),
-        cursor_.x + position_.offset.x / pixelRatio / 10 >= window.innerWidth / at / 10 - 1 && Mn((10 * -cursor_.x + window.innerWidth / at - 10) * pixelRatio, position_.offset.y),
+        cursor_.x + position_.offset.x / pixelRatio / 10 >= window.innerWidth / zoomValue / 10 - 1 && Mn((10 * -cursor_.x + window.innerWidth / zoomValue - 10) * pixelRatio, position_.offset.y),
         cursor_.y + position_.offset.y / pixelRatio / 20 <= 0 && Mn(position_.offset.x, 20 * -cursor_.y * pixelRatio);
     var t = window.innerWidth < 750 ? elemId_info.clientHeight : 0;
-    cursor_.y + position_.offset.y / pixelRatio / 20 >= (window.innerHeight - t) / at / 20 - 1 && Mn(position_.offset.x, (20 * -cursor_.y + window.innerHeight / at - 20 - t / at) * pixelRatio),
+    cursor_.y + position_.offset.y / pixelRatio / 20 >= (window.innerHeight - t) / zoomValue / 20 - 1 && Mn(position_.offset.x, (20 * -cursor_.y + window.innerHeight / zoomValue - 20 - t / zoomValue) * pixelRatio),
         Le = Ae.x != cursor_.x || Ae.y != cursor_.y || Le,
         Ae.x = cursor_.x,
         Ae.y = cursor_.y,
@@ -2589,7 +2592,7 @@ elemId_canvas.addEventListener("touchstart", (function(e) {
         Nn && (function(e) {
                 if (e.touches.length > 1) {
                     var r = Math.sqrt(number_sqr(e.touches[0].pageX - e.touches[1].pageX) + number_sqr(e.touches[0].pageY - e.touches[1].pageY));
-                    0 != jn && it(rt - (jn - r) / 300, true),
+                    0 != jn && it(clampedNum - (jn - r) / 300, true),
                         Dn = void 0,
                         jn = r
                 }
@@ -2607,7 +2610,7 @@ elemId_canvas.addEventListener("touchstart", (function(e) {
 var zn = 0,
     qn = performance.now(),
     Yn = 0;
-const Jn = [4, 5, 7, 8, 9, 18, 11, 20, 13, 28, 15];
+const rainbowId = [4, 5, 7, 8, 9, 18, 11, 20, 13, 28, 15];
 window.prsCol = function(title) {
     var titles = [
         "black",
@@ -2733,8 +2736,8 @@ function writeCharAt(char, color, coordX, coordY, r, a) {
     if ((s.protected || wallSettings.readOnly.checked || U && "" == je) && !m && 0 == j || null == s.txt || K)
         return U && "" == je && !wallSettings.readOnly.checked && showToast_("Please log in before typing.", 3e3),
             0;
-    userOpts.rainbow.checked && !r && (changeColor_(Jn[Yn]),
-        ++Yn == Jn.length && (Yn = 0));
+    userOpts.rainbow.checked && !r && (changeColor_(rainbowId[Yn]),
+        ++Yn == rainbowId.length && (Yn = 0));
     var d, f, v, h, y, g, p, b, x, w, M, k, E, S = 1,
         I = Math.floor(newColFmt / 31),
         C = newColFmt,
@@ -2761,7 +2764,7 @@ function writeCharAt(char, color, coordX, coordY, r, a) {
                 Be.length > 1e3 && Be.pop()),
             s.txt[A] = char,
             s.clr[A] = C,
-            Me.push([c / 20, l / 10, char.codePointAt(), A, C]),
+            writeBuffer_.push([c / 20, l / 10, char.codePointAt(), A, C]),
             S = 2,
             It(u, Dt(A))),
         Hn(),
@@ -2801,8 +2804,8 @@ function writeChar_(e, t, r, a) {
     if ((s.protected || wallSettings.readOnly.checked || U && "" == je) && !m && 0 == j || null == s.txt || K)
         return U && "" == je && !wallSettings.readOnly.checked && showToast_("Please log in before typing.", 3e3),
             0;
-    userOpts.rainbow.checked && !r && (changeColor_(Jn[Yn]),
-        ++Yn == Jn.length && (Yn = 0));
+    userOpts.rainbow.checked && !r && (changeColor_(rainbowId[Yn]),
+        ++Yn == rainbowId.length && (Yn = 0));
     var d, f, v, h, y, g, p, b, x, w, M, k, E, S = 1,
         I = Math.floor(newColFmt / 31),
         C = newColFmt,
@@ -2829,7 +2832,7 @@ function writeChar_(e, t, r, a) {
                 Be.length > 1e3 && Be.pop()),
             s.txt[A] = e,
             s.clr[A] = C,
-            Me.push([c / 20, l / 10, e.codePointAt(), A, C]),
+            writeBuffer_.push([c / 20, l / 10, e.codePointAt(), A, C]),
             S = 2,
             It(u, Dt(A))),
         cursor_.lastedit.x = data.x,
@@ -2843,7 +2846,7 @@ function tp_(e, t) {
     ie(false),
         cursor_.x = e,
         cursor_.y = t,
-        Mn((10 * -cursor_.x + window.innerWidth / at / 2) * pixelRatio, (20 * -cursor_.y + window.innerHeight / at / 2) * pixelRatio),
+        Mn((10 * -cursor_.x + window.innerWidth / zoomValue / 2) * pixelRatio, (20 * -cursor_.y + window.innerHeight / zoomValue / 2) * pixelRatio),
         document.getElementById("tpword").value = "",
         document.getElementById("tpx").value = 0,
         document.getElementById("tpy").value = 0,
@@ -2869,12 +2872,12 @@ var er = false;
 
 function pasteToCanvas(e) {
     if (!Ie) {
-        var r, a, o = (e = e.replace(Tt, "")).split(unicode1B),
+        var r, a, o = (e = e.replace(RegExpCarReturn, "")).split(unicode1B),
             i = false;
         if (2 == o.length ? (i = true,
                 r = Array.from(o[0]),
                 a = Array.from(o[1]),
-                (r.length != a.length || userOpts.rainbow.checked) && (i = false)) : (e = e.replace(At, "   "),
+                (r.length != a.length || userOpts.rainbow.checked) && (i = false)) : (e = e.replace(RegExpTab, "   "),
                 r = Array.from(e)),
             1 != r.length) {
             if (Ie = true,
@@ -3018,7 +3021,7 @@ function goto_(e) {
             Cn(o, i),
             tp_(0, 0)
     } else {
-        var c = Lr(e);
+        var c = randomSeed(e);
         tp_(c.x, c.y),
             Cn("textwall", "main"),
             0 == c.x && 0 == c.y ? $n() : history.pushState({}, null, e)
@@ -3039,7 +3042,7 @@ function changeColor_(e) {
     r.classList.remove("selected"),
         pe = e,
         window.color = pe,
-        be = xe && 0 == pe ? "rgba(255, 255, 255, 0.6)" : Yr(colourHex[pe], .6),
+        be = xe && 0 == pe ? "rgba(255, 255, 255, 0.6)" : convertHextoRGBA(colourHex[pe], .6),
         (r = document.getElementById(pe)).classList.add("selected"),
         r.offsetTop < elemId_colourlist.scrollTop + 36 && (elemId_colourlist.scrollTop = r.offsetTop - 36),
         r.offsetTop > elemId_colourlist.scrollTop + elemId_colourlist.clientHeight && (elemId_colourlist.scrollTop = r.offsetTop - elemId_colourlist.clientHeight),
@@ -3150,8 +3153,8 @@ function flushWrites() {
             Le = Oe = Re = De = false;
         }
 
-        if (Me.length > 0) {
-            var r = Me.splice(0, window.flushAmount),
+        if (writeBuffer_.length > 0) {
+            var r = writeBuffer_.splice(0, window.flushAmount),
                 tA = [];
             e: for (var o = 0; o < r.length; o++) {
                 var [i, c, l, u, s] = r[o];
@@ -3182,7 +3185,7 @@ function setFlushInterval(newer) {
 // always return the write buffer
 Object.defineProperty(window, "writeBuffer", {
     get: function() {
-        return Me;
+        return writeBuffer_;
     },
     set: function() {
         console.warn("writeBuffer is read-only");
@@ -3317,19 +3320,19 @@ window.getChar = function(e, t, r = 0, a = 0) {
     const Xq = Tile.get(e, t);
     if (!Xq) return null;
 
-    const Md = 20;
-    const Fh = 10;
+    const _20 = 20;
+    const _10 = 10;
 
     if (r < 0) {
-        e -= Math.ceil(Math.abs(r) / Md);
-        r = (r % Md + Md) % Md;
+        e -= Math.ceil(Math.abs(r) / _20);
+        r = (r % _20 + _20) % _20;
     }
     if (a < 0) {
-        t -= Math.ceil(Math.abs(a) / Fh);
-        a = (a % Fh + Fh) % Fh;
+        t -= Math.ceil(Math.abs(a) / _10);
+        a = (a % _10 + _10) % _10;
     }
 
-    const Tp = a * Md + r;
+    const Tp = a * _20 + r;
     return Xq.txt[Tp];
 };
 
@@ -3341,31 +3344,31 @@ window.getCharColor = function(e, t, r = 0, a = 0) {
     const Vz = Tile.get(e, t);
     if (!Vz) return null;
 
-    const Rn = 20;
-    const Bw = 10;
+    const _20 = 20;
+    const _10 = 10;
 
     if (r < 0) {
-        e -= Math.ceil(Math.abs(r) / Rn);
-        r = (r % Rn + Rn) % Rn;
+        e -= Math.ceil(Math.abs(r) / _20);
+        r = (r % _20 + _20) % _20;
     }
     if (a < 0) {
-        t -= Math.ceil(Math.abs(a) / Bw);
-        a = (a % Bw + Bw) % Bw;
+        t -= Math.ceil(Math.abs(a) / _10);
+        a = (a % _10 + _10) % _10;
     }
 
-    const Kf = a * Rn + r;
+    const Kf = a * _20 + r;
     return Vz.clr[Kf] % 31;
 };
 
 window.getCharDecoration = function(e) {
 
-    const Lj = Math.floor(e / 31);
+    const decoId = Math.floor(e / 31);
     return {
 
-        bold: (Lj & 8) == 8,
-        italic: (Lj & 4) == 4,
-        underline: (Lj & 2) == 2,
-        strike: (Lj & 1) == 1
+        bold: (decoId & 8) == 8,
+        italic: (decoId & 4) == 4,
+        underline: (decoId & 2) == 2,
+        strike: (decoId & 1) == 1
     };
 };
 
@@ -3377,19 +3380,19 @@ window.getCharInfo = function(e, t, r = 0, a = 0) {
     const Qm = Tile.get(e, t);
     if (!Qm) return null;
 
-    const Nw = 20;
-    const Xv = 10;
+    const _20 = 20;
+    const _10 = 10;
 
     if (r < 0) {
-        e -= Math.ceil(Math.abs(r) / Nw);
-        r = (r % Nw + Nw) % Nw;
+        e -= Math.ceil(Math.abs(r) / _20);
+        r = (r % _20 + _20) % _20;
     }
     if (a < 0) {
-        t -= Math.ceil(Math.abs(a) / Xv);
-        a = (a % Xv + Xv) % Xv;
+        t -= Math.ceil(Math.abs(a) / _10);
+        a = (a % _10 + _10) % _10;
     }
 
-    const Pd = a * Nw + r;
+    const Pd = a * _20 + r;
     const Uf = Qm.txt[Pd];
     const Jy = Qm.clr[Pd];
     const Gh = Jy % 31;
@@ -3402,11 +3405,11 @@ window.getCharInfo = function(e, t, r = 0, a = 0) {
 };
 
 window.getCharInfoXY = function(e, t) {
-    const Rd = Math.floor(e / 20) * 20;
-    const Bs = Math.floor(t / 10) * 10;
-    const Qp = e % 20;
-    const Lk = t % 10;
-    return getCharInfo(Rd, Bs, Qp, Lk);
+    const tileX = Math.floor(e / 20) * 20;
+    const tileY = Math.floor(t / 10) * 10;
+    const offsetX = e % 20;
+    const offSetY = t % 10;
+    return getCharInfo(tileX, tileY, offsetX, offSetY);
 };
 
 
@@ -3602,7 +3605,7 @@ function Pr() {
     return fr(location.pathname)
 }
 
-function Lr(e) {
+function randomSeed(e) {
     if ("" == (e = decodeURI(e.toLowerCase())) || "~main" == e)
         return {
             x: 0,
@@ -3659,7 +3662,7 @@ if (Wr.length > 0)
         o = "/" + Wr,
         Fr || tp_(0, 0);
     else {
-        var Hr = Lr(Wr);
+        var Hr = randomSeed(Wr);
         cursor_.x = Hr.x,
             cursor_.y = Hr.y
     }
@@ -3692,11 +3695,11 @@ function adjustColour(e, t) {
         a = Math.max(a, 0),
         o = Math.max(o, 0),
         i = Math.max(i, 0),
-        "#" + zr(a.toString(16), 2) + zr(o.toString(16), 2) + zr(i.toString(16), 2)
+        "#" + padZeroes(a.toString(16), 2) + padZeroes(o.toString(16), 2) + padZeroes(i.toString(16), 2)
 }
 window.Xr = adjustColour;
 
-function zr(e, t) {
+function padZeroes(e, t) {
     for (; e.length < t;)
         e = "0" + e;
     return e
@@ -3706,7 +3709,7 @@ function qr(e) {
     return e >= 10240 && e <= 10495
 }
 
-function Yr(e, t) {
+function convertHextoRGBA(e, t) {
     if (3 == (e = e.replace("#", "")).length && (e = e[0] + e[0] + e[1] + e[1] + e[2] + e[2]),
         6 != e.length)
         throw new Error("invalid hex length");
@@ -4427,10 +4430,10 @@ window.network.send = function(data) {
 window.network.wsUrl = "wss://" + "tw.2s4.me" + "/ws";
 window.w.changeZoom = function(e, t) {
     console.warn("remember, this won't save!");
-    rt = e < 0 ? 0 : e > 10000 ? 10000 : e,
-        at = Math.round(100 * rt) / 100,
-        elemId_zoom.value = 10 * at,
-        t && showToast_(Math.round(100 * at) + "% ", 1e3),
+    clampedNum = e < 0 ? 0 : e > 10000 ? 10000 : e,
+        zoomValue = Math.round(100 * clampedNum) / 100,
+        elemId_zoom.value = 10 * zoomValue,
+        t && showToast_(Math.round(100 * zoomValue) + "% ", 1e3),
         kn()
 }
 window.w.changeColor = changeColor_;
