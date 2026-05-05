@@ -174,6 +174,9 @@ function split2(str) {
                 case '"':
                     cur += '"';
                     break;
+                case ' ':
+                    cur += ' ';
+                    break;
                 default:
                     throw Error('Unknown escape')
             }
