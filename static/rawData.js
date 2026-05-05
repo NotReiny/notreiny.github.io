@@ -1,6 +1,6 @@
 // better than JSON™
 
-function rawLiteral(e, seen = new WeakSet()) {
+function rawData(e, seen = new WeakSet()) {
     if (typeof e === 'object' && e !== null) {
         if (seen.has(e)) return '...';
         seen.add(e);
@@ -11,24 +11,24 @@ function rawLiteral(e, seen = new WeakSet()) {
             if (e instanceof Error) return e.stack || `${e.name}: ${e.message}`;
 
             if (Array.isArray(e)) {
-                return `[${e.map(v => rawLiteral(v, seen)).join(', ')}]`;
+                return `[${e.map(v => rawData(v, seen)).join(', ')}]`;
             }
 
             if (e instanceof Map) {
                 return `Map {${[...e.entries()]
-                    .map(([k, v]) => `${rawLiteral(k, seen)} => ${rawLiteral(v, seen)}`)
+                    .map(([k, v]) => `${rawData(k, seen)} => ${rawData(v, seen)}`)
                     .join(', ')}}`;
             }
 
             if (e instanceof Set) {
                 return `Set {${[...e]
-                    .map(v => rawLiteral(v, seen))
+                    .map(v => rawData(v, seen))
                     .join(', ')}}`;
             }
 
             const keys = Reflect.ownKeys(e);
             const props = keys.map(key =>
-                `${/^[a-z$_][0-9a-z$_]*$/i.test(String(key)) ? String(key) : `${rawLiteral(String(key))}`}: ${rawLiteral(e[key], seen)}`
+                `${/^[a-z$_][0-9a-z$_]*$/i.test(String(key)) ? String(key) : `${rawData(String(key))}`}: ${rawData(e[key], seen)}`
             );
 
             const prefix = e.constructor?.name !== 'Object'
