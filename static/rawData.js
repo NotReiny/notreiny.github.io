@@ -8,7 +8,7 @@ function rawData(e, seen = new WeakSet()) {
         try {
             if (e instanceof RegExp) return e.toString();
             if (e instanceof Date) return `new Date(${e.getTime()})`;
-            if (e instanceof Error) return e.stack || `${e.name}: ${e.message}`;
+            if (e instanceof Error) return `new Error(${rawData(e.message)})`;
 
             if (Array.isArray(e)) {
                 return `[${e.map(v => rawData(v, seen)).join(', ')}]`;
