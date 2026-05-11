@@ -15,15 +15,15 @@ function rawData(e, seen = new WeakSet()) {
             }
 
             if (e instanceof Map) {
-                return `Map {${[...e.entries()]
-                    .map(([k, v]) => `${rawData(k, seen)} => ${rawData(v, seen)}`)
-                    .join(', ')}}`;
+                return `new Map([${[...e.entries()]
+                    .map(([k, v]) => `[${rawData(k, seen)}, ${rawData(v, seen)}]`)
+                    .join(', ')}])`;
             }
 
             if (e instanceof Set) {
-                return `Set {${[...e]
+                return `new Set([${[...e]
                     .map(v => rawData(v, seen))
-                    .join(', ')}}`;
+                    .join(', ')}])`;
             }
 
             const keys = Reflect.ownKeys(e);
@@ -31,9 +31,9 @@ function rawData(e, seen = new WeakSet()) {
                 `${/^[a-z$_][0-9a-z$_]*$/i.test(String(key)) ? String(key) : `${rawData(String(key))}`}: ${rawData(e[key], seen)}`
             );
 
-            const prefix = e.constructor?.name !== 'Object'
-                ? `${e.constructor.name} `
-                : '';
+            const prefix = e.constructor?.name !== 'Object' ?
+                `${e.constructor.name} ` :
+                '';
 
             return `${prefix}{${props.join(', ')}}`;
 
@@ -64,7 +64,7 @@ function rawData(e, seen = new WeakSet()) {
     }
 
     if (typeof e === 'number') {
-        return (1/e === -Infinity && e === 0) ? '-0' : String(e);
+        return (1 / e === -Infinity && e === 0) ? '-0' : String(e);
     }
 
     return String(e);
