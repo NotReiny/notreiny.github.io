@@ -129,12 +129,12 @@
         var C = S
             , A = I
             , T = Xr(A, 10);
-        const B = document.getElementById("primary")
-            , F = document.getElementById("secondary")
-            , P = document.getElementById("themetext")
+        const primaryColorSelect = document.getElementById("primary")
+            , secondaryColorSelect = document.getElementById("secondary")
+            , whiteTextCheckBox = document.getElementById("themetext")
             , L = document.getElementById("thememenu")
-            , O = document.getElementById("customfont")
-            , R = document.getElementById("customfontsize")
+            , customFontInput = document.getElementById("customfont")
+            , customFontSizeInput = document.getElementById("customfontsize")
             , D = document.getElementById("fontmenu");
         var N = 0;
         var j = 0
@@ -344,7 +344,7 @@
         }, Te = {
             x: 0,
             y: 0
-        }, Be = [], Fe = [], Pe = new Map, Le = true, Oe = true, Re = true, De = false, Ne = [], je = "", Ue = 0, We = 0, coordsElement = document.getElementById("coords"), nearbyElement = document.getElementById("nearby"), Xe = performance.now(), ze = {
+        }, Be = [], Fe = [], Pe = new Map, Le = true, Oe = true, Re = true, De = false, Ne = [], je = "", Ue = 0, online = 0, coordsElement = document.getElementById("coords"), nearbyElement = document.getElementById("nearby"), Xe = performance.now(), ze = {
             scale: 1,
             offset: {
                 x: 0,
@@ -440,7 +440,7 @@
                 at = Math.round(100 * rt) / 100,
                 localStorage.setItem("zoom", at),
                 ot.value = 10 * at,
-                t && ir(Math.round(100 * at) + "% ", 1e3),
+                t && showToast(Math.round(100 * at) + "% ", 1e3),
                 kn()
         }
         function rit(e) {
@@ -500,8 +500,8 @@
             var o = selectedFont
                 , i = fontProperties[selectedFont];
             "Custom" == selectedFont ? (D.classList.remove("hidden"),
-                o = O.value,
-                i = Math.max(Math.min(20, R.value), 1),
+                o = customFontInput.value,
+                i = Math.max(Math.min(20, customFontSizeInput.value), 1),
                 localStorage.setItem("customfont", o),
                 localStorage.setItem("customfontsize", i),
                 o = '"' + (o || "monospace") + '"') : D.classList.add("hidden"),
@@ -983,7 +983,7 @@
             var t = n
                 , r = e.target.parentElement.dataset.id
                 , a = Pe.get(r);
-            null != a && m && ir((a.n || r) + ": (" + a.l[0] + ", " + -a.l[1] + ")", 3e3)
+            null != a && m && showToast((a.n || r) + ": (" + a.l[0] + ", " + -a.l[1] + ")", 3e3)
         }
         function sn(e) {
             var t = n
@@ -1082,9 +1082,9 @@
             document.addEventListener("pointermove", (function (e) {
                 var t = n;
                 if (e["isTrusted"] && (Te = Wn(e),
-                    (Ve || Ze) && (ge = !0),
-                    e["pointerId"] == Dn && !Nn)) {
-                    if (e["preventDefault"](),
+                    (Ve || Ze) && (ge = true),
+                    e.pointerId == Dn && !Nn)) {
+                    if (e.preventDefault(),
                         Je) {
                         if (currentRegionSelection.tiled) {
                             $e.end.tileX = Math.floor(Te.x / 20);
@@ -1103,24 +1103,24 @@
                     }
                     else if (Ye) {
                         var r = e.clientX * devicePixelRatio - qe.start.x / at
-                            , a = e["clientY"] * devicePixelRatio - qe["start"].y / at;
-                        qe["offset"].x = Math["round"](ze["offset"].x + r),
-                            qe["offset"].y = Math["round"](ze["offset"].y + a),
-                            clientOptions["smoothpanning"]["checked"] && Rn(e)
+                            , a = e.clientY * devicePixelRatio - qe.start.y / at;
+                        qe.offset.x = Math.round(ze.offset.x + r),
+                            qe.offset.y = Math.round(ze.offset.y + a),
+                            clientOptions.smoothpanning.checked && Rn(e)
                     }
-                    ge = !0
+                    ge = true
                 }
             }
             )),
-            canvasElement["addEventListener"]("click", nn);
+            canvasElement.addEventListener("click", nn);
         var lastScrollTime = 0;
         canvasElement.addEventListener("wheel", (function (e) {
             var t = n;
-            if (e["isTrusted"] && (ie(!1), !Ye)) {
-                if (e["preventDefault"](), e["ctrlKey"]) {
-                    setZoom(rt - e["deltaY"] / 1e3, !0);
+            if (e.isTrusted && (ie(false), !Ye)) {
+                if (e.preventDefault(), e.ctrlKey) {
+                    setZoom(rt - e.deltaY / 1e3, true);
                 }
-                else if (e["altKey"]) {
+                else if (e.altKey) {
                     e.preventDefault();
 
                     var now = Date.now();
@@ -1160,18 +1160,18 @@
                     e.shiftKey && (r ^= a, r ^= a ^= r);
                     Mn(qe["offset"].x - r, qe.offset.y - a);
                 }
-                ge = !0;
+                ge = true;
             }
-        }), { passive: !1 });
-        document["addEventListener"]("pointerup", (function (e) {
+        }), { passive: false });
+        document.addEventListener("pointerup", (function (e) {
             var t = n;
-            if (e["isTrusted"] && (e["preventDefault"](),
-                e["pointerId"] == Dn && !Nn)) {
-                if (Je && $e["start"] && $e["end"]) {
-                    var r = Math.min($e.start.x, $e["end"].x)
-                        , o = Math["min"]($e.start.y, $e["end"].y)
-                        , i = Math["max"]($e.start.x, $e["end"].x)
-                        , c = Math["max"]($e.start.y, $e["end"].y);
+            if (e.isTrusted && (e.preventDefault(),
+                e.pointerId == Dn && !Nn)) {
+                if (Je && $e.start && $e.end) {
+                    var r = Math.min($e.start.x, $e.end.x)
+                        , o = Math.min($e.start.y, $e.end.y)
+                        , i = Math.max($e.start.x, $e.end.x)
+                        , c = Math.max($e.start.y, $e.end.y);
                     Je = false;
                     $e = {};
                     Dn = void 0;
@@ -1187,44 +1187,44 @@
                     });
 
                 } else if (Dn = void 0,
-                    Ye = !1,
-                    qe["start"].x = null,
-                    qe["start"].y = null,
-                    Mn(qe["offset"].x, qe.offset.y),
-                    clientOptions.smoothpanning["checked"]) {
+                    Ye = false,
+                    qe.start.x = null,
+                    qe.start.y = null,
+                    Mn(qe.offset.x, qe.offset.y),
+                    clientOptions.smoothpanning.checked) {
                     Rn(e);
-                    var w = Ge["length"] - 1;
+                    var w = Ge.length - 1;
                     ((Qe = {
                         dx: Ge[0][0] - Ge[w][0],
                         dy: Ge[0][1] - Ge[w][1],
                         dt: Ge[0][2] - Ge[w][2]
-                    }).dt > 90 || Math.abs(Qe.dx) < 5 && Math["abs"](Qe.dy) < 5) && (Qe = null)
+                    }).dt > 90 || Math.abs(Qe.dx) < 5 && Math.abs(Qe.dy) < 5) && (Qe = null)
                 }
-                canvasElement["style"]["cursor"] = "text",
-                    ge = !0
+                canvasElement.style.cursor = "text",
+                    ge = true
             }
         }
         )),
-            document["addEventListener"]("pointerleave", Un),
-            document["addEventListener"]("pointercancel", Un),
-            textArea["addEventListener"]("input", (function (e) {
+            document.addEventListener("pointerleave", Un),
+            document.addEventListener("pointercancel", Un),
+            textArea.addEventListener("input", (function (e) {
                 var t = n;
                 if (e.preventDefault(),
-                    e["isTrusted"]) {
-                    if ("insertLineBreak" != e["inputType"])
-                        return "deleteContentBackward" == e["inputType"] ? (Ce.x -= 1,
+                    e.isTrusted) {
+                    if ("insertLineBreak" != e.inputType)
+                        return "deleteContentBackward" == e.inputType ? (Ce.x -= 1,
                             Vn(" ", 0, !1, !0) ||
-                            void nr()) : void (null != e["data"] && "" != e["data"] && "insertFromPaste" != e["inputType"] && (nr(),
-                                Array["from"](e.data).length > 1 ? tr(e["data"]) : Vn(e["data"], 1)));
+                            void nr()) : void (null != e.data && "" != e.data && "insertFromPaste" != e.inputType && (nr(),
+                                Array.from(e.data).length > 1 ? tr(e.data) : Vn(e.data, 1)));
                     cr()
                 }
             }
             )),
 
-            textArea["addEventListener"]("keydown", (function (e) {
+            textArea.addEventListener("keydown", (function (e) {
                 var t = n;
-                if (e["isTrusted"]) {
-                    switch (e["keyCode"]) {
+                if (e.isTrusted) {
+                    switch (e.keyCode) {
                         case 38:
                             window.w.moveCursor("up", 1);
                             e.preventDefault();
@@ -1246,17 +1246,17 @@
                             e.preventDefault();
                             break;
                         case 36:
-                            Ce.x = Ce["start"],
+                            Ce.x = Ce.start,
                                 nr(),
-                                ie(!1),
-                                e["preventDefault"]();
+                                ie(false),
+                                e.preventDefault();
                             break;
                         case 46:
-                            Vn(" ", 0, !1, !0),
+                            Vn(" ", 0, false, true),
                                 nr(),
-                                e["preventDefault"]()
+                                e.preventDefault()
                     }
-                    (!e["ctrlKey"] && !e["shiftKey"] && !e["altKey"] || 37 == e["keyCode"] || 38 == e["keyCode"] || 39 == e["keyCode"] || 40 == e["keyCode"]) && Hn()
+                    (!e.ctrlKey && !e.shiftKey && !e.altKey || 37 == e.keyCode || 38 == e.keyCode || 39 == e.keyCode || 40 == e.keyCode) && Hn()
                 }
             }
             )),
@@ -1283,8 +1283,8 @@
             },
             redoWrite = window.redoWrite = function () {
                 var e = fontRender;
-                if (0 != Fe["length"]) {
-                    var t = Fe["shift"]();
+                if (0 != Fe.length) {
+                    var t = Fe.shift();
                     Ce.x = t[0],
                         Ce.y = t[1];
                     var n = pe
@@ -1313,107 +1313,107 @@
                     redoBtn.classList.add("disabled");
                 }
             },
-            document["addEventListener"]("keydown", (function (e) {
+            document.addEventListener("keydown", (function (e) {
                 var r = n;
                 if (e.isTrusted)
                     switch (e.keyCode) {
                         case 90:
                             e.ctrlKey && (undoWrite(),
-                                e["preventDefault"]());
+                                e.preventDefault());
                             break;
                         case 89:
-                            e["ctrlKey"] && (redoWrite(),
-                                e["preventDefault"]());
+                            e.ctrlKey && (redoWrite(),
+                                e.preventDefault());
                             break;
                         case 67:
-                            e["altKey"] && or(e);
+                            e.altKey && or(e);
                             break;
                         case 71:
-                            e["ctrlKey"] && (e["preventDefault"](),
+                            e.ctrlKey && (e.preventDefault(),
                                 dr());
                             break;
                         case 66:
-                            e.ctrlKey && (e["preventDefault"](),
+                            e.ctrlKey && (e.preventDefault(),
                                 br("bold", null, document.getElementById("bold")),
-                                ie(!0));
+                                ie(true));
                             break;
                         case 73:
                             e.ctrlKey && (e.preventDefault(),
                                 br("italic", null, document.getElementById("italic")),
-                                ie(!0));
+                                ie(true));
                             break;
 
                         case 85:
-                            e.ctrlKey && (e["preventDefault"](),
+                            e.ctrlKey && (e.preventDefault(),
                                 br("underline", null, document.getElementById("underline")),
-                                ie(!0));
+                                ie(true));
                             break;
                         case 83:
-                            e["ctrlKey"] && (e["preventDefault"](),
+                            e.ctrlKey && (e.preventDefault(),
                                 br("strikethrough", null, document.getElementById("strikethrough")),
-                                ie(!0));
+                                ie(true));
                             break;
                         case 18:
-                            e["preventDefault"]();
+                            e.preventDefault();
                             break;
                         case 27:
-                            Je && (Je = !1,
+                            Je && (Je = false,
                                 $e = {},
-                                canvasElement.style["cursor"] = "text",
-                                e["preventDefault"]()),
-                                teleportElement["classList"]["remove"]("open"),
+                                canvasElement.style.cursor = "text",
+                                e.preventDefault()),
+                                teleportElement.classList.remove("open"),
                                 ie(!1),
                                 nr();
                             break;
                         case 107:
                         case 187:
-                            e["ctrlKey"] && (e["preventDefault"](),
-                                setZoom(rt + .1, !0));
+                            e.ctrlKey && (e.preventDefault(),
+                                setZoom(rt + .1, true));
                             break;
                         case 109:
                         case 189:
-                            e["ctrlKey"] && (e.preventDefault(),
-                                setZoom(rt - .1, !0))
+                            e.ctrlKey && (e.preventDefault(),
+                                setZoom(rt - .1, true))
                     }
             }
             )),
             textArea.addEventListener("paste", (function (e) {
                 var t = n;
-                e["isTrusted"] && tr((e["clipboardData"] || window["clipboardData"]).getData("text"))
+                e.isTrusted && tr((e.clipboardData || window.clipboardData).getData("text"))
             }
             )),
-            textArea["addEventListener"]("copy", (function (e) {
+            textArea.addEventListener("copy", (function (e) {
                 var t = n
                     , r = rr();
                 if (r) {
                     ar(r[0]),
-                        e["preventDefault"](),
-                        e["clipboardData"] || ir("Copied character.", 1e3);
-                    var a = document["getElementById"]("copyico");
-                    a["src"] = "/static/done.svg",
+                        e.preventDefault(),
+                        e.clipboardData || showToast("Copied character.", 1e3);
+                    var a = document.getElementById("copyico");
+                    a.src = "/static/done.svg",
                         setTimeout((function () {
                             var e = t;
-                            a["src"] = "/static/copy.svg"
+                            a.src = "/static/copy.svg"
                         }
                         ), 1e3),
-                        textArea["focus"]()
+                        textArea.focus()
                 }
             }
             )),
-            nearbyElement["addEventListener"]("click", (function () {
-                ir(We + " online", 3e3)
+            nearbyElement.addEventListener("click", (function () {
+                showToast(online + " online", 3e3)
             }
             )),
             coordsElement.addEventListener("click", (function () {
                 var e = n;
-                history["pushState"]({}, null, o),
-                    ar(location.protocol + "//" + location["host"] + o + "?x=" + Ce.x + "&y=" + -Ce.y),
-                    ir("Copied link.", 1e3),
-                    textArea["focus"]()
+                history.pushState({}, null, o),
+                    ar(location.protocol + "//" + location.host + o + "?x=" + Ce.x + "&y=" + -Ce.y),
+                    showToast("Copied link.", 1e3),
+                    textArea.focus()
             }
             )),
 
-            document["getElementById"]("openmenu").addEventListener("click", (function () {
+            document.getElementById("openmenu").addEventListener("click", (function () {
                 document.getElementById("colourcontainer").classList.toggle("hidden")
             }
             ))
@@ -1434,27 +1434,27 @@
             });
 
 
-        document["getElementById"]("home")["addEventListener"]("click", (function () {
+        document.getElementById("home").addEventListener("click", (function () {
             $n(),
                 Zn(0, 0)
         }
         )),
-            document["getElementById"]("home")["addEventListener"]("contextmenu", (function (e) {
+            document.getElementById("home").addEventListener("contextmenu", (function (e) {
                 var t = n;
-                e["preventDefault"](),
+                e.preventDefault(),
                     Cn("textwall", "main") && Zn(0, 0)
             }
             )),
-            document["getElementById"]("copy")["addEventListener"]("click", or),
-            document["getElementById"]("paste")["addEventListener"]("click", (function () {
+            document.getElementById("copy").addEventListener("click", or),
+            document.getElementById("paste").addEventListener("click", (function () {
                 var e = n;
-                navigator["clipboard"]["readText"]()["then"]((function (t) {
+                navigator.clipboard.readText().then((function (t) {
                     var n = e;
                     tr(t);
-                    var r = document["getElementById"]("pasteico");
+                    var r = document.getElementById("pasteico");
                     r.src = "/static/done.svg",
                         setTimeout((function () {
-                            r["src"] = "/static/paste.svg"
+                            r.src = "/static/paste.svg"
                         }
                         ), 1e3),
                         en()
@@ -1466,50 +1466,50 @@
                 yr()
             }
             )),
-            B["addEventListener"]("input", gr),
-            F["addEventListener"]("input", gr),
-            P["addEventListener"]("change", (function (e) {
+            primaryColorSelect.addEventListener("input", gr),
+            secondaryColorSelect.addEventListener("input", gr),
+            whiteTextCheckBox.addEventListener("change", (function (e) {
                 gr(e),
                     yr(2)
             }
             )),
-            O.addEventListener("input", (function () {
+            customFontInput.addEventListener("input", (function () {
                 vt(selectedFont)
             }
             )),
-            R["addEventListener"]("input", (function () {
+            customFontSizeInput.addEventListener("input", (function () {
                 vt(selectedFont)
             }
             )),
-            document["getElementById"]("goto")["addEventListener"]("click", dr),
-            sidemenu["addEventListener"]("click", (function (e) {
+            document.getElementById("goto").addEventListener("click", dr),
+            sidemenu.addEventListener("click", (function (e) {
                 var t = n
-                    , r = JSON["stringify"](e["target"]["checked"]);
+                    , r = JSON.stringify(e.target.checked);
                 switch (e.target) {
-                    case clientOptions["showothercurs"]:
-                        localStorage["setItem"]("showothercurs", r),
-                            ge = !0;
+                    case clientOptions.showothercurs:
+                        localStorage.setItem("showothercurs", r),
+                            ge = true;
                         break;
-                    case clientOptions["shownametags"]:
+                    case clientOptions.shownametags:
                         localStorage.setItem("shownametags", r),
-                            ge = !0;
+                            ge = true;
                         break;
-                    case clientOptions["showchat"]:
-                        localStorage["setItem"]("showchat", r),
-                            e["target"]["checked"] ? null : hn.classList["add"]("hidden");
+                    case clientOptions.showchat:
+                        localStorage.setItem("showchat", r),
+                            e.target.checked ? null : hn.classList.add("hidden");
                         break;
                     case clientOptions.disablecolour:
                         localStorage.setItem("disablecolour", r),
-                            nt.disableColour["checked"] || hr(clientOptions["disablecolour"].checked),
-                            ge = !0,
+                            nt.disableColour.checked || hr(clientOptions.disablecolour.checked),
+                            ge = true,
                             Sn();
                         break;
-                    case clientOptions["smoothpanning"]:
-                        localStorage["setItem"]("smoothpanning", r),
-                            ge = !0;
+                    case clientOptions.smoothpanning:
+                        localStorage.setItem("smoothpanning", r),
+                            ge = true;
                         break;
-                    case clientOptions["smoothcursors"]:
-                        localStorage["setItem"]("smoothcursors", r);
+                    case clientOptions.smoothcursors:
+                        localStorage.setItem("smoothcursors", r);
                         break;
                     case clientOptions["copycolour"]:
                         localStorage["setItem"]("copycolour", r);
@@ -1644,7 +1644,7 @@
                         document.getElementById("accbanned").innerText = "",
                         a.send(Or({
                             login: [r["value"], o["value"]]
-                        }))) : ir("Please type your password.", 3e3) : ir("Please type your username.", 3e3) : ir("Username is invalid.", 3e3)
+                        }))) : showToast("Please type your password.", 3e3) : showToast("Please type your username.", 3e3) : showToast("Username is invalid.", 3e3)
                 }
             }
             )),
@@ -1657,7 +1657,7 @@
                     mn["test"](r["value"]) ? 0 != r.value.length ? 0 != o["value"]["length"] ? o.value == i["value"] ? (vn(!0),
                         a["send"](Or({
                             register: [r["value"], o.value]
-                        }))) : ir("Passwords do not match.", 3e3) : ir("Please type a password.", 3e3) : ir("Please type a username.", 3e3) : ir("Username is invalid.", 3e3)
+                        }))) : showToast("Passwords do not match.", 3e3) : showToast("Please type a password.", 3e3) : showToast("Please type a username.", 3e3) : showToast("Username is invalid.", 3e3)
                 }
             }
             )),
@@ -1673,7 +1673,7 @@
                     mn["test"](r.value) ? 0 != r["value"]["length"] ? je != r.value ? 0 != o["value"].length ? (vn(!0),
                         a["send"](Or({
                             namechange: [r.value, o.value]
-                        }))) : ir("Please type your password.", 3e3) : ir("You have typed in your current username.", 3e3) : ir("Please type a new username.", 3e3) : ir("Username is invalid.", 3e3)
+                        }))) : showToast("Please type your password.", 3e3) : showToast("You have typed in your current username.", 3e3) : showToast("Please type a new username.", 3e3) : showToast("Username is invalid.", 3e3)
                 }
             }
             )),
@@ -1687,7 +1687,7 @@
                     0 != r["value"]["length"] ? 0 != o["value"].length ? 0 != i["value"].length ? o.value == i["value"] ? (vn(!0),
                         a["send"](Or({
                             passchange: [r["value"], o["value"]]
-                        }))) : ir("New passwords do not match.", 3e3) : ir("Please type your new password again.", 3e3) : ir("Please type your new password.", 3e3) : ir("Please type your password.", 3e3)
+                        }))) : showToast("New passwords do not match.", 3e3) : showToast("Please type your new password again.", 3e3) : showToast("Please type your new password.", 3e3) : showToast("Please type your password.", 3e3)
                 }
             }
             )),
@@ -1699,7 +1699,7 @@
                     0 != r.value["length"] ? (vn(!0),
                         a.send(Or({
                             deleteaccount: r["value"]
-                        }))) : ir("Please type your password.", 3e3)
+                        }))) : showToast("Please type your password.", 3e3)
                 }
             }
             )),
@@ -1819,9 +1819,9 @@
                             if (r.children[a]["innerText"] == e)
                                 return !0;
                         return !1
-                    }(i) || i == je) || (mn["test"](i) ? o.childElementCount >= 20 ? ir("You cannot add more than 20 members.", 3e3) : a["send"](Or({
+                    }(i) || i == je) || (mn["test"](i) ? o.childElementCount >= 20 ? showToast("You cannot add more than 20 members.", 3e3) : a["send"](Or({
                         addmem: i
-                    })) : ir("Username is invalid.", 3e3))
+                    })) : showToast("Username is invalid.", 3e3))
             }
             )),
             deleteWallElement["addEventListener"]("click", (function (e) {
@@ -1843,7 +1843,7 @@
                         dw: 0
                     })),
                     Cn("textwall", "main"),
-                    ir("Deleting wall...", 3e3)) : ir("Please type 'confirm' in the text box if you would like to delete your wall.", 3e3)
+                    showToast("Deleting wall...", 3e3)) : showToast("Please type 'confirm' in the text box if you would like to delete your wall.", 3e3)
             }
             )),
             document["getElementById"]("l")["addEventListener"]("click", (function (e) {
@@ -2594,14 +2594,14 @@
 
                     break;
                 case "alert":
-                    ir(a["alert"], 8e3);
+                    showToast(a["alert"], 8e3);
                     window.w.emit("alert", {
                         message: a.alert,
                     })
                     break;
                 case "online":
-                    We = a["online"],
-                        nearbyElement["title"] = We + " online";
+                    online = a["online"],
+                        nearbyElement["title"] = online + " online";
 
                     break;
                 case "e":
@@ -2911,7 +2911,7 @@
                 case "ro":
                     var B = a.ro;
                     nt["readOnly"].checked = B,
-                        B && ir("This wall is in read-only mode.", 3e3),
+                        B && showToast("This wall is in read-only mode.", 3e3),
                         xn();
                     window.w.emit("readonly", B);
                     break;
@@ -2971,7 +2971,7 @@
                     nt["regonly"]["checked"] = regonly;
                     window.w.emit("regonly", regonly);
                     if (regonly && !je) {
-                        ir("This wall is for registered users only. Please log in or register to access.", 5000);
+                        showToast("This wall is for registered users only. Please log in or register to access.", 5000);
                         setTimeout(() => {
                             window.w.goto("~textwall/main");
                         }, 100);
@@ -3047,17 +3047,17 @@
                     window.w.emit("walllist", Y);
                     break;
                 case "nametaken":
-                    ir("Username is already in use.", 3e3),
+                    showToast("Username is already in use.", 3e3),
                         vn(!1);
                     window.w.emit("nametaken", a["nametaken"]);
                     break;
                 case "noreg":
-                    ir("Registration is closed.", 3e3),
+                    showToast("Registration is closed.", 3e3),
                         window.w.emit("regclosed", a["noreg"]);
                     vn(!1);
                     break;
                 case "wrongpass":
-                    ir("Password is incorrect.", 3e3),
+                    showToast("Password is incorrect.", 3e3),
                         window.w.emit("passfail", a["wrongpass"]);
                     vn(!1);
                     break;
@@ -3095,7 +3095,7 @@
                     window.w.emit("accbanned", banInfo);
                     break;
                 case "loginfail":
-                    ir("Username/Password is incorrect.", 3e3),
+                    showToast("Username/Password is incorrect.", 3e3),
                         vn(!1);
                     window.w.emit("loginfail", a["loginfail"]);
                     break;
@@ -3107,11 +3107,11 @@
                     break;
                 case "token_invalid":
                     dt();
-                    ir("Your token has been invalidated.", 3000);
+                    showToast("Your token has been invalidated.", 3000);
                     break;
                 case "namechanged":
                     vn(!1),
-                        ir("Your username is now: " + (je = a.namechanged), 3e3),
+                        showToast("Your username is now: " + (je = a.namechanged), 3e3),
                         localStorage["setItem"]("username", je),
                         Bn(),
                         ge = !0,
@@ -3119,19 +3119,19 @@
                     window.w.emit("namechanged", a.namechanged);
                     break;
                 case "passchanged":
-                    ir("Password has been changed.", 3e3),
+                    showToast("Password has been changed.", 3e3),
                         vn(!1);
                     window.w.emit("passchanged", a["passchanged"]);
                     break;
                 case "accountdeleted":
-                    ir("Your account has been deleted.", 3e3),
+                    showToast("Your account has been deleted.", 3e3),
                         vn(!1),
                         Re = !0,
                         dt(!0, !0);
                     window.w.emit("accountdeleted", a["accountdeleted"]);
                     break;
                 case "cool":
-                    ir("Rate limit", 3e3),
+                    showToast("Rate limit", 3e3),
                         vn(!1);
                     break;
                 case "token":
@@ -3267,7 +3267,7 @@
                         h.value = "",
                             Bt["test"](r) ? (Cn(W, r),
                                 Zn(0, 0),
-                                teleportElement.classList["remove"]("open")) : ir("Invalid wall name", 2e3)
+                                teleportElement.classList["remove"]("open")) : showToast("Invalid wall name", 2e3)
                     }
                     ))
             }
@@ -3531,7 +3531,7 @@
             var A = Ce.x - c + 20 * (Ce.y - l);
             var cellTextProtected = s["textProtected"] && s["textProtected"][A] === "1";
             if ((s.protected || cellTextProtected || nt["readOnly"]["checked"] || U && "" == je) && !m && 0 == j || null == s["txt"] || K)
-                return U && "" == je && !nt["readOnly"]["checked"] && ir("Please log in before typing.", 3e3),
+                return U && "" == je && !nt["readOnly"]["checked"] && showToast("Please log in before typing.", 3e3),
                     0;
 
             clientOptions.rainbow["checked"] && !r && (
@@ -3624,7 +3624,7 @@
             var A = Ce.x - c + 20 * (Ce.y - l);
             var cellTextProtected = s["textProtected"] && s["textProtected"][A] === "1";
             if ((s.protected || cellTextProtected || nt["readOnly"]["checked"] || U && "" == je) && !m && 0 == j || null == s["txt"] || K)
-                return U && "" == je && !nt["readOnly"]["checked"] && ir("Please log in before typing.", 3e3),
+                return U && "" == je && !nt["readOnly"]["checked"] && showToast("Please log in before typing.", 3e3),
                     0;
             clientOptions.rainbow["checked"] && !r && (
                 clientOptions.rainbowMode.value === "legacy" ? (mr(Jn[Yn]), ++Yn == Jn.length && (Yn = 0)) :
@@ -3883,7 +3883,7 @@
                     clientOptions["copycolour"]["checked"] && f || clientOptions["copydecorations"]["checked"] && v ? ar(s + x1B + d) : ar(s),
                     Ce.x = l,
                     Ce.y = u,
-                    ir("Copied selection.", 1500);
+                    showToast("Copied selection.", 1500);
                 var x = document["getElementById"]("copyico");
                 x.src = "/static/done.svg",
                     setTimeout((function () {
@@ -3893,9 +3893,9 @@
                     ), 1e3)
             });
             regionSelection.startSelection();
-            ir("Select an area to copy.", 1500);
+            showToast("Select an area to copy.", 1500);
         }
-        function ir(e, t) {
+        function showToast(e, t) {
             var r = n;
             clearTimeout(p),
                 toastElement.innerText = e,
@@ -4195,10 +4195,10 @@
                     document["getElementById"]("themeico")["src"] = "/static/moon.svg",
                     C = "#000000",
                     A = "#141414"),
-                2 == N ? (xe = P.checked,
+                2 == N ? (xe = whiteTextCheckBox.checked,
                     document.getElementById("themeico")["src"] = "/static/star.svg",
-                    C = B["value"],
-                    A = F["value"],
+                    C = primaryColorSelect["value"],
+                    A = secondaryColorSelect["value"],
                     L["classList"].remove("hidden")) : L.classList["add"]("hidden"),
                 T = Xr(A, 10),
                 !noSave && localStorage.setItem("theme", N),
@@ -4209,14 +4209,14 @@
         }
         function gr(e) {
             var t = n;
-            e["target"] == B ? (C = B["value"],
-                Sn()) : e.target == F && (A = F.value,
+            e["target"] == primaryColorSelect ? (C = primaryColorSelect["value"],
+                Sn()) : e.target == secondaryColorSelect && (A = secondaryColorSelect.value,
                     T = Xr(A, 10),
                     Sn(!0)),
                 localStorage["setItem"]("customtheme", JSON["stringify"]({
-                    primary: B.value,
-                    secondary: F["value"],
-                    texttheme: P["checked"]
+                    primary: primaryColorSelect.value,
+                    secondary: secondaryColorSelect["value"],
+                    texttheme: whiteTextCheckBox["checked"]
                 }))
         }
         function pr(e) {
@@ -4308,8 +4308,8 @@
 
 
         }
-        window.w.setPrimaryColor = function (e) { B.value = e; gr({ target: B }); }
-        window.w.setSecondaryColor = function (e) { F.value = e; gr({ target: F }); }
+        window.w.setPrimaryColor = function (e) { primaryColorSelect.value = e; gr({ target: primaryColorSelect }); }
+        window.w.setSecondaryColor = function (e) { secondaryColorSelect.value = e; gr({ target: secondaryColorSelect }); }
         window.w.toggleTeleport = dr;
         window.w.color = function () { document.getElementById("colourcontainer").classList.toggle("hidden") }
 
@@ -4424,7 +4424,7 @@
         window.w.redraw = () => ge = !0;
         window.w.renderChunkAmount = renderChunkAmount;
         window.w.setRenderChunkAmount = function (e) { renderChunkAmount = parseInt(e, 0); ge = !0 };
-        window.w.getTheme = function () { return { mode: N, primary: C, secondary: A, texttheme: P.checked }; };
+        window.w.getTheme = function () { return { mode: N, primary: C, secondary: A, texttheme: whiteTextCheckBox.checked }; };
         window.getChar = function (e, t, r = 0, a = 0) {
             if (e === undefined || t === undefined || r === undefined || a === undefined) {
                 [e, t, r, a] = window.cursorCoords;
@@ -4714,8 +4714,8 @@
             null != localStorage["getItem"]("x") && (Ce.x = parseInt(localStorage["getItem"]("x"))),
             null != localStorage["getItem"]("y") && (Ce.y = parseInt(localStorage["getItem"]("y"))),
             null != localStorage["getItem"]("dec") && le(localStorage["getItem"]("dec")),
-            null != localStorage.getItem("customfont") && (O["value"] = localStorage["getItem"]("customfont")),
-            null != localStorage.getItem("customfontsize") && (R.value = localStorage["getItem"]("customfontsize")),
+            null != localStorage.getItem("customfont") && (customFontInput["value"] = localStorage["getItem"]("customfont")),
+            null != localStorage.getItem("customfontsize") && (customFontSizeInput.value = localStorage["getItem"]("customfontsize")),
             null != localStorage.getItem("rca") && (renderChunkAmount = parseInt(localStorage.getItem("rca"), rot.value = parseInt(localStorage.getItem("rca")))),
             null != fontProperties[localStorage["getItem"]("font")] && vt(localStorage["getItem"]("font"));
         const val = localStorage["getItem"]("col");
@@ -4741,9 +4741,9 @@
             var Ir = localStorage.getItem("customtheme");
             try {
                 var Cr = JSON.parse(Ir);
-                null != Cr["primary"] && (B["value"] = Cr["primary"]),
-                    null != Cr.secondary && (F["value"] = Cr.secondary),
-                    null != Cr["texttheme"] && (P.checked = Cr["texttheme"])
+                null != Cr["primary"] && (primaryColorSelect["value"] = Cr["primary"]),
+                    null != Cr.secondary && (secondaryColorSelect["value"] = Cr.secondary),
+                    null != Cr["texttheme"] && (whiteTextCheckBox.checked = Cr["texttheme"])
             } catch (e) { }
         }
         if (null != localStorage.getItem("theme")) {
@@ -5702,11 +5702,11 @@
             rt = e < 0 ? 0 : e > 10000 ? 10000 : e,
                 at = Math.round(100 * rt) / 100,
                 ot["value"] = 10 * at,
-                t && ir(Math["round"](100 * at) + "% ", 1e3),
+                t && showToast(Math["round"](100 * at) + "% ", 1e3),
                 kn()
         }
         window.w.changeColor = mr;
-        window.w.showToast = ir;
+        window.w.showToast = showToast;
         window.currentRegionSelection = null;
         window.RegionSelection = RegionSelection;
         function RegionSelection() {
