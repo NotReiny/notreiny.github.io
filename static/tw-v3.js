@@ -187,8 +187,8 @@
                 Custom: 20,
             };
 
-        var G = "Inconsolata"
-            , Q = Math.floor(fontProperties[G] * v) + "px Iosveka, " + G + ", monospace, Special";
+        var selectedFont = "Inconsolata"
+            , Q = Math.floor(fontProperties[selectedFont] * v) + "px Iosveka, " + selectedFont + ", monospace, Special";
         const specialFonts = new Map;
         specialFonts.set("Unifont", void 0),
             specialFonts.set("Terminus", void 0),
@@ -201,7 +201,7 @@
             option = document.createElement("option"),
                 option.text = Object.keys(fontProperties)[ne],
                 fontSelectElement.add(option);
-        fontSelectElement.value = G;
+        fontSelectElement.value = selectedFont;
         const decorationsElement = document.getElementById("decorations");
         decorationsElement.addEventListener("contextmenu", (function (e) {
             e.preventDefault()
@@ -344,7 +344,7 @@
         }, Te = {
             x: 0,
             y: 0
-        }, Be = [], Fe = [], Pe = new Map, Le = !0, Oe = !0, Re = !0, De = !1, Ne = [], je = "", Ue = 0, We = 0, He = document["getElementById"]("coords"), Ke = document.getElementById("nearby"), Xe = performance["now"](), ze = {
+        }, Be = [], Fe = [], Pe = new Map, Le = true, Oe = true, Re = true, De = false, Ne = [], je = "", Ue = 0, We = 0, coordsElement = document.getElementById("coords"), nearbyElement = document.getElementById("nearby"), Xe = performance.now(), ze = {
             scale: 1,
             offset: {
                 x: 0,
@@ -363,29 +363,29 @@
                 x: 0,
                 y: 0
             }
-        }, Ye = !1, Je = !1, Ve = !1, Ze = !1, $e = {}, Ge = [], Qe = null, _e = [];
+        }, Ye = false, Je = false, Ve = false, Ze = false, $e = {}, Ge = [], Qe = null, _e = [];
         for (ne = 0; ne < 200; ne++)
             _e[ne] = " ";
         var et = [];
 
         for (ne = 0; ne < 200; ne++)
             et[ne] = 0;
-        document.getElementById("fontselect")["onchange"] = function (e) {
+        document.getElementById("fontselect").onchange = function (e) {
             var t = n;
-            vt(e["target"]["value"])
+            vt(e.target.value)
         }
             ;
-        const tt = {
+        const clientOptions = {
             showothercurs: document.getElementById("showothercurs"),
-            shownametags: document["getElementById"]("shownametags"),
-            showchat: document["getElementById"]("showchat"),
+            shownametags: document.getElementById("shownametags"),
+            showchat: document.getElementById("showchat"),
             disablecolour: document.getElementById("disablecolour"),
-            smoothpanning: document["getElementById"]("smoothpanning"),
+            smoothpanning: document.getElementById("smoothpanning"),
             smoothcursors: document.getElementById("smoothcursors"),
-            copycolour: document["getElementById"]("copycolour"),
-            copydecorations: document["getElementById"]("copydecorations"),
-            rainbow: document["getElementById"]("rainbow"),
-            anonymous: document["getElementById"]("anonymous"),
+            copycolour: document.getElementById("copycolour"),
+            copydecorations: document.getElementById("copydecorations"),
+            rainbow: document.getElementById("rainbow"),
+            anonymous: document.getElementById("anonymous"),
             darkChat: document.getElementById("darkChat"),
             rainbowTag: document.getElementById("rainbowTag"),
             fps: document.getElementById("fps"),
@@ -398,29 +398,29 @@
             hueSpeed: document.getElementById("hueSpeed"),
             rainbowMode: document.getElementById("rainbowMode")
         };
-        tt.showothercurs["checked"] = !0,
-            tt["shownametags"]["checked"] = !0,
-            tt.showchat["checked"] = !0,
-            tt["disablecolour"]["checked"] = !1,
-            tt["smoothpanning"]["checked"] = !0,
-            tt["smoothcursors"].checked = !0,
-            tt["showFeedback"].checked = !0,
-            tt["anonIdShow"].checked = !0,
-            tt["rainbowTag"].checked = !0,
-            tt["roundCursors"].checked = !0,
-            tt["displayNames"].checked = !1,
-            tt["fadeInMsg"].checked = !0;
-        tt.hueSpeed.value = localStorage.getItem("hueSpeed") ?? 5;
-        tt.rainbowMode.value = localStorage.getItem("rainbowMode") ?? "legacy";
+        clientOptions.showothercurs.checked = true,
+            clientOptions.shownametags.checked = true,
+            clientOptions.showchat.checked = true,
+            clientOptions.disablecolour.checked = false,
+            clientOptions.smoothpanning.checked = true,
+            clientOptions.smoothcursors.checked = true,
+            clientOptions.showFeedback.checked = true,
+            clientOptions.anonIdShow.checked = true,
+            clientOptions.rainbowTag.checked = true,
+            clientOptions.roundCursors.checked = true,
+            clientOptions.displayNames.checked = false,
+            clientOptions.fadeInMsg.checked = true;
+        clientOptions.hueSpeed.value = localStorage.getItem("hueSpeed") ?? 5;
+        clientOptions.rainbowMode.value = localStorage.getItem("rainbowMode") ?? "legacy";
         /* tt["doNotChangeTheme"].checked = !1;*/
         const nt = {
-            protect: document["getElementById"]("protect"),
+            protect: document.getElementById("protect"),
             clear: document.getElementById("clear"),
-            readOnly: document["getElementById"]("readonly"),
+            readOnly: document.getElementById("readonly"),
             private: document.getElementById("private"),
-            hideCursors: document["getElementById"]("hidecursors"),
-            disableChat: document["getElementById"]("disablechat"),
-            disableColour: document["getElementById"]("walldisablecolour"),
+            hideCursors: document.getElementById("hidecursors"),
+            disableChat: document.getElementById("disablechat"),
+            disableColour: document.getElementById("walldisablecolour"),
             disableBraille: document.getElementById("disablebraille"),
             unlisted: document.getElementById("unlisted"),
             nsfw: document.getElementById("nsfw"),
@@ -432,57 +432,57 @@
         };
         var rt = 1
             , at = 1
-            , ot = document["getElementById"]("zoom")
-            , rot = document["getElementById"]("fca");
-        function it(e, t) {
+            , ot = document.getElementById("zoom")
+            , rot = document.getElementById("fca");
+        function setZoom(e, t) {
             var r = n;
             rt = e < .5 ? .5 : e > 3 ? 3 : e,
                 at = Math.round(100 * rt) / 100,
-                localStorage["setItem"]("zoom", at),
-                ot["value"] = 10 * at,
-                t && ir(Math["round"](100 * at) + "% ", 1e3),
+                localStorage.setItem("zoom", at),
+                ot.value = 10 * at,
+                t && ir(Math.round(100 * at) + "% ", 1e3),
                 kn()
         }
         function rit(e) {
-            localStorage["setItem"]("rca", e.target.value)
+            localStorage.setItem("rca", e.target.value)
         }
-        function ct() {
-            it(ot["value"] / 10, !0)
+        function changeZoom() {
+            setZoom(ot.value / 10, true)
         }
-        var lt = document["getElementById"]("registerlink")
-            , ut = document["getElementById"]("loginlink")
-            , st = document.getElementById("logoutlink");
+        var registerLinkElement = document.getElementById("registerlink")
+            , loginLinkElement = document.getElementById("loginlink")
+            , logoutLinkElement = document.getElementById("logoutlink");
         function dt(e, t) {
             var r = n;
             (localStorage.removeItem("username"),
-                localStorage["removeItem"]("token")),
+                localStorage.removeItem("token")),
                 je = "",
                 j = 0,
-                wallSettingsElement.style["display"] = "none",
-                a.readyState != a["OPEN"] || t || (nt.private["checked"] && Cn("textwall", "main"),
+                wallSettingsElement.style.display = "none",
+                a.readyState != a.OPEN || t || (nt.private.checked && Cn("textwall", "main"),
                     a.send(Or({
                         logout: 0
                     })),
-                    Re = !0),
-                document["getElementById"]("login")["style"]["display"] = "block",
-                document.getElementById("loggedin")["style"].display = "none",
-                vn(!1),
+                    Re = true),
+                document.getElementById("login").style.display = "block",
+                document.getElementById("loggedin").style.display = "none",
+                vn(false),
                 xn(),
-                m = !1,
-                document["getElementById"]("admin")["style"]["display"] = "none",
-                ge = !0
+                m = false,
+                document.getElementById("admin").style.display = "none",
+                ge = true
         }
         function ft() {
             var e = n;
-            return 16 * Math["round"](v) > 20 * v || 16 * Math["round"](v) < 13 * v ? v : Math["round"](v)
+            return 16 * Math.round(v) > 20 * v || 16 * Math.round(v) < 13 * v ? v : Math.round(v)
         }
         function vt(e) {
             var t = n;
-            if (G = e,
-                specialFonts["has"](G)) {
-                var a = specialFonts.get(G);
+            if (selectedFont = e,
+                specialFonts.has(selectedFont)) {
+                var a = specialFonts.get(selectedFont);
                 if (null == a) {
-                    switch (G) {
+                    switch (selectedFont) {
                         case "Unifont":
                             a = new fontRender("/static/fonts/unifont-15.0.01.hex", Sn);
                             break;
@@ -492,52 +492,52 @@
                         default:
                             a = new fontRender("/static/fonts/fixed.hex", Sn)
                     }
-                    a["forceSharpPixels"] = !0,
-                        specialFonts["set"](G, a)
+                    a.forceSharpPixels = true,
+                        specialFonts.set(selectedFont, a)
                 }
-                a["scale"] = ft()
+                a.scale = ft()
             }
-            var o = G
-                , i = fontProperties[G];
-            "Custom" == G ? (D["classList"].remove("hidden"),
-                o = O["value"],
-                i = Math["max"](Math["min"](20, R["value"]), 1),
-                localStorage["setItem"]("customfont", o),
-                localStorage["setItem"]("customfontsize", i),
-                o = '"' + (o || "monospace") + '"') : D.classList["add"]("hidden"),
-                Q = Math["floor"](i * v) + "px " + o + ", monospace, Special",
-                localStorage["setItem"]("font", G),
-                document.getElementById("fontselect")["value"] = G,
-                ge = !0
+            var o = selectedFont
+                , i = fontProperties[selectedFont];
+            "Custom" == selectedFont ? (D.classList.remove("hidden"),
+                o = O.value,
+                i = Math.max(Math.min(20, R.value), 1),
+                localStorage.setItem("customfont", o),
+                localStorage.setItem("customfontsize", i),
+                o = '"' + (o || "monospace") + '"') : D.classList.add("hidden"),
+                Q = Math.floor(i * v) + "px " + o + ", monospace, Special",
+                localStorage.setItem("font", selectedFont),
+                document.getElementById("fontselect").value = selectedFont,
+                ge = true
         }
         function mt() {
             var e = n;
-            return Math["ceil"](.1 * Math["round"](Et * v / .1))
+            return Math.ceil(.1 * Math.round(Et * v / .1))
         }
         function ht() {
             return mt()
         }
         function yt(e) {
             var t = n;
-            canvasGetContext["fillRect"](Math["round"](10 * e[0] * v), Math.round(20 * e[1] * v), mt(), ht())
+            canvasGetContext.fillRect(Math.round(10 * e[0] * v), Math.round(20 * e[1] * v), mt(), ht())
         }
         function gt(e) {
             var t = n;
-            e.font = Math["round"](11 * v) + "px " + G + ", monospace"
+            e.font = Math.round(11 * v) + "px " + selectedFont + ", monospace"
         }
         function pt(e, t) {
             var r = n
-                , a = we["get"](e);
+                , a = we.get(e);
             if (a.empty) {
                 canvasGetContext.fillStyle = a.protected ? A : C,
                     yt(t);
             } else {
-                var o = a["img"];
-                isBrowserFirefox && (o = a["bmp"]),
-                    null != o ? (canvasGetContext["drawImage"](o, Math["round"](10 * t[0] * v), Math.round(20 * t[1] * v), mt(), ht()),
-                        a["dpr"] == v && a.font == Q || St(e, !1)) : (canvasGetContext.fillStyle = T,
+                var o = a.img;
+                isBrowserFirefox && (o = a.bmp),
+                    null != o ? (canvasGetContext.drawImage(o, Math.round(10 * t[0] * v), Math.round(20 * t[1] * v), mt(), ht()),
+                        a.dpr == v && a.font == Q || St(e, false)) : (canvasGetContext.fillStyle = T,
                             yt(t),
-                            St(e, !1))
+                            St(e, false))
             }
             if (!a.protected && a.textProtected) {
                 var cellW = mt() / 20
@@ -555,130 +555,130 @@
             var t = n;
             return e = e || 0,
             {
-                minx: -qe["offset"].x / v / 10 - e,
+                minx: -qe.offset.x / v / 10 - e,
                 maxx: -qe.offset.x / v / 10 + window.innerWidth / at / 10 + e - 20,
-                miny: -qe["offset"].y / v / 20 - e,
-                maxy: -qe["offset"].y / v / 20 + window["innerHeight"] / at / 20 + e - 10
+                miny: -qe.offset.y / v / 20 - e,
+                maxy: -qe.offset.y / v / 20 + window.innerHeight / at / 20 + e - 10
             }
         }
         function xt(e, t) {
             var r = n;
-            return e[0] < t.minx || e[0] > t["maxx"] || e[1] < t.miny || e[1] > t["maxy"]
+            return e[0] < t.minx || e[0] > t.maxx || e[1] < t.miny || e[1] > t.maxy
         }
 
 
         function wt(e) {
             var t = n;
-            return we["get"](e)["coords"] || e["split"](",")
+            return we.get(e).coords || e.split(",")
         }
         function Mt(e, t, r, a) {
             var o = n;
             if ("" != e) {
-                canvasGetContext["fillStyle"] = "rgba(34, 34, 34, 0.4)";
-                var i = canvasGetContext["measureText"](e);
+                canvasGetContext.fillStyle = "rgba(34, 34, 34, 0.4)";
+                var i = canvasGetContext.measureText(e);
                 canvasGetContext.beginPath(),
-                    canvasGetContext.roundRect(Math["round"](t - i.width / 2), Math["round"](r + 21 * v), Math["round"](i["width"] + 10 * v), Math["round"](14 * v), [a]),
-                    canvasGetContext["fill"](),
-                    canvasGetContext["fillStyle"] = "#FFFFFF",
-                    canvasGetContext.fillText(e, Math.round(t - i["width"] / 2 + 5 * v), Math["round"](r + 31 * v))
+                    canvasGetContext.roundRect(Math.round(t - i.width / 2), Math.round(r + 21 * v), Math.round(i.width + 10 * v), Math.round(14 * v), [a]),
+                    canvasGetContext.fill(),
+                    canvasGetContext.fillStyle = "#FFFFFF",
+                    canvasGetContext.fillText(e, Math.round(t - i.width / 2 + 5 * v), Math.round(r + 31 * v))
             }
         }
         function kt(e, t, r, a, i = 0) {
             var o = n;
             if (i > 0) {
-                canvasGetContext["roundRect"](Math["round"](e), Math["round"](t), Math["round"](r), Math["round"](a), i)
+                canvasGetContext.roundRect(Math.round(e), Math.round(t), Math.round(r), Math.round(a), i)
             } else {
-                canvasGetContext["fillRect"](Math["round"](e), Math["round"](t), Math["round"](r), Math["round"](a))
+                canvasGetContext.fillRect(Math.round(e), Math.round(t), Math.round(r), Math.round(a))
             }
         }
 
         !function () {
             var e = n;
-            canvasGetContext["font"] = "10px Special",
-                canvasGetContext["fillText"]("abc", 0, 10),
-                canvasGetContext["font"] = Q,
-                canvasGetContext["fillText"]("abc", 0, 10);
-            for (var t = 0; t < Object.keys(fontProperties)["length"]; t++)
+            canvasGetContext.font = "10px Special",
+                canvasGetContext.fillText("abc", 0, 10),
+                canvasGetContext.font = Q,
+                canvasGetContext.fillText("abc", 0, 10);
+            for (var t = 0; t < Object.keys(fontProperties).length; t++)
                 canvasGetContext.font = "10px " + Object.keys(fontProperties)[t],
-                    canvasGetContext["fillText"]("abc", 0, 10),
-                    canvasGetContext["font"] = "bold 10px " + Object["keys"](fontProperties)[t],
                     canvasGetContext.fillText("abc", 0, 10),
-                    canvasGetContext.font = "italic 10px " + Object["keys"](fontProperties)[t],
-                    canvasGetContext["fillText"]("abc", 0, 10),
-                    canvasGetContext.font = "italic bold 10px " + Object["keys"](fontProperties)[t],
+                    canvasGetContext.font = "bold 10px " + Object.keys(fontProperties)[t],
+                    canvasGetContext.fillText("abc", 0, 10),
+                    canvasGetContext.font = "italic 10px " + Object.keys(fontProperties)[t],
+                    canvasGetContext.fillText("abc", 0, 10),
+                    canvasGetContext.font = "italic bold 10px " + Object.keys(fontProperties)[t],
                     canvasGetContext.fillText("abc", 0, 10)
         }();
         const Et = 200;
         function St(e, t) {
             var r = n;
-            Ee["has"](e) ? 0 == Ee["get"](e) && t && Ee["set"](e, t) : (ke["push"](e),
-                Ee["set"](e, t))
+            Ee.has(e) ? 0 == Ee.get(e) && t && Ee.set(e, t) : (ke.push(e),
+                Ee.set(e, t))
         }
         function It(e, t) {
             var r = n;
-            Ee["has"](e) ? 0 == Ee["get"](e) && t && Ee["set"](e, t) : (ke["unshift"](e),
-                Ee["set"](e, t))
+            Ee.has(e) ? 0 == Ee.get(e) && t && Ee.set(e, t) : (ke.unshift(e),
+                Ee.set(e, t))
         }
 
         var Ct, At, Tt;
         try {
-            Ct = RegExp("\\p{Extended_Pictographic}", "u")
+            Ct = /\p{Extended_Pictographic}/u
         } catch (e) {
-            Ct = !1
+            Ct = false
         }
         try {
-            At = RegExp("\t", "gm")
+            At = /	/gm
         } catch (e) {
-            At = !1
+            At = false
         }
         try {
-            Tt = RegExp("\r", "gm")
+            Tt = /\r/gm
         } catch (e) {
-            Tt = !1
+            Tt = false
         }
         var Bt = RegExp("^[a-zA-Z0-9_-]{1,24}$");
-        function Ft(e) {
-            return 65 + Math["floor"](26 * e)
+        function getCapitalLetter(e) {
+            return 65 + Math.floor(26 * e)
         }
-        function Pt(e) {
+        function getDigit(e) {
             return 48 + Math.floor(10 * e)
         }
-        function Lt(e) {
-            return "AEIOU"[Math["floor"](5 * e)].codePointAt()
+        function getVowel(e) {
+            return "AEIOU"[Math.floor(5 * e)].codePointAt()
         }
-        function Ot(e) {
+        function getConsonant(e) {
             var t = n;
-            return "BCDFGHJKLMNPQRSTVWXYZ"[Math["floor"](21 * e)]["codePointAt"]()
+            return "BCDFGHJKLMNPQRSTVWXYZ"[Math.floor(21 * e)].codePointAt()
         }
-        function Rt(e) {
+        function generateRandomChar(e) {
             const t = Math.random();
             switch (e - 58112) {
                 case 0:
-                    return t < .41 ? Ft(t) + 32 : t < .83 ? Ft(t) : Pt(t);
+                    return t < .41 ? getCapitalLetter(t) + 32 : t < .83 ? getCapitalLetter(t) : getDigit(t);
                 case 1:
-                    return t < .72 ? Ft(t) + 32 : Pt(t);
+                    return t < .72 ? getCapitalLetter(t) + 32 : getDigit(t);
                 case 2:
-                    return t < .72 ? Ft(t) : Pt(t);
+                    return t < .72 ? getCapitalLetter(t) : getDigit(t);
                 case 3:
-                    return t < .5 ? Ft(t) + 32 : Ft(t);
+                    return t < .5 ? getCapitalLetter(t) + 32 : getCapitalLetter(t);
                 case 4:
-                    return Ft(t) + 32;
+                    return getCapitalLetter(t) + 32;
                 case 5:
-                    return Ft(t);
+                    return getCapitalLetter(t);
                 case 6:
-                    return Pt(t);
+                    return getDigit(t);
                 case 7:
-                    return t < .5 ? Lt(t) + 32 : Lt(t);
+                    return t < .5 ? getVowel(t) + 32 : getVowel(t);
                 case 8:
-                    return Lt(t) + 32;
+                    return getVowel(t) + 32;
                 case 9:
-                    return Lt(t);
+                    return getVowel(t);
                 case 10:
-                    return t < .5 ? Ot(t) + 32 : Ot(t);
+                    return t < .5 ? getConsonant(t) + 32 : getConsonant(t);
                 case 11:
-                    return Ot(t) + 32;
+                    return getConsonant(t) + 32;
                 case 12:
-                    return Ot(t)
+                    return getConsonant(t)
             }
             return 97
         }
@@ -687,73 +687,73 @@
         }
         function Nt(e) {
             var t = n;
-            return Math["round"](0 * e) + "px Courier"
+            return Math.round(0 * e) + "px Courier"
         }
         function jt(e, t, r, a, o) {
             var i = n;
-            e["fillText"](t, Math.floor(r), Math["floor"](a + 15 * o))
+            e.fillText(t, Math.floor(r), Math.floor(a + 15 * o))
         }
         function Ut(e, t, r, a, o, i, c) {
             var l = n;
-            e["drawChar"](r, t, Math["floor"](a), Math["floor"](o + (10 * i - c / 2)))
+            e.drawChar(r, t, Math.floor(a), Math.floor(o + (10 * i - c / 2)))
         }
         function Wt(e) {
             var t = n;
-            e["font"] = "bold " + e.font
+            e.font = "bold " + e.font
         }
         function Ht(e) {
             var t = n;
-            e["font"] = "italic " + e.font
+            e.font = "italic " + e.font
         }
         function Kt(e, t) {
             var r = n;
-            tt["disablecolour"]["checked"] && (t = 0);
+            clientOptions.disablecolour.checked && (t = 0);
 
             if (Array.isArray(t)) {
 
                 var rgb888 = t;
-                e["fillStyle"] = "rgb(" + rgb888[0] + "," + rgb888[1] + "," + rgb888[2] + ")";
+                e.fillStyle = "rgb(" + rgb888[0] + "," + rgb888[1] + "," + rgb888[2] + ")";
             } else {
 
-                e["fillStyle"] = xe && 0 == t ? "#FFFFFF" : colorHexs[t];
+                e.fillStyle = xe && 0 == t ? "#FFFFFF" : colorHexs[t];
 
             }
         }
         function Xt(e, t) {
             var r = n
-                , a = we["get"](e);
-            if (null != a && null != a["txt"]) {
+                , a = we.get(e);
+            if (null != a && null != a.txt) {
                 var o = zt(e);
-                if (a["empty"] = o,
+                if (a.empty = o,
                     o) {
                     qt(e);
                     var i = wt(e)
                         , c = i[0] + 20 + "," + i[1];
-                    if (we["has"](c)) {
+                    if (we.has(c)) {
                         var l = we.get(c);
-                        null != l["txt"] && (zt(c) ? (l["empty"] = !0,
-                            qt(c)) : t && It(c, !1))
+                        null != l.txt && (zt(c) ? (l.empty = true,
+                            qt(c)) : t && It(c, false))
                     }
                 } else {
                     var u = mt()
                         , d = ht();
-                    null == a["img"] && (null != window["OffscreenCanvas"] ? a["img"] = new OffscreenCanvas(u, d) : a["img"] = document["createElement"]("canvas")),
-                        a.img["width"] = u,
-                        a.img["height"] = d,
+                    null == a.img && (null != window.OffscreenCanvas ? a.img = new OffscreenCanvas(u, d) : a.img = document.createElement("canvas")),
+                        a.img.width = u,
+                        a.img.height = d,
                         function (e, t, n, a, o) {
                             var i = r
-                                , c = we["get"](a);
-                            e["imageSmoothingEnabled"] = !1,
+                                , c = we.get(a);
+                            e.imageSmoothingEnabled = false,
                                 e.textBaseline = "alphabetic",
-                                e["textAlign"] = "left",
+                                e.textAlign = "left",
                                 e.fillStyle = c.protected ? A : C,
-                                e["fillRect"](0, 0, t, n);
-                            var l, u, s = {}, d = !1, f = wt(a), v = f[0] - 20 + "," + f[1];
-                            if (we["has"](v)) {
+                                e.fillRect(0, 0, t, n);
+                            var l, u, s = {}, d = false, f = wt(a), v = f[0] - 20 + "," + f[1];
+                            if (we.has(v)) {
                                 var m = we.get(v);
-                                null == m.edge || !m.protected && c["protected"] || (l = m["edge"])
+                                null == m.edge || !m.protected && c.protected || (l = m.edge)
                             }
-                            for (var h, y = t / Et, g = specialFonts["get"](G), p = 16 * ft(), b = 0; b < 10; b++)
+                            for (var h, y = t / Et, g = specialFonts.get(selectedFont), p = 16 * ft(), b = 0; b < 10; b++)
                                 for (var x = -2; x < 20; x++) {
                                     var w = t / 20 * x
                                         , M = n / 10 * b;
@@ -763,9 +763,9 @@
                                         if (null != l[k]) {
                                             var E = l[k];
                                             Kt(e, E[2]),
-                                                null != g && g["charMap"]["has"](E[0]["codePointAt"]()) ? (g["bold"] = E[3],
-                                                    g["italic"] = E[4],
-                                                    Ut(g, e, E[0], w, M, y, p)) : (e["font"] = E[1] ? Nt(y) : Q,
+                                                null != g && g.charMap.has(E[0].codePointAt()) ? (g.bold = E[3],
+                                                    g.italic = E[4],
+                                                    Ut(g, e, E[0], w, M, y, p)) : (e.font = E[1] ? Nt(y) : Q,
 
                                                         E[3] && Wt(e),
                                                         E[4] && Ht(e),
@@ -773,310 +773,310 @@
                                         }
                                     }
                                     if (!(x < 0)) {
-                                        var S = c["txt"][x + 20 * b]
+                                        var S = c.txt[x + 20 * b]
                                             , clrVal = c.clr[x + 20 * b]
                                             , I = Array.isArray(clrVal) ? [clrVal, clrVal[3] || 0] : Zr(clrVal)
                                             , T = I[1];
 
-                                        var cellProtected = c["textProtected"] && c["textProtected"][x + 20 * b] === "1";
+                                        var cellProtected = c.textProtected && c.textProtected[x + 20 * b] === "1";
                                         if (cellProtected && !c.protected) {
                                             e.fillStyle = A;
                                             e.fillRect(Math.floor(w), Math.floor(M), Math.ceil(t / 20), Math.ceil(n / 10));
                                         }
                                         if (!Qn(S, T)) {
-                                            var B = S["codePointAt"]()
+                                            var B = S.codePointAt()
                                                 , F = I[0];
                                             Kt(e, F),
-                                                e["font"] = Q;
-                                            var P = !1;
-                                            8 & T && (P = !0,
+                                                e.font = Q;
+                                            var P = false;
+                                            8 & T && (P = true,
                                                 Wt(e));
-                                            var L = !1;
-                                            if (4 & T && (L = !0,
+                                            var L = false;
+                                            if (4 & T && (L = true,
                                                 Ht(e)),
-                                                (h = B) >= 58112 && h <= 58124 && (B = Rt(B),
-                                                    S = String["fromCodePoint"](B)),
+                                                (h = B) >= 58112 && h <= 58124 && (B = generateRandomChar(B),
+                                                    S = String.fromCodePoint(B)),
                                                 (u = B) >= 9472 && u <= 9632 && !(u >= 9476 && u <= 9483) && !(u >= 9548 && u <= 9551) || u >= 9698 && u <= 9701 || qr(B))
-                                                e["font"] = Math["round"](20 * y) + "px Special",
-                                                    e["fillText"](S, Math["round"](w), Math["floor"](M + 15 * y));
+                                                e.font = Math.round(20 * y) + "px Special",
+                                                    e.fillText(S, Math.round(w), Math.floor(M + 15 * y));
                                             else {
-                                                var O = !1;
-                                                Ct && Ct["test"](S) && (O = !0,
-                                                    e["font"] = Nt(y)),
-                                                    null != g && g["charMap"]["has"](B) ? (g["bold"] = P,
-                                                        g["italic"] = L,
+                                                var O = false;
+                                                Ct && Ct.test(S) && (O = true,
+                                                    e.font = Nt(y)),
+                                                    null != g && g.charMap.has(B) ? (g.bold = P,
+                                                        g.italic = L,
                                                         Ut(g, e, S, w, M, y, p)) : jt(e, S, w, M, y),
                                                     x >= 18 && (s[x - 20 + 20 * b] = [S, O, F, P, L],
                                                         d = !0)
                                             }
 
 
-                                            2 & T && e["fillRect"](Math["floor"](w - .5 * y), Math["round"](M + 17.5 * y), Math["ceil"](11 * y), Math["ceil"](y)),
-                                                1 & T && e.fillRect(Math["floor"](w - .5 * y), Math["floor"](M + 9 * y), Math.ceil(11 * y), Math["ceil"](y));
+                                            2 & T && e.fillRect(Math.floor(w - .5 * y), Math.round(M + 17.5 * y), Math.ceil(11 * y), Math.ceil(y)),
+                                                1 & T && e.fillRect(Math.floor(w - .5 * y), Math.floor(M + 9 * y), Math.ceil(11 * y), Math.ceil(y));
 
                                         }
                                     }
                                 }
-                            if (c["edge"] = d ? s : void 0,
+                            if (c.edge = d ? s : void 0,
                                 o) {
                                 var R = f[0] + 20 + "," + f[1];
-                                we.has(R) && null != we["get"](R)["txt"] && It(R, !1)
+                                we.has(R) && null != we.get(R).txt && It(R, !1)
                             }
-                        }(a["img"]["getContext"]("2d", {
-                            alpha: !1
+                        }(a.img.getContext("2d", {
+                            alpha: false
                         }), u, d, e, t),
-                        a["dpr"] = v,
-                        a["font"] = Q,
-                        isBrowserFirefox && createImageBitmap(a["img"])["then"]((function (t) {
+                        a.dpr = v,
+                        a.font = Q,
+                        isBrowserFirefox && createImageBitmap(a.img).then((function (t) {
                             var n = r;
-                            if (we["has"](e)) {
-                                var a = we["get"](e);
-                                null != a.bmp && a["bmp"]["close"](),
-                                    a["bmp"] = t,
-                                    ge = !0
+                            if (we.has(e)) {
+                                var a = we.get(e);
+                                null != a.bmp && a.bmp.close(),
+                                    a.bmp = t,
+                                    ge = true
                             }
                         }
                         )),
-                        a["empty"] = !1
+                        a.empty = false
                 }
             }
         }
         function zt(e) {
-            for (var t = n, r = we["get"](e), a = !0, o = 0; o < 200; o++)
-                if (!Qn(r.txt[o], Zr(r["clr"][o])[1])) {
-                    a = !1;
+            for (var t = n, r = we.get(e), a = !0, o = 0; o < 200; o++)
+                if (!Qn(r.txt[o], Zr(r.clr[o])[1])) {
+                    a = false;
                     break
                 }
             if (a && r.textProtected) {
                 for (o = 0; o < 200; o++)
                     if (r.textProtected[o] === "1") {
-                        a = !1;
+                        a = false;
                         break
                     }
             }
-            if (a && (r["edge"] = void 0),
+            if (a && (r.edge = void 0),
                 a) {
                 var i = wt(e)
                     , c = i[0] - 20 + "," + i[1];
-                we["has"](c) && null != we["get"](c).edge && (a = !1)
+                we.has(c) && null != we.get(c).edge && (a = false)
             }
             return a
         }
         function qt(e) {
             var t = n;
             if (we.has(e)) {
-                var r = we["get"](e);
-                null != r["img"] && delete r.img
+                var r = we.get(e);
+                null != r.img && delete r.img
             }
         }
         var Yt = null;
         function Jt(e, t) {
             var r = n;
-            return null != Yt && Yt["minx"] <= e && e < Yt.maxx && Yt["miny"] <= t && t < Yt["maxy"]
+            return null != Yt && Yt.minx <= e && e < Yt.maxx && Yt.miny <= t && t < Yt.maxy
         }
         function Vt(e, t) {
             return e[0] === t[0] ? 0 : e[0] < t[0] ? -1 : 1
         }
         function Zt(e) {
-            for (var t = n, r = innerWidth / innerHeight, a = [], o = qe["coords"].x, i = 2 * qe.coords.y * r, c = 0; c < e.length; c += 2) {
+            for (var t = n, r = innerWidth / innerHeight, a = [], o = qe.coords.x, i = 2 * qe.coords.y * r, c = 0; c < e.length; c += 2) {
                 var l = e[c] + 10
                     , u = 2 * (e[c + 1] + 5) * r
-                    , s = Math["sqrt"](Jr(o - l) + Jr(i - u));
-                a["push"]([s, c])
+                    , s = Math.sqrt(Jr(o - l) + Jr(i - u));
+                a.push([s, c])
             }
-            return a["sort"](Vt),
+            return a.sort(Vt),
                 a
         }
 
 
-        var $t, Gt = !1;
+        var $t, Gt = false;
         function Qt() {
             var e = n;
             if (!Gt) {
-                for (var t = -120 - 20 * Math["floor"](qe["offset"].x / (200 * v)), r = -60 - 10 * Math["floor"](qe["offset"].y / (200 * v)), o = r, i = Math.floor(window.innerWidth / (10 * at) - qe["offset"].x / (10 * v) + 120), c = Math.floor(window["innerHeight"] / (20 * at) - qe["offset"].y / (20 * v) + 60), l = []; t < i;) {
+                for (var t = -120 - 20 * Math.floor(qe.offset.x / (200 * v)), r = -60 - 10 * Math.floor(qe.offset.y / (200 * v)), o = r, i = Math.floor(window.innerWidth / (10 * at) - qe.offset.x / (10 * v) + 120), c = Math.floor(window.innerHeight / (20 * at) - qe.offset.y / (20 * v) + 60), l = []; t < i;) {
                     for (; r < c;) {
                         var u = t + "," + r;
-                        !we["has"](u) && Jt(t, r) && l["push"](t, r),
+                        !we.has(u) && Jt(t, r) && l.push(t, r),
                             r += 10
                     }
                     r = o,
                         t += 20
                 }
-                if (0 != l["length"]) {
+                if (0 != l.length) {
                     var s = Zt(l);
                     $t = [];
-                    for (var d = 0, f = 0; f < s["length"]; f++) {
+                    for (var d = 0, f = 0; f < s.length; f++) {
                         var m = s[f][1]
                             , h = l[m]
                             , y = l[m + 1];
                         if (u = h + "," + y,
-                            $t["push"](h / 20, y / 10),
-                            we["set"](u, {}),
+                            $t.push(h / 20, y / 10),
+                            we.set(u, {}),
 
                             parseInt(renderChunkAmount || (rot.value || 100)) == ++d)
                             break
                     }
-                    d > 0 && (a["send"](Or({
+                    d > 0 && (a.send(Or({
                         r: $t
                     })),
-                        Gt = !0,
-                        ge = !0)
+                        Gt = true,
+                        ge = true)
                 }
             }
         }
         let diejx = false
         function _t() {
             var e, t = n, r = "pathname";
-            for (const n of we["keys"]()) {
+            for (const n of we.keys()) {
                 var a = wt(n);
                 !xt(a, r) || (e = a)[0] > Ce.x - 20 && e[0] < Ce.x + 20 && e[1] > Ce.y - 10 && e[1] < Ce.y + 10 || we.delete(n)
             }
         }
         function en() {
             var e = n;
-            "ontouchstart" in window || textArea["focus"]()
+            "ontouchstart" in window || textArea.focus()
         }
-        var tn = !1;
+        var tn = false;
         function nn(e) {
             var t = n;
             if (e.isTrusted) {
-                var r = 20 * Math["floor"](Ce.x / 20)
-                    , o = 10 * Math["floor"](Ce.y / 10)
+                var r = 20 * Math.floor(Ce.x / 20)
+                    , o = 10 * Math.floor(Ce.y / 10)
                     , c = r + "," + o;
-                we["has"](c) && (Ve && a["send"](Or({
+                we.has(c) && (Ve && a.send(Or({
                     p: c
                 })),
-                    Ze && (tn ? tn = !1 : a["send"](Or({
+                    Ze && (tn ? tn = false : a.send(Or({
                         c: [r, o, r + 19, o + 9]
                     }))),
-                    textArea["focus"]())
+                    textArea.focus())
             }
         }
         function rn(e) {
             var t = n;
-            return e.target["parentElement"]["parentElement"].dataset.id
+            return e.target.parentElement.parentElement.dataset.id
         }
         function an(e) {
-            m && a["send"](Or({
+            m && a.send(Or({
                 i: rn(e)
             }))
         }
         function on(e) {
             var t = n;
-            m && a["send"](Or({
-                a: [rn(e), e["target"]["checked"]]
+            m && a.send(Or({
+                a: [rn(e), e.target.checked]
             }))
         }
         function cn(e) {
-            m && a["send"](Or({
+            m && a.send(Or({
                 aa: rn(e)
             }))
         }
         function ln(e) {
             var t = n
                 , r = rn(e)
-                , a = Pe["get"](r);
-            null != a && m && (a["highlighted"] = e["target"]["checked"],
-                ge = !0)
+                , a = Pe.get(r);
+            null != a && m && (a.highlighted = e.target.checked,
+                ge = true)
         }
         function un(e) {
             var t = n
-                , r = e["target"]["parentElement"]["dataset"].id
+                , r = e.target.parentElement.dataset.id
                 , a = Pe.get(r);
             null != a && m && ir((a.n || r) + ": (" + a.l[0] + ", " + -a.l[1] + ")", 3e3)
         }
         function sn(e) {
             var t = n
-                , r = e["target"].parentElement["dataset"].id
-                , a = Pe["get"](r);
+                , r = e.target.parentElement.dataset.id
+                , a = Pe.get(r);
             null != a && m && Zn(a.l[0], a.l[1])
         }
         function dn(e) {
             var t = n
-                , r = document["createElement"]("tr")
-                , a = document["createElement"]("td")
-                , o = document["createElement"]("td")
-                , i = document["createElement"]("td")
+                , r = document.createElement("tr")
+                , a = document.createElement("td")
+                , o = document.createElement("td")
+                , i = document.createElement("td")
                 , c = document.createElement("input")
                 , l = document.createElement("input")
                 , u = document.createElement("button")
-                , s = document["createElement"]("button");
-            l["type"] = "checkbox",
-                l["checked"] = !1,
-                u["innerText"] = "2",
+                , s = document.createElement("button");
+            l.type = "checkbox",
+                l.checked = false,
+                u.innerText = "2",
                 s.innerText = "3",
-                l["addEventListener"]("click", on),
-                u["addEventListener"]("click", cn),
-                s["addEventListener"]("click", an),
+                l.addEventListener("click", on),
+                u.addEventListener("click", cn),
+                s.addEventListener("click", an),
                 c.addEventListener("click", ln);
-            var d = Pe["get"](e);
-            c["type"] = "checkbox",
-                c["checked"] = 1 == d["highlighted"],
+            var d = Pe.get(e);
+            c.type = "checkbox",
+                c.checked = 1 == d.highlighted,
                 a.appendChild(c);
             var f = d.c;
-            o["style"].backgroundColor = "#FFFFFF" == colorHexs[f] ? "#222222" : colorHexs[f],
-                o.style["fontSize"] = "10px",
-                o["style"].userSelect = "all",
-                o["innerText"] = d.n || e,
+            o.style.backgroundColor = "#FFFFFF" == colorHexs[f] ? "#222222" : colorHexs[f],
+                o.style.fontSize = "10px",
+                o.style.userSelect = "all",
+                o.innerText = d.n || e,
                 o.addEventListener("click", un),
-                o["addEventListener"]("dblclick", sn),
+                o.addEventListener("dblclick", sn),
                 i.appendChild(l),
-                i["appendChild"](u),
-                i["appendChild"](s),
-                r["dataset"].id = e,
-                r["appendChild"](a),
-                r["appendChild"](o),
-                r["appendChild"](i),
-                document["getElementById"]("admintable")["appendChild"](r)
+                i.appendChild(u),
+                i.appendChild(s),
+                r.dataset.id = e,
+                r.appendChild(a),
+                r.appendChild(o),
+                r.appendChild(i),
+                document.getElementById("admintable").appendChild(r)
         }
         function fn(e) {
-            e["preventDefault"]()
+            e.preventDefault()
         }
         function vn(e) {
             for (var t = n, r = ["loginbtn", "registerbtn", "loginname", "loginpass", "username", "password", "password2", "registerbtn", "chngusername", "chngeusrpass", "submitnamechange", "oldpass", "newpass", "newpass2", "submitpasschange", "deletepassword", "deleteaccount"], a = 0; a < r["length"]; a++)
                 document.getElementById(r[a]).disabled = e;
             if (!e) {
                 var o = ["loginname", "loginpass", "username", "password", "password2", "chngusername", "chngeusrpass", "oldpass", "newpass", "newpass2", "deletepassword"];
-                for (a = 0; a < o["length"]; a++)
-                    document["getElementById"](o[a])["value"] = ""
+                for (a = 0; a < o.length; a++)
+                    document.getElementById(o[a]).value = ""
             }
         }
-        canvasElement["addEventListener"]("pointerdown", (function (e) {
+        canvasElement.addEventListener("pointerdown", (function (e) {
             var t = n;
             e.preventDefault(),
-                e["isTrusted"] && (ie(!1),
-                    null != Dn && 1 != e.pointerId || Nn || (Dn = e["pointerId"],
+                e.isTrusted && (ie(false),
+                    null != Dn && 1 != e.pointerId || Nn || (Dn = e.pointerId,
                         Te = Wn(e),
-                        Je ? ($e["start"] = Te,
-                            $e["end"] = $e.start) : (Ye = !0,
-                                qe["start"].x = e["clientX"] * v,
-                                qe["start"].y = e["clientY"] * v,
+                        Je ? ($e.start = Te,
+                            $e.end = $e.start) : (Ye = true,
+                                qe.start.x = e.clientX * v,
+                                qe.start.y = e.clientY * v,
                                 Ge = [],
                                 Qe = null,
                                 Rn(e),
-                                canvasElement.style["cursor"] = "move",
+                                canvasElement.style.cursor = "move",
                                 function (e) {
                                     var n = t;
                                     if (e["pointerId"] == Dn) {
                                         nr();
                                         var r = Wn(e);
-                                        if (Ce.x == r.x && Ce.y == r.y || (Le = !0),
+                                        if (Ce.x == r.x && Ce.y == r.y || (Le = true),
                                             Ce.x = r.x,
                                             Ce.y = r.y,
                                             Ce.start = Ce.x,
-                                            e["altKey"]) {
+                                            e.altKey) {
                                             var a = rr();
                                             a && (Qn(a[0], Zr(a[1])[1]) ? mr(0) : mr(Zr(a[1])[0]))
                                         }
                                         Hn()
                                     }
                                 }(e)),
-                        ge = !0))
+                        ge = true))
         }
         )),
-            canvasElement["addEventListener"]("contextmenu", (function (e) {
-                e["preventDefault"](),
-                    ie(!0)
+            canvasElement.addEventListener("contextmenu", (function (e) {
+                e.preventDefault(),
+                    ie(true)
             }
             )),
             document.addEventListener("pointermove", (function (e) {
@@ -1106,7 +1106,7 @@
                             , a = e["clientY"] * devicePixelRatio - qe["start"].y / at;
                         qe["offset"].x = Math["round"](ze["offset"].x + r),
                             qe["offset"].y = Math["round"](ze["offset"].y + a),
-                            tt["smoothpanning"]["checked"] && Rn(e)
+                            clientOptions["smoothpanning"]["checked"] && Rn(e)
                     }
                     ge = !0
                 }
@@ -1118,7 +1118,7 @@
             var t = n;
             if (e["isTrusted"] && (ie(!1), !Ye)) {
                 if (e["preventDefault"](), e["ctrlKey"]) {
-                    it(rt - e["deltaY"] / 1e3, !0);
+                    setZoom(rt - e["deltaY"] / 1e3, !0);
                 }
                 else if (e["altKey"]) {
                     e.preventDefault();
@@ -1191,7 +1191,7 @@
                     qe["start"].x = null,
                     qe["start"].y = null,
                     Mn(qe["offset"].x, qe.offset.y),
-                    tt.smoothpanning["checked"]) {
+                    clientOptions.smoothpanning["checked"]) {
                     Rn(e);
                     var w = Ge["length"] - 1;
                     ((Qe = {
@@ -1368,12 +1368,12 @@
                         case 107:
                         case 187:
                             e["ctrlKey"] && (e["preventDefault"](),
-                                it(rt + .1, !0));
+                                setZoom(rt + .1, !0));
                             break;
                         case 109:
                         case 189:
                             e["ctrlKey"] && (e.preventDefault(),
-                                it(rt - .1, !0))
+                                setZoom(rt - .1, !0))
                     }
             }
             )),
@@ -1400,11 +1400,11 @@
                 }
             }
             )),
-            Ke["addEventListener"]("click", (function () {
+            nearbyElement["addEventListener"]("click", (function () {
                 ir(We + " online", 3e3)
             }
             )),
-            He.addEventListener("click", (function () {
+            coordsElement.addEventListener("click", (function () {
                 var e = n;
                 history["pushState"]({}, null, o),
                     ar(location.protocol + "//" + location["host"] + o + "?x=" + Ce.x + "&y=" + -Ce.y),
@@ -1474,11 +1474,11 @@
             }
             )),
             O.addEventListener("input", (function () {
-                vt(G)
+                vt(selectedFont)
             }
             )),
             R["addEventListener"]("input", (function () {
-                vt(G)
+                vt(selectedFont)
             }
             )),
             document["getElementById"]("goto")["addEventListener"]("click", dr),
@@ -1486,76 +1486,76 @@
                 var t = n
                     , r = JSON["stringify"](e["target"]["checked"]);
                 switch (e.target) {
-                    case tt["showothercurs"]:
+                    case clientOptions["showothercurs"]:
                         localStorage["setItem"]("showothercurs", r),
                             ge = !0;
                         break;
-                    case tt["shownametags"]:
+                    case clientOptions["shownametags"]:
                         localStorage.setItem("shownametags", r),
                             ge = !0;
                         break;
-                    case tt["showchat"]:
+                    case clientOptions["showchat"]:
                         localStorage["setItem"]("showchat", r),
                             e["target"]["checked"] ? null : hn.classList["add"]("hidden");
                         break;
-                    case tt.disablecolour:
+                    case clientOptions.disablecolour:
                         localStorage.setItem("disablecolour", r),
-                            nt.disableColour["checked"] || hr(tt["disablecolour"].checked),
+                            nt.disableColour["checked"] || hr(clientOptions["disablecolour"].checked),
                             ge = !0,
                             Sn();
                         break;
-                    case tt["smoothpanning"]:
+                    case clientOptions["smoothpanning"]:
                         localStorage["setItem"]("smoothpanning", r),
                             ge = !0;
                         break;
-                    case tt["smoothcursors"]:
+                    case clientOptions["smoothcursors"]:
                         localStorage["setItem"]("smoothcursors", r);
                         break;
-                    case tt["copycolour"]:
+                    case clientOptions["copycolour"]:
                         localStorage["setItem"]("copycolour", r);
                         break;
-                    case tt["copydecorations"]:
+                    case clientOptions["copydecorations"]:
                         localStorage["setItem"]("copydecorations", r);
                         break;
-                    case tt["rainbow"]:
+                    case clientOptions["rainbow"]:
                         localStorage["setItem"]("rainbow", r);
                         break;
-                    case tt.anonymous:
+                    case clientOptions.anonymous:
                         localStorage["setItem"]("anonymous", r),
                             Re = !0,
                             ge = !0;
                         break;
-                    case tt.anonIdShow:
+                    case clientOptions.anonIdShow:
                         ge = true;
                         break;
-                    case tt.roundCursors:
+                    case clientOptions.roundCursors:
                         ge = true,
                             localStorage["setItem"]("roundCursors", r);
                         break;
-                    case tt.displayNames:
+                    case clientOptions.displayNames:
                         ge = true,
                             localStorage["setItem"]("displayNames", r);
                         break;
-                    case tt.fadeInMsg:
+                    case clientOptions.fadeInMsg:
                         localStorage["setItem"]("fadeInMsg", r);
                         break;
                     /* case tt.doNotChangeTheme:
                          localStorage["setItem"]("doNotChangeTheme", r);
                          break;*/
-                    case lt:
+                    case registerLinkElement:
                         document["getElementById"]("login")["style"]["display"] = "none",
                             document["getElementById"]("register").style.display = "block";
                         break;
-                    case ut:
+                    case loginLinkElement:
                         document["getElementById"]("login")["style"].display = "block",
                             document["getElementById"]("register")["style"]["display"] = "none";
                         break;
-                    case st:
+                    case logoutLinkElement:
                         dt(!0)
                 }
             }
             )),
-            st["addEventListener"]("click", dt)
+            logoutLinkElement["addEventListener"]("click", dt)
         document["getElementById"]("closeteleport").addEventListener("click", (function () {
             var e = n;
             teleportElement.classList["remove"]("open")
@@ -1613,8 +1613,8 @@
                     En()
             }
             )),
-            ot["addEventListener"]("input", ct),
-            ot.addEventListener("change", ct),
+            ot["addEventListener"]("input", changeZoom),
+            ot.addEventListener("change", changeZoom),
             rot["addEventListener"]("input", rit),
             Se["addEventListener"]("message", (function (e) {
                 var t = n;
@@ -2097,7 +2097,7 @@
                 var r = Math["floor"]((qe["offset"].x - canvasElement.width / 2) / t)
                     , a = Math["floor"]((qe.offset.y - canvasElement["height"] / 2) / t);
                 Mn((r + window["innerWidth"] / at / 2) * v, (a + window.innerHeight / at / 2) * v),
-                    vt(G)
+                    vt(selectedFont)
             }
         }
         function En() {
@@ -2275,7 +2275,7 @@
         window.position = qe;
         window.w.currentVersion = "3.0.0";
         window.w.displayNick = "(none)";
-        window.elem = tt;
+        window.elem = clientOptions;
         window.w.chatHistory = [];
         window.w.events = {};
         window.w.on = function (e, t) {
@@ -2478,7 +2478,7 @@
             const isAtBottom = Math.abs(container.scrollHeight - container.scrollTop - container.clientHeight) < 2;
 
             row.style.opacity = 0;
-            row.style.transition = (tt && tt.fadeInMsg && tt.fadeInMsg.checked) ? "opacity 0.5s ease" : "opacity 0s ease";
+            row.style.transition = (clientOptions && clientOptions.fadeInMsg && clientOptions.fadeInMsg.checked) ? "opacity 0.5s ease" : "opacity 0s ease";
 
             container.appendChild(row);
 
@@ -2574,7 +2574,7 @@
                         Me = [],
                         K = !1,
                         On(),
-                        tt["showchat"]["checked"] && hn["classList"].remove("hidden"),
+                        clientOptions["showchat"]["checked"] && hn["classList"].remove("hidden"),
                         xn(),
                         wallListElement["innerHTML"] = "",
                         Le = !0,
@@ -2601,7 +2601,7 @@
                     break;
                 case "online":
                     We = a["online"],
-                        Ke["title"] = We + " online";
+                        nearbyElement["title"] = We + " online";
 
                     break;
                 case "e":
@@ -2797,7 +2797,7 @@
                     null != I.l &&
                         (
                             A.l = I.l,
-                            tt["smoothcursors"]["checked"] ||
+                            clientOptions["smoothcursors"]["checked"] ||
                             (A["rawx"] = A.l[0], A["rawy"] = A.l[1])
                         ),
                         null != I.c &&
@@ -2929,24 +2929,24 @@
                 case "ch":
                     var F = a.ch;
                     nt["hideCursors"].checked = F,
-                        m || (tt["showothercurs"]["disabled"] = F,
-                            tt["showothercurs"].checked = !F && "false" != localStorage.getItem("showothercurs")),
+                        m || (clientOptions["showothercurs"]["disabled"] = F,
+                            clientOptions["showothercurs"].checked = !F && "false" != localStorage.getItem("showothercurs")),
                         ge = !0;
                     window.w.emit("hidecursors", F);
                     break;
                 case "dc":
                     var P = a.dc;
                     nt["disableChat"]["checked"] = P,
-                        tt["showchat"].disabled = P,
-                        P ? (tt["showchat"]["checked"] = !1,
-                            hn["classList"]["add"]("hidden")) : (tt["showchat"]["checked"] = "false" != localStorage["getItem"]("showchat"),
-                                tt.showchat.checked && hn["classList"].remove("hidden"));
+                        clientOptions["showchat"].disabled = P,
+                        P ? (clientOptions["showchat"]["checked"] = !1,
+                            hn["classList"]["add"]("hidden")) : (clientOptions["showchat"]["checked"] = "false" != localStorage["getItem"]("showchat"),
+                                clientOptions.showchat.checked && hn["classList"].remove("hidden"));
                     window.w.emit("disablechat", P);
                     break;
                 case "dcl":
                     var L = a["dcl"];
                     nt["disableColour"]["checked"] = L,
-                        hr(!!L || tt["disablecolour"]["checked"]);
+                        hr(!!L || clientOptions["disablecolour"]["checked"]);
                     window.w.emit("disablecolor", L);
                     break;
                 case "db":
@@ -3275,7 +3275,7 @@
         function On() {
             var e = n;
             Ue = Pe["size"],
-                Ke["innerText"] = "" + Ue + "",
+                nearbyElement["innerText"] = "" + Ue + "",
                 document.getElementById("chatmsg")["placeholder"] = 0 == Ue ? "chat to nobody" : 1 == Ue ? "chat to 1 other user" : "chat to " + Ue + " other users",
                 y || En()
         }
@@ -3301,7 +3301,7 @@
 
         function Hn() {
             var e = n;
-            He.innerText = Ce.x + "," + -Ce.y,
+            coordsElement.innerText = Ce.x + "," + -Ce.y,
                 Ce.x + qe["offset"].x / v / 10 <= 0 && Mn(10 * -Ce.x * v, qe["offset"].y),
                 Ce.x + qe["offset"].x / v / 10 >= window["innerWidth"] / at / 10 - 1 && Mn((10 * -Ce.x + window.innerWidth / at - 10) * v, qe["offset"].y),
                 Ce.y + qe.offset.y / v / 20 <= 0 && Mn(qe["offset"].x, 20 * -Ce.y * v);
@@ -3310,7 +3310,7 @@
                 Le = Ae.x != Ce.x || Ae.y != Ce.y || Le,
                 Ae.x = Ce.x,
                 Ae.y = Ce.y,
-                tt["smoothcursors"]["checked"] || (Ce["rawx"] = Ce.x,
+                clientOptions["smoothcursors"]["checked"] || (Ce["rawx"] = Ce.x,
                     Ce.rawy = Ce.y),
                 (
                     /*Xn() culprit: clears redos and undos */false),
@@ -3322,9 +3322,9 @@
         function Kn(e, t, r, a) {
 
             var o = n;
-            tt["disablecolour"].checked && (r = 0),
+            clientOptions["disablecolour"].checked && (r = 0),
                 r = Zr(r)[0],
-                xt([e, t], bt(20)) || Ne["push"]([e, t, tt["showFeedback"].checked ? .1 : 0, r, a])
+                xt([e, t], bt(20)) || Ne["push"]([e, t, clientOptions["showFeedback"].checked ? .1 : 0, r, a])
         }
 
         function Xn() {
@@ -3347,7 +3347,7 @@
                     var n = t;
                     if (e.touches.length > 1) {
                         var r = Math["sqrt"](Jr(e.touches[0]["pageX"] - e.touches[1]["pageX"]) + Jr(e.touches[0]["pageY"] - e["touches"][1]["pageY"]));
-                        0 != jn && it(rt - (jn - r) / 300, !0),
+                        0 != jn && setZoom(rt - (jn - r) / 300, !0),
                             Dn = void 0,
                             jn = r
                     }
@@ -3534,10 +3534,10 @@
                 return U && "" == je && !nt["readOnly"]["checked"] && ir("Please log in before typing.", 3e3),
                     0;
 
-            tt.rainbow["checked"] && !r && (
-                tt.rainbowMode.value === "legacy" ? (mr(Jn[Yn]), ++Yn == Jn.length && (Yn = 0)) :
+            clientOptions.rainbow["checked"] && !r && (
+                clientOptions.rainbowMode.value === "legacy" ? (mr(Jn[Yn]), ++Yn == Jn.length && (Yn = 0)) :
                     (() => {
-                        let h = (window.cH = ((window.cH || 0) + (tt.hueSpeed?.value ? parseFloat(tt.hueSpeed.value) : 2)) % 360);
+                        let h = (window.cH = ((window.cH || 0) + (clientOptions.hueSpeed?.value ? parseFloat(clientOptions.hueSpeed.value) : 2)) % 360);
                         let s = 100, l = 50;
                         let c = (1 - Math.abs(2 * l / 100 - 1)) * (s / 100);
                         let x = c * (1 - Math.abs((h / 60) % 2 - 1));
@@ -3626,10 +3626,10 @@
             if ((s.protected || cellTextProtected || nt["readOnly"]["checked"] || U && "" == je) && !m && 0 == j || null == s["txt"] || K)
                 return U && "" == je && !nt["readOnly"]["checked"] && ir("Please log in before typing.", 3e3),
                     0;
-            tt.rainbow["checked"] && !r && (
-                tt.rainbowMode.value === "legacy" ? (mr(Jn[Yn]), ++Yn == Jn.length && (Yn = 0)) :
+            clientOptions.rainbow["checked"] && !r && (
+                clientOptions.rainbowMode.value === "legacy" ? (mr(Jn[Yn]), ++Yn == Jn.length && (Yn = 0)) :
                     (() => {
-                        let h = (window.cH = ((window.cH || 0) + (tt.hueSpeed?.value ? parseFloat(tt.hueSpeed.value) : 2)) % 360),
+                        let h = (window.cH = ((window.cH || 0) + (clientOptions.hueSpeed?.value ? parseFloat(clientOptions.hueSpeed.value) : 2)) % 360),
                             X = (1 - Math.abs((h / 60) % 2 - 1)),
                             [r, g, b] = h < 60 ? [1, X, 0] : h < 120 ? [X, 1, 0] : h < 180 ? [0, 1, X] : h < 240 ? [0, X, 1] : h < 300 ? [X, 0, 1] : [1, 0, X];
                         mr([r * 255, g * 255, b * 255].map(Math.round), !0);
@@ -3850,7 +3850,7 @@
                         if (g) {
                             g[0] == x1B ? s += " " : s += g[0];
                             var [p, b] = Zr(g[1]);
-                            if (tt.copycolour.checked) {
+                            if (clientOptions.copycolour.checked) {
                                 if (Array.isArray(g[1])) {
                                     var rgb = g[1];
                                     d += "[";
@@ -3858,12 +3858,12 @@
                                         d += String.fromCharCode(192 + (rgb[i] >> 6)) +
                                             String.fromCharCode(192 + (rgb[i] & 63));
                                     }
-                                    d += tt.copydecorations.checked ? String.fromCharCode(192 + b) : String.fromCharCode(192);
+                                    d += clientOptions.copydecorations.checked ? String.fromCharCode(192 + b) : String.fromCharCode(192);
                                     d += "]";
                                 } else {
                                     d += String.fromCharCode(ue + g[1]);
                                 }
-                            } else if (tt.copydecorations.checked) {
+                            } else if (clientOptions.copydecorations.checked) {
                                 d += String.fromCharCode(ue + Vr(0, b));
                             }
                             Qn(g[0], b) || (0 != b && (v = !0),
@@ -3880,7 +3880,7 @@
                 s = s["slice"](0, -1),
                     d = d["slice"](0, -1),
                     s["startsWith"]("http") && (f = v = !1),
-                    tt["copycolour"]["checked"] && f || tt["copydecorations"]["checked"] && v ? ar(s + x1B + d) : ar(s),
+                    clientOptions["copycolour"]["checked"] && f || clientOptions["copydecorations"]["checked"] && v ? ar(s + x1B + d) : ar(s),
                     Ce.x = l,
                     Ce.y = u,
                     ir("Copied selection.", 1500);
@@ -4257,7 +4257,7 @@
                     var t = {};
                     Le && (t.l = [Ce.x, Ce.y]);
                     Oe && (t.c = pe);
-                    Re && (t.n = tt["anonymous"]["checked"]);
+                    Re && (t.n = clientOptions["anonymous"]["checked"]);
                     De && (t.p = [qe.coords.x, qe.coords.y]);
 
                     a["send"](Or({ ce: t }));
@@ -4572,7 +4572,7 @@
                     Math.abs(Qe.dy) <= .3 && (Qe.dy = 0),
                     0 == Qe.dy && 0 == Qe.dx && (Qe = null)
             }
-            if (tt["smoothcursors"]["checked"]) {
+            if (clientOptions["smoothcursors"]["checked"]) {
                 Ce.rawx = xr(Ce["rawx"], Ce.x, r),
                     Ce.rawy = xr(Ce["rawy"], Ce.y, r);
                 var o = bt(20);
@@ -4601,7 +4601,7 @@
                 var i, c, l, u, s = bt(20), f = bt(d);
                 for (const t of we["keys"]())
                     xt(h = wt(t), s) ? xt(h, f) && delete we.get(t)["img"] : pt(t, h);
-                if (tt["showothercurs"]["checked"] && (!nt.hideCursors["checked"] || m)) {
+                if (clientOptions["showothercurs"]["checked"] && (!nt.hideCursors["checked"] || m)) {
                     gt(canvasGetContext);
                     for (const t of Pe.values()) {
                         var h = t.l;
@@ -4611,22 +4611,22 @@
                             t["highlighted"] && (canvasGetContext["fillStyle"] = "rgba(239, 255, 71, 0.5)",
                                 canvasGetContext["roundRect"](y - 2 * v, g - 2 * v, Math["ceil"](r) + 4 * v, Math.round(a) + 4 * v, [2 * v]));
                             var p = t.c;
-                            var anonIdShow = tt["anonIdShow"].checked;
-                            var displayNameShow = tt["displayNames"].checked;
-                            tt.disablecolour["checked"] && (p = 0),
+                            var anonIdShow = clientOptions["anonIdShow"].checked;
+                            var displayNameShow = clientOptions["displayNames"].checked;
+                            clientOptions.disablecolour["checked"] && (p = 0),
                                 0 == p && xe && (p = colorHexs["length"]);
                             if (rgb888(p)) {
                                 canvasGetContext["fillStyle"] = gst(p);
                             } else {
                                 canvasGetContext["fillStyle"] = gst(colorHexs[p], 0.2) || "rgba(255,255,255,0.2)";
                             };
-                            tt.roundCursors["checked"] ?
+                            clientOptions.roundCursors["checked"] ?
                                 (ge = !0, canvasGetContext.beginPath(),
                                     canvasGetContext.lineWidth = 2 * v,
                                     kt(y, g, r, a, 2 * v),
                                     canvasGetContext.fill()) :
                                 (ge = !0, kt(y, g, r, a)),
-                                !tt["shownametags"]["checked"] || (i = h,
+                                !clientOptions["shownametags"]["checked"] || (i = h,
                                     c = void 0,
                                     l = void 0,
                                     u = void 0,
@@ -4647,7 +4647,7 @@
                         canvasGetContext["fillStyle"] = rgb888(p) ? gst(p) : me[p];
                     var x = 10 * Ne[b][0] * v
                         , w = 20 * Ne[b][1] * v;
-                    if (tt["showothercurs"]["checked"] && m) {
+                    if (clientOptions["showothercurs"]["checked"] && m) {
                         var M = Pe.get(Ne[b][4]);
                         null != M && M["highlighted"] && (canvasGetContext.lineWidth = 3 * v,
                             canvasGetContext["strokeStyle"] = rgb888(p) ? gst(p) : colorHexs[p],
@@ -4659,8 +4659,8 @@
 
                     canvasGetContext["fillRect"](x, w, r, a)
                 }
-                var anonIdShow = tt['anonIdShow'].checked;
-                if (tt.roundCursors["checked"] ? (canvasGetContext["fillStyle"] = be,
+                var anonIdShow = clientOptions['anonIdShow'].checked;
+                if (clientOptions.roundCursors["checked"] ? (canvasGetContext["fillStyle"] = be,
                     canvasGetContext.beginPath(),
                     canvasGetContext.lineWidth = 2 * v,
                     kt(y = Math["round"](10 * Ce["rawx"] * v), g = Math["round"](20 * Ce["rawy"] * v), r, a, 2 * v),
@@ -4669,9 +4669,9 @@
                         canvasGetContext["fillStyle"] = be,
                         kt(y = Math["round"](10 * Ce["rawx"] * v), g = Math["round"](20 * Ce["rawy"] * v), r, a)
                     ),
-                    tt["shownametags"].checked && (gt(canvasGetContext),
+                    clientOptions["shownametags"].checked && (gt(canvasGetContext),
                         Mt(
-                            (tt["anonymous"]["checked"] || je == "")
+                            (clientOptions["anonymous"]["checked"] || je == "")
                                 ? (anonIdShow ? `(${window.w.clientId || 0})` : "")
                                 : (displayNameShow ? window.w.displayNick : je),
                             y, g, o
@@ -4730,13 +4730,13 @@
             mr(0, true);
         }
 
-        var Er = Object["keys"](tt);
+        var Er = Object["keys"](clientOptions);
         for (ne = 0; ne < Er["length"]; ne++) {
             var Sr = Er[ne];
-            null != localStorage.getItem(Sr) && (tt[Sr]["checked"] = "true" == localStorage["getItem"](Sr))
+            null != localStorage.getItem(Sr) && (clientOptions[Sr]["checked"] = "true" == localStorage["getItem"](Sr))
         }
-        if (tt["showchat"].checked,
-            tt["disablecolour"]["checked"] && hr(!0),
+        if (clientOptions["showchat"].checked,
+            clientOptions["disablecolour"]["checked"] && hr(!0),
             null != localStorage["getItem"]("customtheme")) {
             var Ir = localStorage.getItem("customtheme");
             try {
@@ -4974,7 +4974,7 @@
             }
             ), 0),
             Zn(Ce.x, Ce.y),
-            null != localStorage.getItem("zoom") && it(JSON["parse"](localStorage["getItem"]("zoom")), !1),
+            null != localStorage.getItem("zoom") && setZoom(JSON["parse"](localStorage["getItem"]("zoom")), !1),
             Kr(),
             Or = function (e, r) {
                 var a = n;
@@ -5550,7 +5550,7 @@
             ];
         $r && setInterval((function () {
             var e = n;
-            if ("textwall" == W && "main" == H && !tt.disablecolour.checked)
+            if ("textwall" == W && "main" == H && !clientOptions.disablecolour.checked)
                 for (var t = 0; t < Gr["length"]; t++) {
                     var r = Gr[t]
                         , a = we["get"](r);
@@ -5796,10 +5796,10 @@
             });
         });
 
-        tt.rainbowMode.addEventListener("change", (e) => {
+        clientOptions.rainbowMode.addEventListener("change", (e) => {
             localStorage.setItem("rainbowMode", e.target.value)
         });
-        tt.hueSpeed.addEventListener("input", (e) => {
+        clientOptions.hueSpeed.addEventListener("input", (e) => {
             localStorage.setItem("hueSpeed", e.target.value)
         });
 
