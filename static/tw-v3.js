@@ -96,10 +96,10 @@
         }
         var a, o = "/";
         const textArea = document.getElementById("textarea")
-            , connectingElement = document["getElementById"]("connecting")
-            , infoElement = document["getElementById"]("info")
-            , isDeviceApple = -1 != navigator.userAgent["indexOf"]("iPhone") || -1 != navigator["userAgent"]["indexOf"]("iPod") || -1 != navigator.userAgent.indexOf("iPad")
-            , isBrowserFirefox = -1 != navigator["userAgent"]["indexOf"]("Firefox")
+            , connectingElement = document.getElementById("connecting")
+            , infoElement = document.getElementById("info")
+            , isDeviceApple = -1 != navigator.userAgent.indexOf("iPhone") || -1 != navigator.userAgent.indexOf("iPod") || -1 != navigator.userAgent.indexOf("iPad")
+            , isBrowserFirefox = -1 != navigator.userAgent.indexOf("Firefox")
             , d = isDeviceApple ? 40 : 200
             , f = new Date;
         var v = devicePixelRatio
@@ -107,22 +107,22 @@
             , pageTitle = document.title
 
             , y = true;
-        const g = document["getElementById"]("toast");
+        const toastElement = document.getElementById("toast");
         var p;
-        const b = document["getElementById"]("clipboard")
-            , x = document["getElementById"]("usermenu")
-            , w = document["getElementById"]("colourlist")
-            , M = document["getElementById"]("teleport");
-        var k = document["getElementById"]("canvas");
-        k["removeAttribute"]("id");
-        var E = k.getContext("2d", {
-            alpha: !1
+        const b = document.getElementById("clipboard")
+            , menuElement = document.getElementById("usermenu")
+            , colList = document.getElementById("colourlist")
+            , teleportElement = document.getElementById("teleport");
+        var canvasElement = document.getElementById("canvas");
+        canvasElement.removeAttribute("id");
+        var canvasGetContext = canvasElement.getContext("2d", {
+            alpha: false
         });
-        k["width"] = Math.round(window["innerWidth"] * v),
-            k["height"] = Math["round"](window.innerHeight * v),
-            k["style"]["width"] = window["innerWidth"] + "px",
-            k["style"]["height"] = window["innerHeight"] + "px",
-            E.imageSmoothingEnabled = !1;
+        canvasElement.width = Math.round(window.innerWidth * v),
+            canvasElement.height = Math.round(window.innerHeight * v),
+            canvasElement.style.width = window.innerWidth + "px",
+            canvasElement.style.height = window.innerHeight + "px",
+            canvasGetContext.imageSmoothingEnabled = !1;
         var renderChunkAmount = localStorage.getItem("rca") || (rot && rot.value && parseInt(rot.value)) || 100;
         const S = "#FFFFFF"
             , I = "#EBEBEB";
@@ -130,26 +130,26 @@
             , A = I
             , T = Xr(A, 10);
         const B = document.getElementById("primary")
-            , F = document["getElementById"]("secondary")
-            , P = document["getElementById"]("themetext")
-            , L = document["getElementById"]("thememenu")
+            , F = document.getElementById("secondary")
+            , P = document.getElementById("themetext")
+            , L = document.getElementById("thememenu")
             , O = document.getElementById("customfont")
-            , R = document["getElementById"]("customfontsize")
-            , D = document["getElementById"]("fontmenu");
+            , R = document.getElementById("customfontsize")
+            , D = document.getElementById("fontmenu");
         var N = 0;
         var j = 0
-            , U = !1
+            , U = false
             , W = ""
             , H = ""
-            , K = !1;
-        const X = document["getElementById"]("wallsettings")
-            , z = document["getElementById"]("addmembers")
-            , q = document["getElementById"]("walllist");
+            , K = false;
+        const wallSettingsElement = document.getElementById("wallsettings")
+            , addMembersElement = document.getElementById("addmembers")
+            , wallListElement = document.getElementById("walllist");
         var Y;
-        const J = document["getElementById"]("deletewall")
-            , V = String.fromCharCode(10240)
-            , Z = String["fromCharCode"](27)
-            , $ = {
+        const deleteWallElement = document.getElementById("deletewall")
+            , u2800 = String.fromCharCode(10240)
+            , x1B = String.fromCharCode(27)
+            , fontProperties = {
                 Inconsolata: 18,
                 "IBM Plex Mono": 16,
                 "Roboto Mono": 16,
@@ -188,68 +188,68 @@
             };
 
         var G = "Inconsolata"
-            , Q = Math.floor($[G] * v) + "px Iosveka, " + G + ", monospace, Special";
-        const _ = new Map;
-        _["set"]("Unifont", void 0),
-            _["set"]("Terminus", void 0),
-            _["set"]("Fixed", void 0);
-        const ee = Object.keys($)["length"]
-            , te = document["getElementById"]("fontselect");
-        for (var ne = 0; te["length"] > 0; ne++)
+            , Q = Math.floor(fontProperties[G] * v) + "px Iosveka, " + G + ", monospace, Special";
+        const specialFonts = new Map;
+        specialFonts.set("Unifont", void 0),
+            specialFonts.set("Terminus", void 0),
+            specialFonts.set("Fixed", void 0);
+        const totalFonts = Object.keys(fontProperties).length
+            , fontSelectElement = document.getElementById("fontselect");
+        for (var ne = 0; fontSelectElement.length > 0; ne++)
             ;
-        for (ne = 0; ne < ee; ne++)
-            option = document["createElement"]("option"),
-                option["text"] = Object.keys($)[ne],
-                te.add(option);
-        te["value"] = G;
-        const re = document.getElementById("decorations");
-        re["addEventListener"]("contextmenu", (function (e) {
-            e["preventDefault"]()
+        for (ne = 0; ne < totalFonts; ne++)
+            option = document.createElement("option"),
+                option.text = Object.keys(fontProperties)[ne],
+                fontSelectElement.add(option);
+        fontSelectElement.value = G;
+        const decorationsElement = document.getElementById("decorations");
+        decorationsElement.addEventListener("contextmenu", (function (e) {
+            e.preventDefault()
         }
         ));
-        const ae = {
+        const decorationSetting = {
             bold: {
-                el: document["getElementById"]("bold"),
-                enabled: !1
+                el: document.getElementById("bold"),
+                enabled: false
             },
             italic: {
-                el: document["getElementById"]("italic"),
-                enabled: !1
+                el: document.getElementById("italic"),
+                enabled: false
             },
             underline: {
                 el: document.getElementById("underline"),
-                enabled: !1
+                enabled: false
             },
             strikethrough: {
                 el: document.getElementById("strikethrough"),
-                enabled: !1
+                enabled: false
             }
         };
-        var oe = Object.keys(ae);
-        for (ne = 0; ne < oe.length; ne++)
-            ae[oe[ne]].el.addEventListener("click", pr);
+        var decorationNames = Object.keys(decorationSetting);
+        for (ne = 0; ne < decorationNames.length; ne++)
+            decorationSetting[decorationNames[ne]].el.addEventListener("click", pr);
         function ie(e) {
             var t, r, a = n;
             if (e) {
-                re["style"].display = "flex";
+                decorationsElement["style"].display = "flex";
                 var o = (t = Ce.x,
                     r = Ce.y,
                 {
-                    x: t * (10 * v) / devicePixelRatio + qe["offset"].x / devicePixelRatio,
+                    x: t * (10 * v) / devicePixelRatio + qe.offset.x / devicePixelRatio,
                     y: r * (20 * v) / devicePixelRatio + qe.offset.y / devicePixelRatio
                 });
-                o.x + 15 * v + re["clientWidth"] > window["innerWidth"] ? re.style["left"] = o.x - re["clientWidth"] - 5 * at + "px" : re["style"]["left"] = o.x + 15 * at + "px",
-                    re["style"]["top"] = Math["max"](o.y - re["clientHeight"], 0) + "px"
+                o.x + 15 * v + decorationsElement.clientWidth > window.innerWidth ? decorationsElement.style.left = o.x - decorationsElement.clientWidth - 5 * at + "px" : decorationsElement.style.left = o.x + 15 * at + "px",
+                    decorationsElement.style.top = Math.max(o.y - decorationsElement.clientHeight, 0) + "px"
             } else
-                re["style"]["display"] = "none"
+                decorationsElement.style.display = "none"
         }
         function ce() {
             var e = n
                 , t = 0;
-            return ae.bold.enabled && (t |= 8),
-                ae.italic.enabled && (t |= 4),
-                ae.underline.enabled && (t |= 2),
-                ae.strikethrough.enabled && (t |= 1),
+            return decorationSetting.bold.enabled && (t |= 8),
+                decorationSetting.italic.enabled && (t |= 4),
+                decorationSetting.underline.enabled && (t |= 2),
+                decorationSetting.strikethrough.enabled && (t |= 1),
                 t
         }
         window.cel = ce;
@@ -261,9 +261,9 @@
                 br("strikethrough", Boolean(1 & e))
         }
         const ue = 192
-            , se = ["#000000", "#898D90", "#D4D7D9", "#FF99AA", "#FF4500", "#FFA800", "#9C6926", "#FFD635", "#7EED56", "#00CC78", "#51E9F4", "#3690EA", "#2450A4", "#B44AC0", "#811E9F", "#BE0039", "#00A368", "#00756F", "#009EAA", "#493AC1", "#6A5CFF", "#FF3881", "#6D482F", "#6D001A", "#FFF8B8", "#00CCC0", "#94B3FF", "#E4ABFF", "#DE107F", "#FFB470", "#515252"]
-            , de = ["black", "grey", "light grey", "light pink", "red", "orange", "brown", "yellow", "light green", "green", "light blue", "blue", "dark blue", "purple", "dark purple", "dark red", "dark green", "dark teal", "teal", "indigo", "periwinkle", "pink", "dark brown", "burgundy", "pale yellow", "light teal", "lavender", "pale purple", "magenta", "beige", "dark grey"]
-            , fe = [0, 30, 1, 2, 23, 15, 4, 5, 7, 24, 16, 9, 8, 17, 18, 25, 12, 11, 10, 19, 20, 26, 14, 13, 27, 28, 21, 3, 22, 6, 29];
+            , colorHexs = ["#000000", "#898D90", "#D4D7D9", "#FF99AA", "#FF4500", "#FFA800", "#9C6926", "#FFD635", "#7EED56", "#00CC78", "#51E9F4", "#3690EA", "#2450A4", "#B44AC0", "#811E9F", "#BE0039", "#00A368", "#00756F", "#009EAA", "#493AC1", "#6A5CFF", "#FF3881", "#6D482F", "#6D001A", "#FFF8B8", "#00CCC0", "#94B3FF", "#E4ABFF", "#DE107F", "#FFB470", "#515252"]
+            , colorNames = ["black", "grey", "light grey", "light pink", "red", "orange", "brown", "yellow", "light green", "green", "light blue", "blue", "dark blue", "purple", "dark purple", "dark red", "dark green", "dark teal", "teal", "indigo", "periwinkle", "pink", "dark brown", "burgundy", "pale yellow", "light teal", "lavender", "pale purple", "magenta", "beige", "dark grey"]
+            , colorIds = [0, 30, 1, 2, 23, 15, 4, 5, 7, 24, 16, 9, 8, 17, 18, 25, 12, 11, 10, 19, 20, 26, 14, 13, 27, 28, 21, 3, 22, 6, 29];
         // addons
         const rgbse = [
             [200, 50, 50],     // muted red
@@ -311,28 +311,28 @@
             "muted tomato"      // [220,100,80]
         ];
         function ve(e) {
-            for (var t = n, r = 0; r < se["length"]; r++)
-                if (fe[r] == e)
+            for (var t = n, r = 0; r < colorHexs.length; r++)
+                if (colorIds[r] == e)
                     return r;
             return -1
         }
         var me = [];
         !function () {
             var e = n;
-            for (ne = 0; ne < se["length"]; ne++)
+            for (ne = 0; ne < colorHexs.length; ne++)
                 try {
-                    me[ne] = Yr(se[ne], .2);
+                    me[ne] = Yr(colorHexs[ne], .2);
                 } catch (t) {
                     me[ne] = "rgba(128, 128, 128, 0.2)";
                 }
-            me[se["length"]] = "rgba(255, 255, 255, 0.2)"
+            me[colorHexs["length"]] = "rgba(255, 255, 255, 0.2)"
         }();
-        var he, ye, ge, pe = 0, be = Yr(se[pe], .2), xe = !1, we = new Map, Me = [], ke = [], Ee = new Map, Se = new Worker("/static/ping.js"), Ie = !1, Ce = {
+        var he, ye, ge, pe = 0, be = Yr(colorHexs[pe], .2), xe = false, we = new Map, Me = [], ke = [], Ee = new Map, Se = new Worker("/static/ping.js"), Ie = false, Ce = {
             x: 0,
             y: 0,
             rawx: 0,
             rawy: 0,
-            visible: !0,
+            visible: true,
             start: 0,
             lastedit: {
                 x: 0,
@@ -458,7 +458,7 @@
                 localStorage["removeItem"]("token")),
                 je = "",
                 j = 0,
-                X.style["display"] = "none",
+                wallSettingsElement.style["display"] = "none",
                 a.readyState != a["OPEN"] || t || (nt.private["checked"] && Cn("textwall", "main"),
                     a.send(Or({
                         logout: 0
@@ -479,8 +479,8 @@
         function vt(e) {
             var t = n;
             if (G = e,
-                _["has"](G)) {
-                var a = _.get(G);
+                specialFonts["has"](G)) {
+                var a = specialFonts.get(G);
                 if (null == a) {
                     switch (G) {
                         case "Unifont":
@@ -493,12 +493,12 @@
                             a = new fontRender("/static/fonts/fixed.hex", Sn)
                     }
                     a["forceSharpPixels"] = !0,
-                        _["set"](G, a)
+                        specialFonts["set"](G, a)
                 }
                 a["scale"] = ft()
             }
             var o = G
-                , i = $[G];
+                , i = fontProperties[G];
             "Custom" == G ? (D["classList"].remove("hidden"),
                 o = O["value"],
                 i = Math["max"](Math["min"](20, R["value"]), 1),
@@ -519,7 +519,7 @@
         }
         function yt(e) {
             var t = n;
-            E["fillRect"](Math["round"](10 * e[0] * v), Math.round(20 * e[1] * v), mt(), ht())
+            canvasGetContext["fillRect"](Math["round"](10 * e[0] * v), Math.round(20 * e[1] * v), mt(), ht())
         }
         function gt(e) {
             var t = n;
@@ -529,25 +529,25 @@
             var r = n
                 , a = we["get"](e);
             if (a.empty) {
-                E.fillStyle = a.protected ? A : C,
+                canvasGetContext.fillStyle = a.protected ? A : C,
                     yt(t);
             } else {
                 var o = a["img"];
                 isBrowserFirefox && (o = a["bmp"]),
-                    null != o ? (E["drawImage"](o, Math["round"](10 * t[0] * v), Math.round(20 * t[1] * v), mt(), ht()),
-                        a["dpr"] == v && a.font == Q || St(e, !1)) : (E.fillStyle = T,
+                    null != o ? (canvasGetContext["drawImage"](o, Math["round"](10 * t[0] * v), Math.round(20 * t[1] * v), mt(), ht()),
+                        a["dpr"] == v && a.font == Q || St(e, !1)) : (canvasGetContext.fillStyle = T,
                             yt(t),
                             St(e, !1))
             }
             if (!a.protected && a.textProtected) {
                 var cellW = mt() / 20
                     , cellH = ht() / 10;
-                E.fillStyle = A;
+                canvasGetContext.fillStyle = A;
                 for (var idx = 0; idx < 200; idx++)
                     if (a.textProtected[idx] === "1") {
                         var cellX = idx % 20
                             , cellY = Math.floor(idx / 20);
-                        E.fillRect(Math.round(10 * t[0] * v + cellX * cellW), Math.round(20 * t[1] * v + cellY * cellH), Math.ceil(cellW), Math.ceil(cellH))
+                        canvasGetContext.fillRect(Math.round(10 * t[0] * v + cellX * cellW), Math.round(20 * t[1] * v + cellY * cellH), Math.ceil(cellW), Math.ceil(cellH))
                     }
             }
         }
@@ -574,39 +574,39 @@
         function Mt(e, t, r, a) {
             var o = n;
             if ("" != e) {
-                E["fillStyle"] = "rgba(34, 34, 34, 0.4)";
-                var i = E["measureText"](e);
-                E.beginPath(),
-                    E.roundRect(Math["round"](t - i.width / 2), Math["round"](r + 21 * v), Math["round"](i["width"] + 10 * v), Math["round"](14 * v), [a]),
-                    E["fill"](),
-                    E["fillStyle"] = "#FFFFFF",
-                    E.fillText(e, Math.round(t - i["width"] / 2 + 5 * v), Math["round"](r + 31 * v))
+                canvasGetContext["fillStyle"] = "rgba(34, 34, 34, 0.4)";
+                var i = canvasGetContext["measureText"](e);
+                canvasGetContext.beginPath(),
+                    canvasGetContext.roundRect(Math["round"](t - i.width / 2), Math["round"](r + 21 * v), Math["round"](i["width"] + 10 * v), Math["round"](14 * v), [a]),
+                    canvasGetContext["fill"](),
+                    canvasGetContext["fillStyle"] = "#FFFFFF",
+                    canvasGetContext.fillText(e, Math.round(t - i["width"] / 2 + 5 * v), Math["round"](r + 31 * v))
             }
         }
         function kt(e, t, r, a, i = 0) {
             var o = n;
             if (i > 0) {
-                E["roundRect"](Math["round"](e), Math["round"](t), Math["round"](r), Math["round"](a), i)
+                canvasGetContext["roundRect"](Math["round"](e), Math["round"](t), Math["round"](r), Math["round"](a), i)
             } else {
-                E["fillRect"](Math["round"](e), Math["round"](t), Math["round"](r), Math["round"](a))
+                canvasGetContext["fillRect"](Math["round"](e), Math["round"](t), Math["round"](r), Math["round"](a))
             }
         }
 
         !function () {
             var e = n;
-            E["font"] = "10px Special",
-                E["fillText"]("abc", 0, 10),
-                E["font"] = Q,
-                E["fillText"]("abc", 0, 10);
-            for (var t = 0; t < Object.keys($)["length"]; t++)
-                E.font = "10px " + Object.keys($)[t],
-                    E["fillText"]("abc", 0, 10),
-                    E["font"] = "bold 10px " + Object["keys"]($)[t],
-                    E.fillText("abc", 0, 10),
-                    E.font = "italic 10px " + Object["keys"]($)[t],
-                    E["fillText"]("abc", 0, 10),
-                    E.font = "italic bold 10px " + Object["keys"]($)[t],
-                    E.fillText("abc", 0, 10)
+            canvasGetContext["font"] = "10px Special",
+                canvasGetContext["fillText"]("abc", 0, 10),
+                canvasGetContext["font"] = Q,
+                canvasGetContext["fillText"]("abc", 0, 10);
+            for (var t = 0; t < Object.keys(fontProperties)["length"]; t++)
+                canvasGetContext.font = "10px " + Object.keys(fontProperties)[t],
+                    canvasGetContext["fillText"]("abc", 0, 10),
+                    canvasGetContext["font"] = "bold 10px " + Object["keys"](fontProperties)[t],
+                    canvasGetContext.fillText("abc", 0, 10),
+                    canvasGetContext.font = "italic 10px " + Object["keys"](fontProperties)[t],
+                    canvasGetContext["fillText"]("abc", 0, 10),
+                    canvasGetContext.font = "italic bold 10px " + Object["keys"](fontProperties)[t],
+                    canvasGetContext.fillText("abc", 0, 10)
         }();
         const Et = 200;
         function St(e, t) {
@@ -715,7 +715,7 @@
                 e["fillStyle"] = "rgb(" + rgb888[0] + "," + rgb888[1] + "," + rgb888[2] + ")";
             } else {
 
-                e["fillStyle"] = xe && 0 == t ? "#FFFFFF" : se[t];
+                e["fillStyle"] = xe && 0 == t ? "#FFFFFF" : colorHexs[t];
 
             }
         }
@@ -753,7 +753,7 @@
                                 var m = we.get(v);
                                 null == m.edge || !m.protected && c["protected"] || (l = m["edge"])
                             }
-                            for (var h, y = t / Et, g = _["get"](G), p = 16 * ft(), b = 0; b < 10; b++)
+                            for (var h, y = t / Et, g = specialFonts["get"](G), p = 16 * ft(), b = 0; b < 10; b++)
                                 for (var x = -2; x < 20; x++) {
                                     var w = t / 20 * x
                                         , M = n / 10 * b;
@@ -1014,7 +1014,7 @@
                 c["checked"] = 1 == d["highlighted"],
                 a.appendChild(c);
             var f = d.c;
-            o["style"].backgroundColor = "#FFFFFF" == se[f] ? "#222222" : se[f],
+            o["style"].backgroundColor = "#FFFFFF" == colorHexs[f] ? "#222222" : colorHexs[f],
                 o.style["fontSize"] = "10px",
                 o["style"].userSelect = "all",
                 o["innerText"] = d.n || e,
@@ -1041,7 +1041,7 @@
                     document["getElementById"](o[a])["value"] = ""
             }
         }
-        k["addEventListener"]("pointerdown", (function (e) {
+        canvasElement["addEventListener"]("pointerdown", (function (e) {
             var t = n;
             e.preventDefault(),
                 e["isTrusted"] && (ie(!1),
@@ -1054,7 +1054,7 @@
                                 Ge = [],
                                 Qe = null,
                                 Rn(e),
-                                k.style["cursor"] = "move",
+                                canvasElement.style["cursor"] = "move",
                                 function (e) {
                                     var n = t;
                                     if (e["pointerId"] == Dn) {
@@ -1074,7 +1074,7 @@
                         ge = !0))
         }
         )),
-            k["addEventListener"]("contextmenu", (function (e) {
+            canvasElement["addEventListener"]("contextmenu", (function (e) {
                 e["preventDefault"](),
                     ie(!0)
             }
@@ -1112,9 +1112,9 @@
                 }
             }
             )),
-            k["addEventListener"]("click", nn);
+            canvasElement["addEventListener"]("click", nn);
         var lastScrollTime = 0;
-        k.addEventListener("wheel", (function (e) {
+        canvasElement.addEventListener("wheel", (function (e) {
             var t = n;
             if (e["isTrusted"] && (ie(!1), !Ye)) {
                 if (e["preventDefault"](), e["ctrlKey"]) {
@@ -1200,7 +1200,7 @@
                         dt: Ge[0][2] - Ge[w][2]
                     }).dt > 90 || Math.abs(Qe.dx) < 5 && Math["abs"](Qe.dy) < 5) && (Qe = null)
                 }
-                k["style"]["cursor"] = "text",
+                canvasElement["style"]["cursor"] = "text",
                     ge = !0
             }
         }
@@ -1359,9 +1359,9 @@
                         case 27:
                             Je && (Je = !1,
                                 $e = {},
-                                k.style["cursor"] = "text",
+                                canvasElement.style["cursor"] = "text",
                                 e["preventDefault"]()),
-                                M["classList"]["remove"]("open"),
+                                teleportElement["classList"]["remove"]("open"),
                                 ie(!1),
                                 nr();
                             break;
@@ -1558,7 +1558,7 @@
             st["addEventListener"]("click", dt)
         document["getElementById"]("closeteleport").addEventListener("click", (function () {
             var e = n;
-            M.classList["remove"]("open")
+            teleportElement.classList["remove"]("open")
         }
         )),
             document.getElementById("tpwordgo")["addEventListener"]("click", (function (e) {
@@ -1591,7 +1591,7 @@
                     0 !== c && (c = c || Ce.y),
                     Zn(i = Math["max"](Math["min"](i, Yt.maxx - 1), Yt["minx"]), c = Math["max"](Math["min"](-c, Yt["maxy"] - 1), Yt["miny"])),
                     history["pushState"]({}, null, o),
-                    M["classList"]["remove"]("open"),
+                    teleportElement["classList"]["remove"]("open"),
                     r["blur"](),
                     a["blur"]())
             }
@@ -1824,7 +1824,7 @@
                     })) : ir("Username is invalid.", 3e3))
             }
             )),
-            J["addEventListener"]("click", (function (e) {
+            deleteWallElement["addEventListener"]("click", (function (e) {
                 var t = n
                     , r = document["getElementById"]("deletewallconfirm");
                 if (null == r) {
@@ -2086,16 +2086,16 @@
             var e = n
                 , t = v;
             if (v = devicePixelRatio * at,
-                k["width"] = Math["round"](window.innerWidth * devicePixelRatio),
-                k.height = Math.round(window["innerHeight"] * devicePixelRatio),
-                k.style["width"] = Math["round"](k.width / devicePixelRatio) + "px",
-                k["style"]["height"] = Math.round(k["height"] / devicePixelRatio) + "px",
-                E["imageSmoothingEnabled"] = !1,
+                canvasElement["width"] = Math["round"](window.innerWidth * devicePixelRatio),
+                canvasElement.height = Math.round(window["innerHeight"] * devicePixelRatio),
+                canvasElement.style["width"] = Math["round"](canvasElement.width / devicePixelRatio) + "px",
+                canvasElement["style"]["height"] = Math.round(canvasElement["height"] / devicePixelRatio) + "px",
+                canvasGetContext["imageSmoothingEnabled"] = !1,
                 ge = !0,
                 t != v) {
                 ie(!1);
-                var r = Math["floor"]((qe["offset"].x - k.width / 2) / t)
-                    , a = Math["floor"]((qe.offset.y - k["height"] / 2) / t);
+                var r = Math["floor"]((qe["offset"].x - canvasElement.width / 2) / t)
+                    , a = Math["floor"]((qe.offset.y - canvasElement["height"] / 2) / t);
                 Mn((r + window["innerWidth"] / at / 2) * v, (a + window.innerHeight / at / 2) * v),
                     vt(G)
             }
@@ -2464,7 +2464,7 @@
             if (Array.isArray(color) && color.length === 3) {
                 nameLink.style.color = "rgb(" + color.join(",") + ")";
             } else {
-                nameLink.style.color = (typeof rgb888 === "function" && rgb888(color)) ? "rgb(" + color.join(",") + ")" : se[color] || "#222222";
+                nameLink.style.color = (typeof rgb888 === "function" && rgb888(color)) ? "rgb(" + color.join(",") + ")" : colorHexs[color] || "#222222";
             }
 
             if (isRegistered) {
@@ -2560,7 +2560,7 @@
                             history["pushState"]({}, null, o)) : (o = "/~" + W,
                                 history["pushState"]({}, null, o)) : (o = "/",
                                     Pr()["startsWith"]("~") && history["pushState"]({}, null, o),
-                                    J["style"]["display"] = "none"),
+                                    deleteWallElement["style"]["display"] = "none"),
                         Gt = !1,
                         he = setInterval(Qt, 250),
                         ye = setInterval(_t, 2e3),
@@ -2569,14 +2569,14 @@
                         connectingElement["style"]["opacity"] = "0%",
                         Je = !1,
                         $e = {},
-                        k["style"]["cursor"] = "text",
+                        canvasElement["style"]["cursor"] = "text",
                         Pe["clear"](),
                         Me = [],
                         K = !1,
                         On(),
                         tt["showchat"]["checked"] && hn["classList"].remove("hidden"),
                         xn(),
-                        q["innerHTML"] = "",
+                        wallListElement["innerHTML"] = "",
                         Le = !0,
                         Oe = !0,
                         Re = !0,
@@ -2879,7 +2879,7 @@
                                 if (Array.isArray(n) && n.length === 3) {
                                     l.style.color = "rgb(" + n.join(",") + ")";
                                 } else {
-                                    l.style.color = (typeof rgb888 !== "undefined" && rgb888(n)) ? "rgb(" + n.join(",") + ")" : (typeof se !== "undefined" ? se[n] : "#222222");
+                                    l.style.color = (typeof rgb888 !== "undefined" && rgb888(n)) ? "rgb(" + n.join(",") + ")" : (typeof colorHexs !== "undefined" ? colorHexs[n] : "#222222");
                                 }
 
                                 if (a) {
@@ -3008,10 +3008,10 @@
                     break;
                 case "perms":
                     j = a["perms"],
-                        X["style"]["display"] = 2 == j || 1 == j ? "block" : "none",
+                        wallSettingsElement["style"]["display"] = 2 == j || 1 == j ? "block" : "none",
                         j == 1 || j == 2 ? document.getElementById("toggled").style.display = "inline-flex" : document.getElementById("toggled").style.display = "none",
-                        2 == j ? (z["style"]["display"] = "block",
-                            J.style.display = "block") : (z["style"]["display"] = "none"),
+                        2 == j ? (addMembersElement["style"]["display"] = "block",
+                            deleteWallElement.style.display = "block") : (addMembersElement["style"]["display"] = "none"),
                         nt["readOnly"]["disabled"] =
                         nt["private"].disabled =
                         nt["hideCursors"].disabled =
@@ -3023,7 +3023,7 @@
                         nt["webhook"].disabled =
                         nt["nsfw"].disabled = !(2 == j || m),
 
-                        m && (J["style"]["display"] = "textwall" != W || K ? "block" : "none"),
+                        m && (deleteWallElement["style"]["display"] = "textwall" != W || K ? "block" : "none"),
                         0 == j && (Ve = !1,
                             Ze = !1),
                         ge = !0,
@@ -3219,12 +3219,12 @@
             }
             a["sort"](),
                 o && a["unshift"]("main"),
-                q["innerHTML"] = "",
-                q["appendChild"](document["createElement"]("hr"));
+                wallListElement["innerHTML"] = "",
+                wallListElement["appendChild"](document["createElement"]("hr"));
             var u = document["createElement"]("span");
             u["innerText"] = W + "'s walls:",
-                q["appendChild"](u);
-            var s = q.appendChild(document["createElement"]("ul"));
+                wallListElement["appendChild"](u);
+            var s = wallListElement.appendChild(document["createElement"]("ul"));
             for (s.classList["add"]("walllist"),
                 i = 0; i < a.length; i++) {
                 l = r[c = a[i]];
@@ -3249,7 +3249,7 @@
                     s["appendChild"](d)
             }
             if (W == je["toLowerCase"]()) {
-                var m = q["appendChild"](document["createElement"]("form"));
+                var m = wallListElement["appendChild"](document["createElement"]("form"));
                 m.style["display"] = "flex",
                     m.style["justifyContent"] = "space-between";
                 var h = m.appendChild(document["createElement"]("input"));
@@ -3267,7 +3267,7 @@
                         h.value = "",
                             Bt["test"](r) ? (Cn(W, r),
                                 Zn(0, 0),
-                                M.classList["remove"]("open")) : ir("Invalid wall name", 2e3)
+                                teleportElement.classList["remove"]("open")) : ir("Invalid wall name", 2e3)
                     }
                     ))
             }
@@ -3331,7 +3331,7 @@
             Be = [],
                 Fe = []
         }
-        k.addEventListener("touchstart", (function (e) {
+        canvasElement.addEventListener("touchstart", (function (e) {
             var t = n;
             2 === e["touches"]["length"] && (Nn = !0,
                 Dn = void 0,
@@ -3341,7 +3341,7 @@
         ), {
             passive: !0
         }),
-            k["addEventListener"]("touchmove", (function (e) {
+            canvasElement["addEventListener"]("touchmove", (function (e) {
                 var r = n;
                 Nn && (function (e) {
                     var n = t;
@@ -3357,7 +3357,7 @@
             ), {
                 passive: !0
             }),
-            k["addEventListener"]("touchend", (function (e) {
+            canvasElement["addEventListener"]("touchend", (function (e) {
                 Nn && (Dn = void 0,
                     jn = 0,
                     Nn = !1,
@@ -3688,7 +3688,7 @@
             history.pushState({}, null, o)
         }
         function Gn(e) {
-            return " " == e || e == V
+            return " " == e || e == u2800
         }
         function Qn(e, t) {
             return Gn(e) && 0 == (2 & t) && 0 == (1 & t)
@@ -3733,7 +3733,7 @@
             }
 
             e = e.replace(Tt, "");
-            var parts = e.split(Z);
+            var parts = e.split(x1B);
             var r = [], a = [];
 
             if (parts.length === 2) {
@@ -3836,7 +3836,7 @@
         }
         function or(e) {
             var t = n;
-            k.style.cursor = "crosshair";
+            canvasElement.style.cursor = "crosshair";
             var regionSelection = new RegionSelection();
             regionSelection.onSelection(function (r, o, i, c) {
                 var l = Ce.x
@@ -3848,7 +3848,7 @@
                         var g = rr();
 
                         if (g) {
-                            g[0] == Z ? s += " " : s += g[0];
+                            g[0] == x1B ? s += " " : s += g[0];
                             var [p, b] = Zr(g[1]);
                             if (tt.copycolour.checked) {
                                 if (Array.isArray(g[1])) {
@@ -3880,7 +3880,7 @@
                 s = s["slice"](0, -1),
                     d = d["slice"](0, -1),
                     s["startsWith"]("http") && (f = v = !1),
-                    tt["copycolour"]["checked"] && f || tt["copydecorations"]["checked"] && v ? ar(s + Z + d) : ar(s),
+                    tt["copycolour"]["checked"] && f || tt["copydecorations"]["checked"] && v ? ar(s + x1B + d) : ar(s),
                     Ce.x = l,
                     Ce.y = u,
                     ir("Copied selection.", 1500);
@@ -3898,10 +3898,10 @@
         function ir(e, t) {
             var r = n;
             clearTimeout(p),
-                g.innerText = e,
-                g["classList"]["add"]("toasting"),
+                toastElement.innerText = e,
+                toastElement["classList"]["add"]("toasting"),
                 p = setTimeout((function () {
-                    g["classList"].remove("toasting")
+                    toastElement["classList"].remove("toasting")
                 }
                 ), t)
         }
@@ -3919,11 +3919,11 @@
             return [Number(m[1]), Number(m[2]), Number(m[3])];
         }
         function sr() {
-            if (!w) return;
-            while (w.firstChild) w.removeChild(w.firstChild);
+            if (!colList) return;
+            while (colList.firstChild) colList.removeChild(colList.firstChild);
 
-            var palette = Array.isArray(se) ? se : [];
-            var paletteTitles = Array.isArray(de) ? de : [];
+            var palette = Array.isArray(colorHexs) ? colorHexs : [];
+            var paletteTitles = Array.isArray(colorNames) ? colorNames : [];
             var addons = Array.isArray(rgbse) ? rgbse : [];
             var addonTitles = Array.isArray(rgbde) ? rgbde : [];
 
@@ -4074,13 +4074,13 @@
                 }
             }
 
-            w.appendChild(frag);
+            colList.appendChild(frag);
         }
         function dr() {
             var e = n;
             ie(!1),
-                M["classList"]["contains"]("open") ? (M.classList["remove"]("open"),
-                    en()) : (M["classList"]["add"]("open"),
+                teleportElement["classList"]["contains"]("open") ? (teleportElement.classList["remove"]("open"),
+                    en()) : (teleportElement["classList"]["add"]("open"),
                         2 == lr && ur(0),
                         document.getElementById("tpword")["focus"]())
         }
@@ -4105,7 +4105,7 @@
                     Cn("textwall", "main"),
                     0 == c.x && 0 == c.y ? $n() : history["pushState"]({}, null, e)
             }
-            M["classList"]["remove"]("open")
+            teleportElement["classList"]["remove"]("open")
         }
 
 
@@ -4137,12 +4137,12 @@
             }
             pe = e;
             window.color = pe;
-            if (typeof e === "number" && e < se.length) {
-                be = xe && e === 0 ? "rgba(255,255,255,0.6)" : Yr(se[e], 0.6);
+            if (typeof e === "number" && e < colorHexs.length) {
+                be = xe && e === 0 ? "rgba(255,255,255,0.6)" : Yr(colorHexs[e], 0.6);
                 newEl = document.querySelector(`.swatch-p[data-index='${e}']`);
             }
-            else if (typeof e === "number" && e >= se.length) {
-                let addonIndex = e - se.length;
+            else if (typeof e === "number" && e >= colorHexs.length) {
+                let addonIndex = e - colorHexs.length;
                 let obj = rgbse[addonIndex];
                 if (obj) {
                     be = gst(Array.isArray(obj) ? ("rgb(" + obj[0] + "," + obj[1] + "," + obj[2] + ")") : obj, 0.6);
@@ -4162,14 +4162,14 @@
         }
 
 
-        let total = se.length + rgbse.length;
+        let total = colorHexs.length + rgbse.length;
 
-        if (w.children.length > 0) a = !0;
+        if (colList.children.length > 0) a = !0;
         sr();
 
         function hr(e) {
-            for (var t = n, r = 0; r < w.children.length; r++)
-                "0" != w["children"][r].id && (e ? w["children"][r]["classList"].add("hidden") : w["children"][r].classList.remove("hidden"));
+            for (var t = n, r = 0; r < colList.children.length; r++)
+                "0" != colList["children"][r].id && (e ? colList["children"][r]["classList"].add("hidden") : colList["children"][r].classList.remove("hidden"));
             e && mr(0)
         }
         function yr(e, noSave = !1) {
@@ -4226,7 +4226,7 @@
         }
         function br(e, t) {
             var r = n
-                , a = ae[e];
+                , a = decorationSetting[e];
             a.enabled = null != t ? t : !a.enabled,
                 a["enabled"] ? a.el["classList"]["add"]("enabled") : a.el["classList"]["remove"]("enabled"),
                 localStorage.setItem("dec", ce())
@@ -4591,10 +4591,10 @@
             }
             if (ge && (function () {
                 var e = t;
-                E["setTransform"](1, 0, 0, 1, 0, 0),
-                    E["fillStyle"] = A,
-                    E["fillRect"](0, 0, k["width"], k["height"]),
-                    E["translate"](Math.ceil(qe["offset"].x), Math["ceil"](qe.offset.y));
+                canvasGetContext["setTransform"](1, 0, 0, 1, 0, 0),
+                    canvasGetContext["fillStyle"] = A,
+                    canvasGetContext["fillRect"](0, 0, canvasElement["width"], canvasElement["height"]),
+                    canvasGetContext["translate"](Math.ceil(qe["offset"].x), Math["ceil"](qe.offset.y));
                 const r = 10 * v
                     , a = 20 * v
                     , o = Math["round"](5 * v);
@@ -4602,29 +4602,29 @@
                 for (const t of we["keys"]())
                     xt(h = wt(t), s) ? xt(h, f) && delete we.get(t)["img"] : pt(t, h);
                 if (tt["showothercurs"]["checked"] && (!nt.hideCursors["checked"] || m)) {
-                    gt(E);
+                    gt(canvasGetContext);
                     for (const t of Pe.values()) {
                         var h = t.l;
                         if (!xt(h, s)) {
                             var y = Math.round(10 * t.rawx * v)
                                 , g = Math.round(20 * t["rawy"] * v);
-                            t["highlighted"] && (E["fillStyle"] = "rgba(239, 255, 71, 0.5)",
-                                E["roundRect"](y - 2 * v, g - 2 * v, Math["ceil"](r) + 4 * v, Math.round(a) + 4 * v, [2 * v]));
+                            t["highlighted"] && (canvasGetContext["fillStyle"] = "rgba(239, 255, 71, 0.5)",
+                                canvasGetContext["roundRect"](y - 2 * v, g - 2 * v, Math["ceil"](r) + 4 * v, Math.round(a) + 4 * v, [2 * v]));
                             var p = t.c;
                             var anonIdShow = tt["anonIdShow"].checked;
                             var displayNameShow = tt["displayNames"].checked;
                             tt.disablecolour["checked"] && (p = 0),
-                                0 == p && xe && (p = se["length"]);
+                                0 == p && xe && (p = colorHexs["length"]);
                             if (rgb888(p)) {
-                                E["fillStyle"] = gst(p);
+                                canvasGetContext["fillStyle"] = gst(p);
                             } else {
-                                E["fillStyle"] = gst(se[p], 0.2) || "rgba(255,255,255,0.2)";
+                                canvasGetContext["fillStyle"] = gst(colorHexs[p], 0.2) || "rgba(255,255,255,0.2)";
                             };
                             tt.roundCursors["checked"] ?
-                                (ge = !0, E.beginPath(),
-                                    E.lineWidth = 2 * v,
+                                (ge = !0, canvasGetContext.beginPath(),
+                                    canvasGetContext.lineWidth = 2 * v,
                                     kt(y, g, r, a, 2 * v),
-                                    E.fill()) :
+                                    canvasGetContext.fill()) :
                                 (ge = !0, kt(y, g, r, a)),
                                 !tt["shownametags"]["checked"] || (i = h,
                                     c = void 0,
@@ -4643,33 +4643,33 @@
                     }
                 }
                 for (var b = 0; b < Ne["length"]; b++) {
-                    0 == (p = Ne[b][3]) && xe && (p = se["length"]),
-                        E["fillStyle"] = rgb888(p) ? gst(p) : me[p];
+                    0 == (p = Ne[b][3]) && xe && (p = colorHexs["length"]),
+                        canvasGetContext["fillStyle"] = rgb888(p) ? gst(p) : me[p];
                     var x = 10 * Ne[b][0] * v
                         , w = 20 * Ne[b][1] * v;
                     if (tt["showothercurs"]["checked"] && m) {
                         var M = Pe.get(Ne[b][4]);
-                        null != M && M["highlighted"] && (E.lineWidth = 3 * v,
-                            E["strokeStyle"] = rgb888(p) ? gst(p) : se[p],
-                            E["beginPath"](),
-                            E["moveTo"](Math["round"](10 * M["rawx"] * v + r / 2), Math["round"](20 * M["rawy"] * v + a)),
-                            E["lineTo"](Math["round"](x + r / 2), Math.round(w + a)),
-                            E.stroke())
+                        null != M && M["highlighted"] && (canvasGetContext.lineWidth = 3 * v,
+                            canvasGetContext["strokeStyle"] = rgb888(p) ? gst(p) : colorHexs[p],
+                            canvasGetContext["beginPath"](),
+                            canvasGetContext["moveTo"](Math["round"](10 * M["rawx"] * v + r / 2), Math["round"](20 * M["rawy"] * v + a)),
+                            canvasGetContext["lineTo"](Math["round"](x + r / 2), Math.round(w + a)),
+                            canvasGetContext.stroke())
                     }
 
-                    E["fillRect"](x, w, r, a)
+                    canvasGetContext["fillRect"](x, w, r, a)
                 }
                 var anonIdShow = tt['anonIdShow'].checked;
-                if (tt.roundCursors["checked"] ? (E["fillStyle"] = be,
-                    E.beginPath(),
-                    E.lineWidth = 2 * v,
+                if (tt.roundCursors["checked"] ? (canvasGetContext["fillStyle"] = be,
+                    canvasGetContext.beginPath(),
+                    canvasGetContext.lineWidth = 2 * v,
                     kt(y = Math["round"](10 * Ce["rawx"] * v), g = Math["round"](20 * Ce["rawy"] * v), r, a, 2 * v),
-                    E.fill()) :
+                    canvasGetContext.fill()) :
                     (
-                        E["fillStyle"] = be,
+                        canvasGetContext["fillStyle"] = be,
                         kt(y = Math["round"](10 * Ce["rawx"] * v), g = Math["round"](20 * Ce["rawy"] * v), r, a)
                     ),
-                    tt["shownametags"].checked && (gt(E),
+                    tt["shownametags"].checked && (gt(canvasGetContext),
                         Mt(
                             (tt["anonymous"]["checked"] || je == "")
                                 ? (anonIdShow ? `(${window.w.clientId || 0})` : "")
@@ -4677,22 +4677,22 @@
                             y, g, o
                         )),
                     Je && $e["start"] && $e["end"]) {
-                    E.fillStyle = "rgba(0,120,212,0.5)",
+                    canvasGetContext.fillStyle = "rgba(0,120,212,0.5)",
 
 
                         y = Math["round"](10 * Math["min"]($e["start"].x, $e.end.x) * v),
                         g = Math.round(20 * Math.min($e["start"].y, $e["end"].y) * v);
                     var S = Math.round(10 * Math.max($e["start"].x, $e["end"].x) * v - y + 10 * v)
                         , I = Math.round(20 * Math["max"]($e["start"].y, $e["end"].y) * v - g + 20 * v);
-                    E["fillRect"](y, g, S, I)
+                    canvasGetContext["fillRect"](y, g, S, I)
 
                 }
                 if (Ve || Ze) {
 
-                    E["fillStyle"] = Ve && Ze ? "rgba(195,219,224,0.5)" : (Ve ? "rgba(204,204,204,0.5)" : "rgba(221,249,255,0.5)")
+                    canvasGetContext["fillStyle"] = Ve && Ze ? "rgba(195,219,224,0.5)" : (Ve ? "rgba(204,204,204,0.5)" : "rgba(221,249,255,0.5)")
                     var C = 20 * Math.floor(Te.x / 20)
                         , T = 10 * Math["floor"](Te.y / 10);
-                    E.fillRect(10 * C * v, 20 * T * v, 200 * v, 200 * v)
+                    canvasGetContext.fillRect(10 * C * v, 20 * T * v, 200 * v, 200 * v)
                 }
             }(), ge = !1,
                 "\n\n\n\n\n\n\n\n\n" != textArea.value && (textArea.value = "\n\n\n\n\n\n\n\n\n"),
@@ -4717,7 +4717,7 @@
             null != localStorage.getItem("customfont") && (O["value"] = localStorage["getItem"]("customfont")),
             null != localStorage.getItem("customfontsize") && (R.value = localStorage["getItem"]("customfontsize")),
             null != localStorage.getItem("rca") && (renderChunkAmount = parseInt(localStorage.getItem("rca"), rot.value = parseInt(localStorage.getItem("rca")))),
-            null != $[localStorage["getItem"]("font")] && vt(localStorage["getItem"]("font"));
+            null != fontProperties[localStorage["getItem"]("font")] && vt(localStorage["getItem"]("font"));
         const val = localStorage["getItem"]("col");
         if (val != null) {
             const parts = val.split(",");
@@ -4940,10 +4940,10 @@
 
         function ce2() {
             var decorations = {
-                bold: ae.bold.enabled,
-                italic: ae.italic.enabled,
-                underline: ae.underline.enabled,
-                strikethrough: ae.strikethrough.enabled
+                bold: decorationSetting.bold.enabled,
+                italic: decorationSetting.italic.enabled,
+                underline: decorationSetting.underline.enabled,
+                strikethrough: decorationSetting.strikethrough.enabled
             }
             return decorations
         }
@@ -5716,7 +5716,7 @@
                 if (Je) throw "There is already an active region selection";
                 Je = true;
                 window.currentRegionSelection = this;
-                k.style.cursor = "crosshair";
+                canvasElement.style.cursor = "crosshair";
             };
             this.onSelection = func => {
                 this.onSelectionEvents.push(func);
